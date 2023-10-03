@@ -1,0 +1,13 @@
+﻿body {
+    margin: 0;
+}
+#div-top {
+    width: 1600px;
+    height: 70px;
+    color: black;
+}
+#div-containt{
+    width:auto;
+    height:auto;
+    color:aqua;
+}
