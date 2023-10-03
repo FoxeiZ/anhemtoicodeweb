@@ -18,3 +18,4 @@ Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại s
 - [ ] Find a hosting service
 - [ ] Get some b*tches
 - [ ] Also get laid
+
