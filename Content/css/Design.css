@@ -9,5 +9,6 @@
 #div-containt{
     width:auto;
     height:auto;
-    color:aqua;
+    color: white;
+    background-color: aqua
 }
