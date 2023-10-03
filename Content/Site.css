@@ -18,3 +18,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+html {
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
