@@ -12,5 +12,9 @@ namespace anhemtoicodeweb.Controllers
         {
             return View();
         }
+        public ActionResult ProDetails()
+        {
+            return View();
+        }
     }
 }
