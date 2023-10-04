@@ -1,14 +1,21 @@
 ﻿body {
-    margin: 0;
-}
-#div-top {
-    width: 1600px;
-    height: 70px;
-    color: black;
-}
-#div-containt{
-    width:auto;
     height:auto;
-    color: white;
-    background-color: aqua
+    width: auto;
+    margin: 0;
+    background-color: #323232;
+}
+#rectangle {
+    height: 466px;
+    width: 542px;
+    background-color: white;
+    position: relative;
+    margin-top: 125px;
+    margin-left: 500px;
+
+}
+h1 {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, 150%);
 }
