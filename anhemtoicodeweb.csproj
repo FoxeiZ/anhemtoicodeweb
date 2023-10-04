@@ -145,6 +145,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\Design.css" />
     <Content Include="Content\css\index.css" />
+    <Content Include="Content\landing.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
