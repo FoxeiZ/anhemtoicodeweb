@@ -68,6 +68,12 @@
             </div>
         </div>
     </nav>
+    </body>
+    </html>
 
-    <div class="container body-content" style="height:2400px;">
+    <div class="container body-content" style="height:2400px;"/>
         @RenderBody()
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
