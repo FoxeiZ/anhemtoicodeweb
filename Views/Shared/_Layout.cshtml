@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)
 </head>
 <body class="m-0 d-grid" style="grid-template-rows:auto 1fr auto;">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-header">
@@ -71,32 +72,6 @@
 
     <div class="container body-content" style="height:2400px;">
         @RenderBody()
-        <section class="index-category">
-            <div class="index-category-box">
-                <h3>Category1</h3>
-            </div>
-            <div class="index-category-box">
-                <h3>Category2</h3>
-            </div>
-            <div class="index-category-box">
-                <h3>Category3</h3>
-            </div>
-            <div class="index-category-box">
-                <h3>Category4</h3>
-            </div>
-            <div class="index-category-box">
-                <h3>Category5</h3>
-            </div>
-            <div class="index-category-box">
-                <h3>Category6</h3>
-            </div>
-            <div class="index-category-box">
-                <h3>Category7</h3>
-            </div>
-        </section>
-
-        <button class="favorite styled" type="button">More</button>
-
     </div>
 
     <div class="container body-content footer-container">
