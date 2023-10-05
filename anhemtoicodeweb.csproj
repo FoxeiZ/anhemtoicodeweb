@@ -141,8 +141,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\Design.css" />
-    <Content Include="Content\css\index.css" />
-    <Content Include="Content\landing.css" />
+    <Content Include="Content\css\Index.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -177,7 +176,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ProDetails.cshtml" />
-    <Content Include="Views\Shared\_LayoutForLogin.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
