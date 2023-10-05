@@ -1,27 +1,23 @@
 ﻿
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    <link href="~/Content/css/Design.css" rel="stylesheet" />
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-<div id="rectangle">
-    <h1><a href="Index" style="color:black; text-decoration-line:none">x</a></h1>
-    <h2 style="text-align:center;">Login</h2>
-    <form action="#" method="post" name="frmDK" style="margin:5px">
-        <div id="Login">
-            <fieldset>
-                <input type="text" name="txtUsername" style="margin-top:20px; width: 500px" placeholder="Username..."/>
-                <br/>
 
-                <input type="text" name="txtPassword" style="margin-top:20px;width:500px" placeholder="Password"/>
-                <br/>
-            </fieldset>
+@section Styles {
+    <link href="@Url.Content("~/Content/css/Login.css")" rel="stylesheet" type="text/css" />
+}
+
+<form class="popup">
+    <div class="wrapper">
+        <h1>Login</h1>
+        <div class="input-field">
+            <input class="input-box" type="text" placeholder="Username" name="uname" required>
+            <input class="input-box" type="password" placeholder="Password" name="psw" required>
         </div>
-        <div id="login-btn">
-            <input type="submit" value="Login" style="color: azure; background-color: #4E6C50; border: none" > 
-        </div>
-    </form>
+        <button class="login-btn" type="submit">Login</button>
+        <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
 </div>
-
-
-
+</form>

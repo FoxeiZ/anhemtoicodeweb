@@ -140,8 +140,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\css\Design.css" />
     <Content Include="Content\css\Index.css" />
+    <Content Include="Content\css\Login.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -177,6 +177,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ProDetails.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
