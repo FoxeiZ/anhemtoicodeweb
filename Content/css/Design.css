@@ -13,6 +13,25 @@
     
 
 }
+#login-btn {
+    width: 200px;
+    height: 50px;
+    position: absolute;
+    margin-left: 27%;
+    margin-right: auto;
+    padding-right:unset;
+    margin-top: 30px;
+    top: 50%;
+    background-color: #4E6C50;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+
 #Login {
     position:absolute;
     width: 450px;
