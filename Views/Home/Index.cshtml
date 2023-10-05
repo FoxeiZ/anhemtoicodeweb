@@ -2,11 +2,40 @@
     ViewBag.Title = "Home Page";
 }
 
+@*@section Styles {
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+}*@
+
 <main>
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/css/Index.css" rel="stylesheet" />
     <div class="imgSlideshow">
         <img src="~/Image/image_banner.png" class="imgBanner" />
     </div>
     @* slideshow when *@
     <h2 style="width:auto">Danh mục</h2>
+    <section class="index-category">
+        <div class="index-category-box">
+            <h3>Category1</h3>
+        </div>
+        <div class="index-category-box">
+            <h3>Category2</h3>
+        </div>
+        <div class="index-category-box">
+            <h3>Category3</h3>
+        </div>
+        <div class="index-category-box">
+            <h3>Category4</h3>
+        </div>
+        <div class="index-category-box">
+            <h3>Category5</h3>
+        </div>
+        <div class="index-category-box">
+            <h3>Category6</h3>
+        </div>
+        <div class="index-category-box">
+            <h3>Category7</h3>
+        </div>
+    </section>
+
+    <button class="favorite styled" type="button">More</button>
 </main>
