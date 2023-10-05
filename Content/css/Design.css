@@ -4,18 +4,27 @@
     background-color: #323232;
 }
 #rectangle {
-    height: 466px;
-    width: 542px;
+    height: 542px;
+    width: 466px;
     background-color: white;
     position: relative;
     margin-top: 100px;
-    margin-left: 400px;
+    margin-left: 375px;
     
 
 }
-h1 {
-    position: absolute;
-    left: 50%;
-    top: 25%;
+#Login {
+    position:absolute;
+    width: 450px;
+    left:60%;
+    top: 5%;
     transform: translate(-50%, 150%);
 }
+
+h2 {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, 150%);
+}
+

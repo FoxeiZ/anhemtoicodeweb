@@ -1,7 +1,25 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutForLogin.cshtml";
     <link href="~/Content/css/Design.css" rel="stylesheet" />
 }
 <div id="rectangle">
-    <h1>Mẹ mày béo</h1>
+    <h2 style="text-align:center;">Login</h2>
+    <form action="#" method="post" name="frmDK" style="margin:5px">
+        <div id="Login">
+            <fieldset>
+                <input type="text" name="txtUsername" style="margin-top:20px; width: 500px" placeholder="Username..."/>
+                <br/>
+                <input type="text" name="txtPassword" style="margin-top:20px;width:500px" placeholder="Password"/>
+                <br/>
+                
+            </fieldset>
+        </div>
+    </form>
+
+
 </div>
+
+
+
