@@ -75,3 +75,46 @@ html {
     border-radius: 0px 8px 8px 0px;
     background: #4E6C50;
 }
+
+/*Category section*/
+.index-category {
+    width: 100%;
+    padding: 60px 0;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+}
+
+.index-category-box {
+    width: 160px;
+    height: 160px;
+    background-color: darkcyan;
+}
+
+.index-category-box h3 {
+    font-size: 24px;
+    line-height: 24px;
+}
+/*Look more button*/
+.styled {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: white;
+    background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+    .styled:hover {
+        background-color: white;
+    }
+
+    .styled:active {
+        box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+    }
