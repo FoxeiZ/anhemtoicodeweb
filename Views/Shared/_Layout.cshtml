@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("Styles", false)
 </head>
-<body class="m-0 d-grid" style="grid-template-rows:auto 1fr auto;">
+<body class="m-0">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-header">
         <div class="container">
             <div class="logo">
@@ -70,11 +70,11 @@
         </div>
     </nav>
 
-    <div class="container body-content" style="height:2400px;">
+    <div class="container mt-4">
         @RenderBody()
     </div>
 
-    <div class="container body-content footer-container">
+    <div class="container footer-container">
         <hr />
         <footer>
             <p>Footer.</p>
