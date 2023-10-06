@@ -79,3 +79,9 @@ body {
     border-radius: 0px 8px 8px 0px;
     background: #4E6C50;
 }
+
+.profile-img {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+}
