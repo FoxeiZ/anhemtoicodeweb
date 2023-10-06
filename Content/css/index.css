@@ -34,24 +34,35 @@
 }
 
 .category-box {
-    width: 160px;
-    height: 160px;
+    width: calc( 100% / 7 - 15px);
+    overflow: hidden;
     border-radius: 10px;
-    background-color: darkcyan;
+    background-color: white;
 }
 
-.category-box h3 {
-    font-size: 24px;
-    line-height: 24px;
-    text-align: center;
-}
+    .category-box img {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .category-box h3 {
+        padding: 12px;
+        font-size: 24px;
+        line-height: 24px;
+        text-align: center;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 .moreButton {
     width: 100%;
     height: 50px;
     border-radius: 10px;
     background: var(--background-white, #FFF);
-    border: none;
+    border: 1px solid black;
     text-align: center;
 }
 
@@ -61,8 +72,33 @@
 }
 
 .product-box {
-    width: 227px;
+    width: calc(100%/5);
     height: 357px;
     border-radius: 10px;
     background-color: #FFFFFF;
+    overflow:hidden;
 }
+    .BuyNowBtn {
+        border-radius: 8px;
+        background: #4E6C50;
+        text-align: center;
+        margin-right: 40%;
+        padding: 2%;
+    }
+    .product-box h3 {
+        color: #4E6C50;
+        font-family: Montserrat;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .product-box h4 {
+        color: black;
+        font-family: Montserrat;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .product-box img {
+        width: 80%;
+        height: auto;
+        position: relative;
+    }
