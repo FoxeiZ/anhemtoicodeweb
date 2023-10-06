@@ -20,3 +20,6 @@ jobs:
         server-dir: www.vass.somee.com/
         username: foxeiz
         password: ${{ secrets.ftp_password }}
+        exclude: |
+          **/.git*
+          **/.git*/**
