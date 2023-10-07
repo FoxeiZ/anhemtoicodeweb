@@ -23,7 +23,7 @@
     width: 100%;
     margin: 20px 0px 20px 0px;
     display: flex;
-    /*justify-content: space-between;*/
+    justify-content: space-between;
     /*flex-wrap: wrap;
     gap: 10px;*/
 }
@@ -68,15 +68,16 @@
 
 .container-wrap.product {
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 0px;
 }
 
 .product-box {
-    width: calc(100%/5);
+    width: calc(100%/6);
     height: 357px;
     border-radius: 10px;
     background-color: #FFFFFF;
-    overflow:hidden;
+    overflow: hidden;
+    margin: 14px;
 }
 .BuyNowBtn {
     color: white;
@@ -86,6 +87,7 @@
     text-align: center;
     margin-right: 40%;
     padding: 2%;
+    cursor: pointer;
 }
     .product-box h3 {
         color: #4E6C50;
@@ -109,3 +111,9 @@
     transition: 0.3s;
     opacity: 0.5;
     }
+.footer-container {
+    background: linear-gradient(270deg, rgba(78, 108, 80, 0.50) 0%, rgba(170, 139, 86, 0.50) 100%);
+    width: auto;
+    height: 300px;
+    flex-shrink: 0;
+}
