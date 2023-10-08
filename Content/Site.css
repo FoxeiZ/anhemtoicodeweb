@@ -86,3 +86,10 @@ body {
     height: 46px;
     border-radius: 10px;
 }
+
+.footer-container {
+    background: linear-gradient(270deg, rgba(78, 108, 80, 0.50) 0%, rgba(170, 139, 86, 0.50) 100%);
+    width: auto;
+    height: 300px;
+    flex-shrink: 0;
+}
