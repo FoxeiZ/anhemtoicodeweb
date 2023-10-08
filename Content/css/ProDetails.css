@@ -1,0 +1,51 @@
+﻿.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+}
+
+img {
+    max-width: 100%;
+}
+
+.image {
+    flex-basis: 40%;
+}
+
+.text h1 {
+    font-size: 60px;
+    padding-left: 20px;
+}
+
+.text l {
+    font-size: 30px;
+    padding-left: 20px;
+}
+
+.text p {
+    font-size: 40px;
+    padding-top: 30px;
+    padding-left: 20px;
+}
+
+.BuyNowBtn {
+    margin-left: 20px;
+    margin-top: 30px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 402px;
+    height: 66px;
+    background: #4E6C50;
+}
+
+    .BuyNowBtn:hover {
+        transition: 0.3s;
+        opacity: 0.8;
+    }
+
+    .BuyNowBtn:not(:hover) {
+        opacity: 1;
+        transition: 0.3s;
+    }
