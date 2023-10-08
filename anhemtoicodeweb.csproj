@@ -147,6 +147,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Image\image 6.png" />
     <Content Include="Image\image_banner.png" />
+    <Content Include="Image\image_banner1.png" />
     <Content Include="Image\profile.png" />
     <Content Include="Image\puoy.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
