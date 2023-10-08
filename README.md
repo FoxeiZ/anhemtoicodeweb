@@ -17,7 +17,6 @@ Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại s
 - [ ] Demo Database
 - [ ] Category Listing
 - [x] Find a hosting service
-- [ ] Get some b*tches
 - [ ] Also get laid
 
 
