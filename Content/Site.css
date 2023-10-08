@@ -94,9 +94,42 @@ body {
     border-radius: 10px;
 }
 
-.footer-container {
+footer {
     background: linear-gradient(270deg, rgba(78, 108, 80, 0.50) 0%, rgba(170, 139, 86, 0.50) 100%);
     width: auto;
-    height: 300px;
-    flex-shrink: 0;
+    height: 450px;
+    margin-top: 85px;
+}
+
+.footer-docs {
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.frame-wrap {
+    width: fit-content;
+    display: flex;
+    gap: 20px;
+}
+
+.title {
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 100;
+    line-height: normal;
+    letter-spacing: 0.32px;
+}
+
+.item {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.32px;
+}
+
+.about-us {
+    width: 396px;
+    flex-direction: column
 }
