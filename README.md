@@ -11,12 +11,9 @@ Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại s
 
 # Todo
 > More Todo to come...
-- [ ] Landing Page
+- [x] Landing Page (not functional)
 - [ ] Product Detail Page
 - [x] Login page (not functional)
 - [ ] Demo Database
 - [ ] Category Listing
 - [x] Find a hosting service
-- [ ] Also get laid
-
-
