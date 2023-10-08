@@ -2,9 +2,12 @@
     ViewBag.Title = "Home Page";
 }
 
-@*@section Styles {
-        <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
-    }*@
+@section Styles {
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+}
 
 <main style="height:auto;">
     <link href="~/Content/css/Index.css" rel="stylesheet" />
@@ -203,9 +206,20 @@
         </div>
         <button class="moreButton">More</button>
     </div>
-    <div class="mt-5 imgSlideshow">
-        <img src="~/Image/image_banner1.png" class="imgBanner" />
-    </div>
+    @*banner*@
+    <section aria-label="banner">
+
+        <div class="w3-content w3-display-container">
+            <img class="mySlides" src="~/Image/image_banner1.png" style="width:100%">
+            <img class="mySlides" src="~/Image/slide1.png" style="width:100%">
+            <img class="mySlides" src="~/Image/silde2.jpg" style="width:100%">
+
+            <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+            <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+        </div>
+    </section>
+
+
     <div class="section">
         @* products *@
         <h2>Products</h2>
