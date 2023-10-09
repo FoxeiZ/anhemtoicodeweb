@@ -37,7 +37,7 @@
             <div class="d-flex flex-row gap-4">
                 <a href="@Url.Action("Index", "Home")">
                     <div class="box-link">
-                        <img src="~/Image/svg/heart.svg" alt="favorite list"/>
+                        <img src="~/Image/svg/heart.svg" alt="favorite list" />
                     </div>
                 </a>
                 <a href="@Url.Action("Index", "Home")">
@@ -47,7 +47,7 @@
                 </a>
                 <a href="@Url.Action("Login", "Home")">
                     <div>
-                        <img src="~/Image/profile.png" class="profile-img"/>
+                        <img src="~/Image/profile.png" class="profile-img" />
                     </div>
                 </a>
             </div>
@@ -89,13 +89,14 @@
                     <div class="item">item</div>
                 </div>
             </div>
-            <hr/>
+            <hr />
             <h2>example.com</h2>
         </div>
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("JavaScript", false)
+
 </body>
 </html>

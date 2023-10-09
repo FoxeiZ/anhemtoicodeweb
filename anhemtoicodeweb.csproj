@@ -148,10 +148,11 @@
     <Content Include="Content\Site.css" />
     <Content Include="Image\image 6.png" />
     <Content Include="Image\image 7.png" />
-    <Content Include="Image\image_banner.png" />
-    <Content Include="Image\image_banner1.png" />
+    <Content Include="Image\banner1.png" />
     <Content Include="Image\profile.png" />
     <Content Include="Image\logo.jpg" />
+    <Content Include="Image\banner2.jpg" />
+    <Content Include="Image\banner3.png" />
     <Content Include="Image\svg\cart.svg" />
     <Content Include="Image\svg\heart.svg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -161,6 +162,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="Scripts\IndexScript.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -189,7 +191,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
