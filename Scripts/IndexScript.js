@@ -56,7 +56,6 @@ $(document).ready(function () {
     });
 });
 
-
 $(document).ready(function () {
     $('#slide2 .slide-container').slick({
         autoplay: true,
@@ -66,5 +65,3 @@ $(document).ready(function () {
 
     });
 });
-
-console.log("a")
