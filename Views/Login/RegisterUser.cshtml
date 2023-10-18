@@ -1,0 +1,32 @@
+﻿@model anhemtoicodeweb.Models.User
+
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@section Styles {
+    <link href="@Url.Content("~/Content/css/Login.css")" rel="stylesheet" type="text/css" />
+}
+
+<style>
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<form class="popup" method="post" action="@Url.Action("RegisterUser", "Login")">
+    <div class="wrapper">
+        <h1>Register</h1>
+        @Html.AntiForgeryToken()
+    <div class="input-field">
+        <input class="input-box" type="text" placeholder="Username" name="UserName" id="UserName" required>
+        <input class="input-box" type="password" placeholder="Password" name="Password" id="Password" required>
+        <input class="input-box" type="password" placeholder="Re-enter password" name="ConfirmPass" id="ConfirmPass" required>
+        <input class="input-box" type="Email" placeholder="Email (Optional)" name="Email" id="Email">
+    </div>
+        <input class="login-btn" type="submit" value="Register">
+        <a href="@Url.Action("Index", "Login")">&#8592 Back to Login</a>
+    </div>
+</form>
