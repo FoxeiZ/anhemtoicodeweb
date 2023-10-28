@@ -155,8 +155,15 @@
     <Content Include="Image\image 6.png" />
     <Content Include="Image\image 7.png" />
     <Content Include="Image\banner1.png" />
+    <Content Include="Image\logoforcategory\anecologo.jpg" />
+    <Content Include="Image\logoforcategory\NaturallyClean.jpg" />
+    <Content Include="Image\Product\cocbamianong.jpg" />
     <Content Include="Image\Product\CuonTuiDungThucPham.jpg" />
     <Content Include="Image\Product\CuonTuiRac.jpg" />
+    <Content Include="Image\Product\Hop100onghutPhanHuy.jpg" />
+    <Content Include="Image\Product\HopBaMia.jpg" />
+    <Content Include="Image\Product\HopComboDaoThiaNia.png" />
+    <Content Include="Image\Product\OngHutBotGo.jpg" />
     <Content Include="Image\Product\TuiDungThucPham%28hopnau%29.jpg" />
     <Content Include="Image\Product\TuiDungThucPham.jpg" />
     <Content Include="Image\Product\TuiTuHuySinhHoc.jpg" />

@@ -101,8 +101,8 @@ section {
 
 .product-name {
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    height: 4em;
+    -webkit-line-clamp: 2;
+    height: 3.15em;
     display: -webkit-box;
     overflow: hidden;
     font-size: 14px;
