@@ -10,8 +10,9 @@
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
 }
 
-<section>
-    <h2>Kết quả tìm kiếm</h2>
+<h2>Kết quả tìm kiếm</h2>
+@if (Model.Count() > 0)
+{
     <div class="container-wrap justify-content-start product">
 
         @foreach (var product in Model)
@@ -33,4 +34,10 @@
             </div>
         }
     </div>
-</section>
+}
+else
+{
+    <div class="d-flex align-content-center justify-content-center w-100 pt-5">
+        <h2>Không tìm thấy sản phẩm nào</h2>
+    </div>
+}
