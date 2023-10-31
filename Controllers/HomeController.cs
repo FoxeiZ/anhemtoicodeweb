@@ -1,5 +1,7 @@
-﻿using System;
+﻿using anhemtoicodeweb.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Management;
@@ -9,9 +11,11 @@ namespace anhemtoicodeweb.Controllers
 {
     public class HomeController : Controller
     {
+        private Model1 database = new Model1();
         public ActionResult Index()
         {
-            return View();
+            var productList = database.Products.OrderByDescending(x => x.NamePro);
+            return View(productList);
         }
         public ActionResult ProductDetails()
         {
@@ -21,6 +25,6 @@ namespace anhemtoicodeweb.Controllers
         {
             return View();
         }
-        
+
     }
 }

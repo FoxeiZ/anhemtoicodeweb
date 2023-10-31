@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<anhemtoicodeweb.Models.Product>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -43,8 +45,8 @@
                 <img src="~/Image/logoforcategory/CleverChanges.jpg" />
                 <h3>Clever Changes</h3>
             </div>
-            <div class="category-box" >
-               <img src="~/Image/logoforcategory/SapChangSen.png" />
+            <div class="category-box">
+                <img src="~/Image/logoforcategory/SapChangSen.png" />
                 <h3>Sap Chàng Sen</h3>
             </div>
             <div class="category-box">
@@ -60,35 +62,19 @@
     <section>
         @* products *@
         <h2>Các sản phẩm AnEco</h2>
-        
+
         <div class="container-wrap product">
-            
-                <div class="product-box">
-                    
-                    <div class="product-image">
-                        <img src="~/Image/Product/TuiTuHuySinhHoc.jpg" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">42.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name"> Hộp túi shopping có quai phân huỷ sinh học AnEco</div></a>
-                        </div>
 
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-
+            @foreach (var product in Model.Take(10))
+            {
                 <div class="product-box">
                     <div class="product-image">
-                        <img src="~/Image/Product/CuonTuiRac.jpg" />
+                        <img src="@Url.Content(product.ImagePro)" />
                     </div>
                     <div class="product-content">
                         <div class="main-content">
-                            <div class="product-price">145.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name"> Túi rác phân huỷ sinh học AnEco dạng cuộn có lõi 1kg</div></a>
+                            <div class="product-price">@(product.Price)đ</div>
+                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
                         </div>
                         <div class="d-flex gap-4">
                             <div class="no-select BuyNowBtn">Buy Now</div>
@@ -96,128 +82,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/TuiDungThucPham.jpg" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">60.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name"> Túi đựng thực phẩm phân hủy sinh học AnEco hộp xanh </div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/TuiDungThucPham(hopnau).jpg" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">60.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Túi đựng thực phẩm phân hủy sinh học AnEco hộp nâu </div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/CuonTuiDungThucPham.jpg" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">93.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Túi đựng thực phẩm phân hủy sinh học AnEco dạng cuộn có lõi</div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/HopComboDaoThiaNia.png" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">100.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Hộp combo dao thìa muỗng AnEco</div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/OngHutBotGo.jpg" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">85.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Ống hút bột gỗ AnEco (500 chiếc)</div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/Hop100onghutPhanHuy.jpg"/>
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">60.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Hộp 100 ống hút phân huỷ sinh học AnEco</div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/HopBaMia.jpg"/>
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">600.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Hộp bã mía đựng thức ăn AnEco (100-125 chiếc)</div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <div class="product-image">
-                        <img src="~/Image/Product/cocbamianong.jpg" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">200.000đ</div>
-                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Cốc bã mía nóng AnEco (100 chiếc)</div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <div class="no-select BuyNowBtn">Buy Now</div>
-                            <img src="~/Image/svg/cart.svg" alt="cart button">
-                        </div>
-                    </div>
-                </div>
+            }
         </div>
-            <button class="moreButton">More</button>
+        <button class="moreButton">More</button>
     </section>
     @*banner*@
     <div class="p-2 position-relative" id="slide2">
@@ -233,156 +100,25 @@
         @* products *@
         <h2>Các sản phẩm khác</h2>
         <div class="container-wrap product">
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/DiaTreCuon.jpg" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">125.000₫</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Đĩa tre cuốn 25cm</div></a>
+
+            @foreach (var product in Model.Skip(10).Take(10))
+            {
+                <div class="product-box">
+                    <div class="product-image">
+                        <img src="@Url.Content(product.ImagePro)" />
                     </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/TuiXachQuaiDaBamboo.png" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">140.000đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Túi xách quai da BAMBOO HOME đan thủ công thân thiện môi trường</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
+                    <div class="product-content">
+                        <div class="main-content">
+                            <div class="product-price">@(product.Price)đ</div>
+                            <a href="ProductDetails" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
+                        </div>
+                        <div class="d-flex gap-4">
+                            <div class="no-select BuyNowBtn">Buy Now</div>
+                            <img src="~/Image/svg/cart.svg" alt="cart button">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/thanh-than-tre.jpg" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">100.000đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Thanh than tre hoạt tính</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/BanChaiTre.png" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">120.000₫</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Bàn chải tre chà chân 2 mặt (Sạp Chàng Sen)</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/BongTayTrangToTam.jpg" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">75.000đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Bông tẩy trang tơ tằm tái sử dụng set 6 miếng Papa's Dreamer</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/BatChenGao.jpg" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">32.000đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Bát Chén gáo Dừa kèm muỗng dừa BAMBOOO ECO cao cấp dùng ăn Salad, hoa quả dầm, đựng sinh tố, kem, chè, papaya thân thiện môi trường</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/BatGoTramBamboo.jpg" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">250.000đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Bát gỗ tràm BAMBOOO ECO chén dùng ăn cơm Salad, hoa quả dầm, đựng sinh tố, kem, chè, papaya thân thiện môi trường</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/MuoiCanhTre.jpg" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">60.000đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Muôi canh tre</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/CoBinhXoDua.png" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">42.000đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Cọ bình xơ dừa có thể co duỗi được (Sạp Chàng Sen)</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
-            <div class="product-box">
-                <div class="product-image">
-                    <img src="~/Image/Product/LuocTre.png" />
-                </div>
-                <div class="product-content">
-                    <div class="main-content">
-                        <div class="product-price">136.000₫</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">Lược tre mát-xa da đầu (Sạp Chàng Sen)</div></a>
-                    </div>
-                    <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
-                    </div>
-                </div>
-            </div>
+            }
         </div>
         <button class="moreButton">More</button>
     </section>
