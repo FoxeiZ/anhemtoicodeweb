@@ -88,7 +88,7 @@ namespace anhemtoicodeweb.Controllers
         public ActionResult LogoutUser()
         {
             Session.Abandon();
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
