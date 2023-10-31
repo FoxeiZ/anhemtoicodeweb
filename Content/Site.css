@@ -138,3 +138,7 @@ footer {
     width: 396px;
     flex-direction: column
 }
+
+.profile-img:hover {
+    transform: scale(1.2);
+}
