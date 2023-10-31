@@ -139,6 +139,31 @@ footer {
     flex-direction: column
 }
 
-.profile-img:hover {
-    transform: scale(1.2);
+.profile {
+    background-size: contain;
 }
+
+.profile-popup {
+    box-shadow: 5px 10px #00000040;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    margin-top: 8px;
+    width: max-content;
+    height: max-content;
+    min-width: 180px;
+    background: #ECF4FF;
+    z-index: 5;
+    border-radius: 8px;
+    border: #4E6C50 2px solid;
+    transition: 0.2s all;
+    transition-delay: 0.3s;
+}
+
+    .profile-link:hover ~ .profile-popup,
+    .profile-popup:hover {
+        opacity: 1;
+        transition-delay: 0.2s;
+        visibility: visible;
+    }

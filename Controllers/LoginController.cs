@@ -37,7 +37,7 @@ namespace anhemtoicodeweb.Controllers
             {
                 database.Configuration.ValidateOnSaveEnabled = false;
                 Session["UserId"] = _user.IDCus;
-                Session["Password"] = _user.PasswordCus;
+                Session["NameCus"] = _user.NameCus;
                 return RedirectToAction("Index", "Home");
             }
         }
