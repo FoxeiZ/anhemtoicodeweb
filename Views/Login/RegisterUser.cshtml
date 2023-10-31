@@ -1,4 +1,4 @@
-﻿@model anhemtoicodeweb.Models.User
+﻿@model anhemtoicodeweb.Models.Customer
 
 
 @{
@@ -19,12 +19,16 @@
 <form class="popup" method="post" action="@Url.Action("RegisterUser", "Login")">
     <div class="wrapper">
         <h1>Register</h1>
+        @if (ViewBag.ErrorRegister != null)
+            {
+                <div class="error-info">@ViewBag.ErrorRegister</div>
+            }
         @Html.AntiForgeryToken()
     <div class="input-field">
-        <input class="input-box" type="text" placeholder="Username" name="UserName" id="UserName" required>
-        <input class="input-box" type="password" placeholder="Password" name="Password" id="Password" required>
-        <input class="input-box" type="password" placeholder="Re-enter password" name="ConfirmPass" id="ConfirmPass" required>
-        <input class="input-box" type="Email" placeholder="Email (Optional)" name="Email" id="Email">
+        <input class="input-box" type="text" placeholder="Username" name="NameCus" id="NameCus" required>
+        <input class="input-box" type="password" placeholder="Password" name="PasswordCus" id="PasswordCus" required>
+        <input class="input-box" type="password" placeholder="Re-enter password" name="ConfirmPasswordCus" id="ConfirmPasswordCus" required>
+        <input class="input-box" type="Email" placeholder="Email (Optional)" name="EmailCus" id="EmailCus">
     </div>
         <input class="login-btn" type="submit" value="Register">
         <a href="@Url.Action("Index", "Login")">&#8592 Back to Login</a>

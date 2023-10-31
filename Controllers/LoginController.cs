@@ -1,5 +1,4 @@
-﻿using anhemtoicodeweb.Context;
-using anhemtoicodeweb.Models;
+﻿using anhemtoicodeweb.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +11,7 @@ namespace anhemtoicodeweb.Controllers
 {
     public class LoginController : Controller
     {
-        readonly ProductManagementContext database = new ProductManagementContext();
+        Model1 database = new Model1();
 
         // GET: LoginUser
         public ActionResult Index()
@@ -25,6 +24,24 @@ namespace anhemtoicodeweb.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Index(Customer _user)
+        {
+            var check = database.Customers.Where(s => s.NameCus == _user.NameCus && s.PasswordCus == _user.PasswordCus).FirstOrDefault();
+            if (check == null)
+            {
+                ViewBag.ErrorInfo = "Thông tin đăng nhập bị sai. Vui lòng kiểm tra";
+                return View("Index");
+            }
+            else
+            {
+                database.Configuration.ValidateOnSaveEnabled = false;
+                Session["UserId"] = _user.IDCus;
+                Session["Password"] = _user.PasswordCus;
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         public ActionResult UserProfile()
         {
             return View();
@@ -35,24 +52,6 @@ namespace anhemtoicodeweb.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult LoginAccount(User _user)
-        {
-            var check = database.Users.Where(s => s.UserName == _user.UserName && s.Password == _user.Password).FirstOrDefault();
-            if (check == null)
-            {
-                ViewBag.ErrorInfo = "SaiInfo";
-                return View("Index");
-            }
-            else
-            {
-                database.Configuration.ValidateOnSaveEnabled = false;
-                Session["UserId"] = _user.UserId;
-                Session["Password"] = _user.Password;
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
         public ActionResult RegisterUser() 
         {
             return View();
@@ -60,21 +59,26 @@ namespace anhemtoicodeweb.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult RegisterUser(User _user)
+        public ActionResult RegisterUser(Customer _user)
         {
             if (ModelState.IsValid)
             {
-                var check_ID = database.Users.Where(s => s.UserId == _user.UserId).FirstOrDefault();
-                if (check_ID == null)
+                var check = database.Customers.Where(s => s.IDCus == _user.IDCus || s.NameCus == _user.NameCus).FirstOrDefault();
+                if (check == null)
                 {
+                    if (_user.ConfirmPasswordCus != _user.PasswordCus)
+                    {
+                        ViewBag.ErrorRegister = "Password nhập lại không đúng.";
+                        return View();
+                    }
                     database.Configuration.ValidateOnSaveEnabled = false;
-                    database.Users.Add(_user);
+                    database.Customers.Add(_user);
                     database.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewBag.ErrorRegister = "This ID is exist";
+                    ViewBag.ErrorRegister = "Người dùng này đã tồn tại trước đó.";
                     return View();
                 }
             }
