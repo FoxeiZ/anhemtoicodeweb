@@ -19,8 +19,8 @@
                     <img src="~/Image/logo.jpg" class="logo" />
                 </div>
             </a>
-            <form class="searchBox">
-                <input type="text" class="searchBar" placeholder="Search..." />
+            <form class="searchBox" method="get" action="@Url.Action("Search", "Home")">
+                <input type="text" class="searchBar" placeholder="Search..." name="query" />
                 <button type="submit" class="searchBtn">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1_2737)">

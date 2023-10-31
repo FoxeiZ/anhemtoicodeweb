@@ -1,0 +1,36 @@
+﻿@model IEnumerable<anhemtoicodeweb.Models.Product>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+}
+
+<section>
+    <h2>Kết quả tìm kiếm</h2>
+    <div class="container-wrap justify-content-start product">
+
+        @foreach (var product in Model)
+        {
+            <div class="product-box">
+                <div class="product-image">
+                    <img src="@Url.Content(product.ImagePro)" />
+                </div>
+                <div class="product-content">
+                    <div class="main-content">
+                        <div class="product-price">@(product.Price)đ</div>
+                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
+                    </div>
+                    <div class="d-flex gap-4">
+                        <div class="no-select BuyNowBtn">Buy Now</div>
+                        <img src="~/Image/svg/cart.svg" alt="cart button">
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

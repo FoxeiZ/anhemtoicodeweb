@@ -17,14 +17,14 @@ namespace anhemtoicodeweb.Controllers
             var productList = database.Products.OrderByDescending(x => x.NamePro);
             return View(productList);
         }
+        public ActionResult Search(string query)
+        {
+            var searchQuery = database.Products.Where(x => x.NamePro.Contains(query));
+            return View(searchQuery);
+        }
         public ActionResult ProductDetails()
         {
             return View();
         }
-        public ActionResult Login()
-        {
-            return View();
-        }
-
     }
 }
