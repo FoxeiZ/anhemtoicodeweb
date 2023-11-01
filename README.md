@@ -16,7 +16,6 @@ Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại s
 - [ ] Product Detail Page (wait for rework)
 - [x] Login page
 - [x] Demo Database
-- [ ] Product Category Listing
 - [x] Find a hosting service
 - [x] Simple backend
 - [x] Login function
