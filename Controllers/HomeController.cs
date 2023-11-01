@@ -19,6 +19,10 @@ namespace anhemtoicodeweb.Controllers
         }
         public ActionResult Search(string query)
         {
+            if (query == null || query.Length == 0)
+            {
+                return View();
+            }
             var searchQuery = database.Products.Where(x => x.NamePro.Contains(query));
             return View(searchQuery);
         }
