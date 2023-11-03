@@ -1,0 +1,38 @@
+﻿@model anhemtoicodeweb.Models.Customer
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Session["IsAdmin"] is false)
+{
+    <h2>Profile</h2>
+    <h3>@Model.NameCus</h3>
+}
+else
+{
+    <h2 class="py-3">Admin Panel</h2>
+    <p>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#productsCollapse" aria-expanded="false" aria-controls="productsCollapse">
+            Products
+        </button>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
+            Category
+        </button>
+    </p>
+    <div class="px-3 collapse" id="productsCollapse">
+        <h4>Editing <b>Product</b> table</h4>
+        @{
+            Html.RenderAction("Index", "Products");
+        }
+        <hr />
+    </div>
+    <div class="px-3 collapse" id="categoryCollapse">
+        <h4>Editing <b>Categories</b> table</h4>
+        @{
+            Html.RenderAction("Index", "Categories");
+        }
+        <hr />
+    </div>
+}

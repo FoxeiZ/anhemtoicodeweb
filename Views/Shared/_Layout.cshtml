@@ -46,15 +46,24 @@
                     </div>
                 </a>
                 <div class="position-relative">
-                    <a class="profile-link" href="@Url.Action("Index", "Login")">
-                        <img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />
-                    </a>
+                    @if (Session["UserID"] != null)
+                    {
+                        <a class="profile-link" href="@Url.Action("Index", "Profile")">
+                            <img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="profile-link" href="@Url.Action("Index", "Login")">
+                            <img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />
+                        </a>
+                    }
                     <div class="d-flex flex-column gap-2 p-2 profile-popup">
                         @if (Session["UserID"] != null)
                         {
                             <div>Hello, <b>@Session["NameCus"]</b>!</div>
                             <hr style="margin: 0.3em 0;" />
-                            <a href="@Url.Action("UserProfile", "Login")">Profile</a>
+                            <a href="@Url.Action("Index", "Profile")">Profile</a>
                             <a href="@Url.Action("LogoutUser", "Login")">Logout</a>
                         }
                         else
