@@ -14,7 +14,7 @@ namespace anhemtoicodeweb.Controllers
         private Model1 database = new Model1();
         public ActionResult Index()
         {
-            var productList = database.Products.OrderByDescending(x => x.NamePro);
+            IEnumerable<Product> productList = database.Products.OrderByDescending(x => x.NamePro);
             return View(productList);
         }
         public ActionResult Search(string query)
@@ -23,7 +23,7 @@ namespace anhemtoicodeweb.Controllers
             {
                 return View();
             }
-            var searchQuery = database.Products.Where(x => x.NamePro.Contains(query));
+            IEnumerable<Product> searchQuery = database.Products.Where(x => x.NamePro.Contains(query));
             return View(searchQuery);
         }
         public ActionResult ProductDetails()
