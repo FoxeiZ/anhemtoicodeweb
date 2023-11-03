@@ -19,7 +19,7 @@ namespace anhemtoicodeweb.Controllers
             var Id = Session["UserId"];
             if (Id != null)
             {
-                return RedirectToAction("UserProfile");
+                return RedirectToAction("Index", "Profile");
             }
             return View();
         }
@@ -36,15 +36,11 @@ namespace anhemtoicodeweb.Controllers
             else
             {
                 database.Configuration.ValidateOnSaveEnabled = false;
-                Session["UserId"] = _user.IDCus;
-                Session["NameCus"] = _user.NameCus;
+                Session["UserId"] = check.IDCus;
+                Session["NameCus"] = check.NameCus;
+                Session["IsAdmin"] = (database.AdminUsers.Where(s => s.NameUser == check.NameCus && s.IDCus == check.IDCus).FirstOrDefault() != null);
                 return RedirectToAction("Index", "Home");
             }
-        }
-
-        public ActionResult UserProfile()
-        {
-            return View();
         }
 
         public ActionResult ForgotPassword()

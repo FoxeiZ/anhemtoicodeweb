@@ -14,9 +14,6 @@ namespace anhemtoicodeweb.Models
 
         public string NameUser { get; set; }
 
-        public string RoleUser { get; set; }
-
-        [StringLength(50)]
-        public string PasswordUser { get; set; }
+        public int? IDCus { get; set; }
     }
 }

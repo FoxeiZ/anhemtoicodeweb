@@ -22,8 +22,7 @@ namespace anhemtoicodeweb.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AdminUser>()
-                .Property(e => e.PasswordUser)
-                .IsFixedLength();
+                .Property(e => e.IDCus);
 
             modelBuilder.Entity<Category>()
                 .Property(e => e.IDCate)
