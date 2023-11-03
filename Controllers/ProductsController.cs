@@ -18,6 +18,11 @@ namespace anhemtoicodeweb.Controllers
         public ActionResult Index()
         {
             var products = db.Products.Include(p => p.Category);
+            if (ControllerContext.IsChildAction)
+            {
+                return PartialView(products.ToList());
+            }
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
             return View(products.ToList());
         }
 

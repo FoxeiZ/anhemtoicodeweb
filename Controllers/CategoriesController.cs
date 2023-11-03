@@ -17,7 +17,13 @@ namespace anhemtoicodeweb.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            var category = db.Categories.ToList();
+            if (ControllerContext.IsChildAction)
+            {
+                return PartialView(category.ToList());
+            }
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            return View(category.ToList());
         }
 
         // GET: Categories/Details/5

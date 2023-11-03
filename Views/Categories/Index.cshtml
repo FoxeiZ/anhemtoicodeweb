@@ -2,10 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = ViewBag.Layout;
 }
-
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -21,20 +19,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NameCate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IDCate }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IDCate }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IDCate })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameCate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IDCate }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IDCate }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IDCate })
+            </td>
+        </tr>
+    }
 
 </table>
