@@ -16,8 +16,8 @@ jobs:
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: vass.somee.com
-        server-dir: www.vass.somee.com/
+        server: aloalo.somee.com
+        server-dir: www.aloalo.somee.com/
         username: foxeiz
         password: ${{ secrets.ftp_password }}
         exclude: |
