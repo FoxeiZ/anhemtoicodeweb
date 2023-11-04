@@ -1,42 +1,51 @@
 ﻿.product-container {
     display:flex;
-    align-items:flex-start;
-    justify-content: left;
+    /*align-items:flex-start;
+    justify-content: left;*/
+    flex-direction:row;
 }
 
 img {
     max-width: 100%;
+   
+    
 }
 
 .image {
-    flex-basis: 40%;
-}
+    flex-basis: 40%
+    }
 
 .text h1 {
-    font-size: 60px;
-    padding-left: 20px;
+    font-size: 40px;
+    padding-left: 30px;
+    padding-top:10px;
+}
+.text h2 {
+    font-size: 35px;
+    padding-left: 30px;
+    padding-top: 10px;
 }
 
 .text l {
     font-size: 30px;
-    padding-left: 20px;
+    padding-left: 30px;
+    padding-top: 10px;
 }
 
-.text p {
+.text b {
     font-size: 40px;
-    padding-left: 20px;
+    padding-left: 30px;
+    padding-top: 10px;
 }
 
 .BuyNowBtn {
-    margin-left: 20px;
-    margin-top: 100px;
     color: white;
     display: flex;
+    width: 200px;
+    height: 40px;
     justify-content: center;
-    font-size: 40px;
     align-items: center;
-    width: 402px;
-    height: 70px;
+    border-radius: 8px;
     background: #4E6C50;
 }
 
@@ -49,3 +58,27 @@ img {
         opacity: 1;
         transition: 0.3s;
     }
+
+.AddToCart {
+    color: white;
+    display: flex;
+    width: 200px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #4E6C50;
+}
+    .AddToCart:hover {
+        transition: 0.3s;
+        opacity: 0.8;
+    }
+
+    .AddToCart:not(:hover) {
+        opacity: 1;
+        transition: 0.3s;
+    }
+.button-container {
+    display:flex;
+        flex-direction: row;
+}

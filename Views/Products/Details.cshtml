@@ -3,6 +3,13 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/ProductDetails.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
 }
 
 <h2>Details</h2>
@@ -10,48 +17,53 @@
 <div>
     <h4>Product</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.NameCate)
-        </dt>
+   
+    <div class="product-container">
+        <div class=" image">
+            <div>
+                <img src="@Model.ImagePro" alt="Product image" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Category.NameCate)
-        </dd>
+                @*<img src="~/Image/Product/BanChaiTre.png" alt="Product image" />*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NamePro)
-        </dt>
+            </div>
+        </div>
+        <div class="text">
 
-        <dd>
-            @Html.DisplayFor(model => model.NamePro)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DecriptionPro)
-        </dt>
+            <div>
+                <h2> @Html.DisplayFor(model => model.NamePro) </h2>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DecriptionPro)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+            <div>
+                <l>@Html.DisplayFor(model => model.DecriptionPro) </l>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePro)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImagePro)
-        </dd>
+            <div>
+                <b style="color: #4E6C50">@Html.DisplayFor(model => model.Price) đ </b>
+            </div>
+            <div class="button-container">
+                <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">
+                    <div class="no-select AddToCart">Add To Cart</div>
+                </div>
 
-    </dl>
+                <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">
+                    <div class="no-select BuyNowBtn">Buy Now</div>
+                </div>
+            </div>
+            
+
+        </div>
+        
+
+
+    </div>
+
+
+
+   
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
