@@ -33,9 +33,13 @@
             @foreach (var category in Model.Item2)
             {
                 <div class="category-box">
-                    <img src=@Url.Content(category.PicCate) />
-                    <a href="@Url.Action("Categories", "Details", new { id = category.Id })"></a>
-                    <h3></h3>
+                    @if (category.PicCate != null)
+                    {
+                        <img src=@Url.Content(category.PicCate) />
+                    }
+                    <a href="@Url.Action("Categories", "Details", new { id = category.Id })">
+                        <h3>@category.NameCate</h3>
+                    </a>
                 </div>
             }
             <div class="category-box">
