@@ -9,6 +9,9 @@
         font-size: large;
         margin: inherit;
     }
+    button {
+        border-radius: 7px;
+    }
 </style>
 @if (Session["IsAdmin"] is false)
 {
@@ -16,6 +19,7 @@
     <p>Name: <b>@Model.NameCus</b></p>
     <p>Email: <b>@Model.EmailCus</b></p>
     <p>Phone number: <b>@Model.PhoneCus</b></p>
+    <button><a href="@Url.Action("LogoutUser", "Login")">Log out</a></button>
 }
 else
 {
