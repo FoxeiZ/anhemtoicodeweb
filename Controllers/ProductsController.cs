@@ -23,7 +23,7 @@ namespace anhemtoicodeweb.Controllers
                 return PartialView(products.ToList());
             }
             ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
-            return View(products.ToList());
+            return View("UserIndex", products.ToList());
         }
 
         public ActionResult Details(int? id)
