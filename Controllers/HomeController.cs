@@ -15,6 +15,8 @@ namespace anhemtoicodeweb.Controllers
         public ActionResult Index()
         {
             IEnumerable<Product> productList = database.Products.OrderByDescending(x => x.NamePro);
+            IEnumerable<Category> categoriesList = database.Categories.OrderByDescending(x => x.NameCate);
+            var tuple = new Tuple<IEnumerable<Product>, IEnumerable<Category>>(productList, categoriesList);
             return View(productList);
         }
         public ActionResult Search(string query)

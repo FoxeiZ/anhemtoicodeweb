@@ -24,6 +24,8 @@ namespace anhemtoicodeweb.Models
 
         public string NameCate { get; set; }
 
+        public string PicCate { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
     }
