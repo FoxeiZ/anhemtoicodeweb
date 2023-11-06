@@ -1,35 +1,35 @@
-﻿@model anhemtoicodeweb.Models.Category
+﻿@model IEnumerable<anhemtoicodeweb.Models.Product>
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
+}
 
-<div>
-    <h4>Category</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NameCate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NameCate)
-        </dd>
-
-    </dl>
+<div class="container-wrap product" style="justify-content: center; gap: 12px">
+    @foreach (var product in Model)
+    {
+        <div class="product-box">
+            <div class="product-image">
+                <img src="@Url.Content(product.ImagePro)" />
+            </div>
+            <div class="product-content">
+                <div class="main-content">
+                    <div class="product-price">@(product.Price)đ</div>
+                    <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration: none">
+                        <div class="product-name">@product.NamePro</div>
+                    </a>
+                </div>
+                <div class="d-flex gap-4">
+                    <div class="no-select BuyNowBtn">Buy Now</div>
+                    <img src="~/Image/svg/cart.svg" alt="cart button">
+                </div>
+            </div>
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IDCate }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
