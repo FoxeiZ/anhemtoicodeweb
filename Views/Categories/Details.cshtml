@@ -1,4 +1,4 @@
-﻿@model IEnumerable<anhemtoicodeweb.Models.Product>
+﻿@model Tuple<anhemtoicodeweb.Models.Category, IEnumerable<anhemtoicodeweb.Models.Product>>
 
 @{
     ViewBag.Title = "Details";
@@ -8,12 +8,21 @@
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ProductDetails.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
 }
 
-<h2>Các sản phẩm đến từ <b>@Model.First().Category.NameCate</b></h2>
+<div style="display:flex;flex-direction:row">
+    <h2>Các sản phẩm đến từ <b>@Model.Item1.NameCate</b></h2>
+    @if (Session["IsAdmin"] is true)
+    {
+        <div style="padding-left:20px">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.Id }, new { style = "width:80px", @class = "no-select EditBtn" })
+        </div>
+    }
+</div>
 <div class="container-wrap product" style="justify-content: center; gap: 12px">
-    @foreach (var product in Model)
+    @foreach (var product in Model.Item2)
     {
         <div class="product-box">
             <div class="product-image">

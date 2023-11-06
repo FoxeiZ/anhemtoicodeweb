@@ -39,7 +39,8 @@ namespace anhemtoicodeweb.Controllers
                 return HttpNotFound();
             }
             IEnumerable<Product> productList = db.Products.Where(x => x.IDCate == category.IDCate).ToList();
-            return View(productList);
+            var tuple = new Tuple<Category, IEnumerable<Product>>(category, productList);
+            return View(tuple);
         }
 
         // GET: Categories/Create
