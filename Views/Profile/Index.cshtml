@@ -4,11 +4,18 @@
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    .p {
+        font-size: large;
+        margin: inherit;
+    }
+</style>
 @if (Session["IsAdmin"] is false)
 {
     <h2>Profile</h2>
-    <h3>@Model.NameCus</h3>
+    <p>Name: <b>@Model.NameCus</b></p>
+    <p>Email: <b>@Model.EmailCus</b></p>
+    <p>Phone number: <b>@Model.PhoneCus</b></p>
 }
 else
 {
