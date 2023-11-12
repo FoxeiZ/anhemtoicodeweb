@@ -1,5 +1,4 @@
 ﻿using anhemtoicodeweb.Models;
-using KetNoiDatabase.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +13,9 @@ namespace KetNoiDatabase.Controllers
         Model1 database = new Model1();
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult ShowCart()
-        {
             if (Session["Cart"] == null)
             {
-                return View("EmptyCart");
+                return View();
             }
             Cart cart = Session["Cart"] as Cart;
             return View(cart);
@@ -45,7 +39,7 @@ namespace KetNoiDatabase.Controllers
             {
                 GetCart().AddProductCart(_pro);
             }
-            return RedirectToAction("ShowCart", "ShoppingCart");
+            return RedirectToAction("Index", "ShoppingCart");
         }
 
         public ActionResult RemoveCart(int id)

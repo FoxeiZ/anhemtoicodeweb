@@ -1,0 +1,71 @@
+﻿@model anhemtoicodeweb.Models.Cart
+
+@{
+    ViewBag.Title = "ShowCart";
+}
+
+@section Styles {
+    <style>
+        .item-container {
+            display: flex;
+            height: 100%;
+            max-height: 320px;
+            overflow: hidden;
+            background: white;
+            padding: 12px;
+            margin: 10px 0px 20px 0px;
+            border-radius: 10px;
+            flex-direction: column;
+        }
+
+        .flex-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .image-wrapper {
+            height: 100%;
+            width: 15%;
+        }
+
+        .quantity-input {
+            width: 64px;
+            border-radius: 6px;
+            border: #5b5b5b solid 1px;
+        }
+    </style>
+}
+
+<h2>Giỏ hàng của bạn</h2>
+<a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
+
+@if (Model != null && Model.Items.Count() > 0)
+{
+    foreach (var item in Model.Items)
+    {
+        decimal total = item._quantity * (decimal)item._product.Price;
+        <div class="item-container">
+            <div class="flex-container">
+                <div class="image-wrapper">
+                    <img class="w-100" src="@Url.Content(item._product.ImagePro)" />
+                </div>
+                <div>
+                    <h2>@item._product.NamePro</h2>
+                    @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
+                    {
+                        <input type="hidden" value="@item._product.ProductID" name="idPro" />
+                        <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
+                        <input type="submit" value="Update" />
+                    }
+                </div>
+
+            </div>
+            <h3 class="text-end">Thành tiền sản phẩm: @total</h3>
+            <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
+        </div>
+    }
+}
+else
+{
+    Html.RenderPartial("EmptyCart");
+}
