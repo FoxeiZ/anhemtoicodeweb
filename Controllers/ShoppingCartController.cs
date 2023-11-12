@@ -46,7 +46,7 @@ namespace KetNoiDatabase.Controllers
         {
             Cart cart = Session["Cart"] as Cart;
             cart.RemoveCartItem(id);
-            return RedirectToAction("ShowCast", "ShoppingCart");
+            return RedirectToAction("Index", "ShoppingCart");
         }
 
         public PartialViewResult BagCart()

@@ -33,65 +33,81 @@
             border-radius: 6px;
             border: #5b5b5b solid 1px;
         }
+        .text h3 {
+            font-size: 12px;
+        }
     </style>
 }
 
 <h2>Giỏ hàng của bạn</h2>
 <a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
-
-@if (Model != null && Model.Items.Count() > 0)
-{
-    foreach (var item in Model.Items)
+<body>
+    @if (Model != null && Model.Items.Count() > 0)
     {
-        decimal total = item._quantity * (decimal)item._product.Price;
-        <div class="item-container">
-            <div class="flex-container">
-                <div class="image-wrapper">
-                    <img class="w-100" src="@Url.Content(item._product.ImagePro)" />
-                </div>
-                <div>
-                    <h2>@item._product.NamePro</h2>
-                    @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
-                    {
-                        <input type="hidden" value="@item._product.ProductID" name="idPro" />
-                        <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
-                        <input type="submit" value="Update" />
-                    }
-                </div>
+        foreach (var item in Model.Items)
+        {
+            decimal total = item._quantity * (decimal)item._product.Price;
+            <div class="item-container">
+                <div class="flex-container">
+                    <div class="image-wrapper">
+                        <img class="w-100" src="@Url.Content(item._product.ImagePro)" />
+                    </div>
+                    <div>
+                        <h2>@item._product.NamePro</h2>
+                        @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
+                        {
+                            <input type="hidden" value="@item._product.ProductID" name="idPro" />
+                            <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
+                            <input type="submit" value="Update" />
+                        }
+                    </div>
+                    <div style="padding-left:250px; color:red">
+                        <a href="/ShoppingCart/RemoveCart/@item._product.ProductID">X</a>
+                    </div>
+                     
 
+
+                </div>
+                <h3 class="text-end">Thành tiền sản phẩm: @total đ</h3>
+                <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
             </div>
-            <h3 class="text-end">Thành tiền sản phẩm: @total</h3>
-            <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
-        </div>
-        <div colspan="2"></div>
-        <div colspan="4">
-            @using (Html.BeginForm("CheckOut", "ShoppingCart"))
-            {
-                <table style="border-collapse:separate;border-spacing:5px;">
-                    <tr>
-                        <td>Code Customer:</td>
-                        <td><input type="number" name="CodeCustomer" required /></td>
-                    </tr>
-                    <tr>
-                        <td>Address Delivery:</td>
-                        <td><input type="text" name="AddressDelivery" required /></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="submit" value="CheckOut" class="btn btn-success" />
-                            <a href="@Url.Action("RegisterUser","LoginUser")" class="btn btn-success">Register</a>
-                        </td>
-                    </tr>
-                </table>
-            }
-        </div>
+            <div colspan=6 style="text-align:right;font-size: 30px"> Tổng tiền: @Model.TotalMoney() đ </div>
 
-
-
+        }
     }
-}
-else
-{
-    Html.RenderPartial("EmptyCart");
-}
+    else
+    {
+        Html.RenderPartial("EmptyCart");
+    }
+
+</body>
+
+<tfooter>
+    <div colspan="2"></div>
+    <div colspan="4">
+        @using (Html.BeginForm("CheckOut", "ShoppingCart"))
+        {
+            <table style="border-collapse:separate;border-spacing:5px;">
+                <tr>
+                    <td>Code Customer:</td>
+                    <td><input type="number" name="CodeCustomer" required /></td>
+                </tr>
+                <tr>
+                    <td>Address Delivery:</td>
+                    <td><input type="text" name="AddressDelivery" required /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="CheckOut" class="btn btn-success" />
+                        <a href="@Url.Action("RegisterUser","LoginUser")" class="btn btn-success">Register</a>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+
+</tfooter>
+
+
+
