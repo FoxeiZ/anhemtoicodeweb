@@ -35,7 +35,7 @@
             <div class="button-container">
                 <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">
                     <div class="no-select AddToCart">Add To Cart</div>
-                    <div class="no-select BuyNowBtn">Buy Now</div>
+                    <a href="/ShoppingCart/AddToCart/@Model.ProductID" class="no-select BuyNowBtn">Buy Now</a>
                 </div>
                 @if (Session["IsAdmin"] is true)
                 {

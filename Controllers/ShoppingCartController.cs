@@ -66,7 +66,7 @@ namespace KetNoiDatabase.Controllers
             int id_pro = int.Parse(form["idPro"]);
             int _quantity = int.Parse(form["cartQuantity"]);
             cart.UpdateQuantity(id_pro, _quantity);
-            return RedirectToAction("ShowCart", "ShoppingCart");
+            return RedirectToAction("Index", "ShoppingCart");
         }
 
         public ActionResult CheckOut(FormCollection form)

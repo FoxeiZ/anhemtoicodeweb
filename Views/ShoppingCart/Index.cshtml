@@ -63,6 +63,32 @@
             <h3 class="text-end">Thành tiền sản phẩm: @total</h3>
             <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
         </div>
+        <div colspan="2"></div>
+        <div colspan="4">
+            @using (Html.BeginForm("CheckOut", "ShoppingCart"))
+            {
+                <table style="border-collapse:separate;border-spacing:5px;">
+                    <tr>
+                        <td>Code Customer:</td>
+                        <td><input type="number" name="CodeCustomer" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Address Delivery:</td>
+                        <td><input type="text" name="AddressDelivery" required /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="CheckOut" class="btn btn-success" />
+                            <a href="@Url.Action("RegisterUser","LoginUser")" class="btn btn-success">Register</a>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+
+
     }
 }
 else
