@@ -74,7 +74,7 @@ namespace KetNoiDatabase.Controllers
             try
             {
                 Cart cart = Session["Cart"] as Cart;
-                if (cart == null)
+                if (cart.Items.Count() == 0)
                 {
                     return RedirectToAction("Index");
                 }
