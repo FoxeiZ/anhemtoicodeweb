@@ -1,0 +1,47 @@
+﻿@model IEnumerable<anhemtoicodeweb.Models.CartItem>
+
+@{
+    ViewBag.Title = "CheckOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Kiểm tra thanh toán</h2>
+@if (Model == null)
+{
+    <div class="d-flex justify-content-center align-items-center " style="height: 40vh">
+        <h1>Đơn hàng không tồn tại!</h1>
+    </div>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Tên mặt hàng</th>
+            <th>Hãng</th>
+            <th>Số lượng</th>
+            <th>Giá tiền(đơn)</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img width="24" height="24" src="@Url.Content(item._product.ImagePro)" /></td>
+                <td>
+                    @item._product.NamePro
+                </td>
+                <td>
+                    @item._product.Category.NameCate
+                </td>
+                <td>
+                    @item._quantity
+                </td>
+                <td>
+                    @item._product.Price
+                </td>
+                <td></td>
+            </tr>
+        }
+
+    </table>
+}

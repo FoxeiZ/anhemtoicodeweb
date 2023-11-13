@@ -77,7 +77,7 @@ namespace KetNoiDatabase.Controllers
                 OrderPro _order = new OrderPro(); //Bang Hoa Don San pham
 
                 _order.DateOrder = DateTime.Now;
-                _order.AddressDeliverry = form["AddressDelivery"];
+                _order.AddressDelivery = form["AddressDelivery"];
                 _order.IDCus = int.Parse(form["CodeCustomer"]);
                 database.OrderProes.Add(_order);
                 foreach (var item in cart.Items)
@@ -94,7 +94,7 @@ namespace KetNoiDatabase.Controllers
 
                 database.SaveChanges();
                 cart.ClearCart();
-                return RedirectToAction("CheckOutSuccess", "ShoppingCart");
+                return View("CheckOutSuccess", _order);
             }
             catch
             {
@@ -102,9 +102,30 @@ namespace KetNoiDatabase.Controllers
             }
         }
 
-        public ActionResult CheckOutSuccess()
+        public ActionResult CheckOutSuccess(OrderPro _order)
         {
-            return View();
+            return View(_order);
+        }
+
+        public ActionResult CheckOrder(int id)
+        {
+            OrderPro _order = database.OrderProes.Where(x => x.ID == id).FirstOrDefault();
+            if (_order == null)
+            {
+                return View();
+            }
+            //List<OrderDetail> order_items = new List<OrderDetail>();
+
+            Product product;
+            List<CartItem> cartItems = new List<CartItem>();
+            var order_items = database.OrderDetails.Where(x => x.IDOrder == _order.ID).ToList();
+            foreach (var item in order_items)
+            {
+                product = database.Products.Where(x => x.ProductID == item.ID).FirstOrDefault();
+                CartItem cartItem = new CartItem { _quantity = (int)item.Quantity, _product = item.Product };
+                cartItems.Add(cartItem);
+            }
+            return View(cartItems);
         }
     }
 }
