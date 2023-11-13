@@ -85,26 +85,35 @@
 <tfooter>
     <div colspan="2"></div>
     <div colspan="4">
-        @using (Html.BeginForm("CheckOut", "ShoppingCart"))
+        @if (Session["UserID"] == null)
         {
-            <table style="border-collapse:separate;border-spacing:5px;">
-                <tr>
-                    <td>Code Customer:</td>
-                    <td><input type="number" name="CodeCustomer" required /></td>
-                </tr>
-                <tr>
-                    <td>Address Delivery:</td>
-                    <td><input type="text" name="AddressDelivery" required /></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" value="CheckOut" class="btn btn-success" />
-                        <a href="@Url.Action("RegisterUser","LoginUser")" class="btn btn-success">Register</a>
-                    </td>
-                </tr>
-            </table>
+            using (Html.BeginForm("CheckOut", "ShoppingCart"))
+            {
+                <table style="border-collapse:separate;border-spacing:5px;">
+                    <tr>
+                        <td>Số điện thoại</td>
+                        <td><input type="number" name="PhoneNumber" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ giao hàng</td>
+                        <td><input type="text" name="AddressDelivery" required /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="CheckOut" class="btn btn-success" />
+                            <a href="@Url.Action("RegisterUser","Login")" class="btn btn-success">Register</a>
+                        </td>
+                    </tr>
+                </table>
+            }
         }
+        else
+        {
+            <input type="submit" value="CheckOut" class="btn btn-success" />
+
+        }
+
     </div>
 
 </tfooter>
