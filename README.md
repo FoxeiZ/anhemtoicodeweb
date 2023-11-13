@@ -13,7 +13,7 @@ Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại s
 > More Todo to come...
 - [x] Landing Page
 - [x] Image Slideshow
-- [ ] Product Detail Page (wait for rework)
+- [x] Product Detail Page
 - [x] Login page
 - [x] Demo Database
 - [x] Find a hosting service
@@ -21,4 +21,5 @@ Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại s
 - [x] Login function
 - [x] Signup function
 - [x] Search
-- [ ] User Checkout
+- [x] User Checkout
+- [x] OrderDetail Lookup
