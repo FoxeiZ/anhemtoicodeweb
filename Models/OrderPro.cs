@@ -22,7 +22,7 @@ namespace anhemtoicodeweb.Models
 
         public int? IDCus { get; set; }
 
-        public string AddressDeliverry { get; set; }
+        public string AddressDelivery { get; set; }
 
         public virtual Customer Customer { get; set; }
 
