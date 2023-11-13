@@ -58,23 +58,24 @@
                             <img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />
                         </a>
                     }
-                    <div class="d-flex flex-column gap-2 p-2 profile-popup">
-                        @if (Session["UserID"] != null)
-                        {
-                            <div>Hello, <b>@Session["NameCus"]</b>!</div>
-                            <hr style="margin: 0.3em 0;" />
-                            <a href="@Url.Action("Index", "Profile")">Profile</a>
-                            <a href="@Url.Action("LogoutUser", "Login")">Logout</a>
-                        }
-                        else
-                        {
-                            <div>Hello, Anonymous user</div>
-                            <hr style="margin: 0.3em 0;" />
-                            <a href="@Url.Action("Index", "Login")">Đăng nhập</a>
-                            <a href="@Url.Action("RegisterUser", "Login")">Đăng ký</a>
-                        }
-                        <a href="@Url.Action("CheckOrder", "ShoppingCart")">Kiểm tra đơn hàng</a>
-                    </div>
+                <div class="d-flex flex-column gap-2 p-2 profile-popup">
+                    @if (Session["UserID"] != null)
+                    {
+                        <div>Hello, <b>@Session["NameCus"]</b>!</div>
+                        <hr style="margin: 0.3em 0;" />
+                        <a href="@Url.Action("Index", "Profile")">Profile</a>
+                        <a href="@Url.Action("LogoutUser", "Login")">Logout</a>
+                    }
+                    else
+                    {
+                        <div>Hello, Anonymous user</div>
+                        <hr style="margin: 0.3em 0;" />
+                        <a href="@Url.Action("Index", "Login")">Đăng nhập</a>
+                        <a href="@Url.Action("RegisterUser", "Login")">Đăng ký</a>
+                    }
+                    <hr style="margin: 0.3em 0;" />
+                    <a href="@Url.Action("CheckOrder", "ShoppingCart")">Kiểm tra đơn hàng</a>
+                </div>
                 </div>
             </div>
         </div>

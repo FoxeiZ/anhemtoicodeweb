@@ -125,11 +125,10 @@
     <div class="d-flex flex-column mt-5 align-items-center">
         @if (Session["UserId"] != null)
         {
-            using (Html.BeginForm("Checkout", "ShoppingCart"))
+            using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post, new { style = "display: flex; gap: 10px;" }))
             {
                 <input type="hidden" value="@Session["UserId"]" name="CodeCustomer" />
-                <label>Địa chỉ giao hàng</label>
-                <input style="border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" required />
+                <input style="text-indent: 5px; border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" placeholder="Địa chỉ giao hàng" required />
                 <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />
             }
         }

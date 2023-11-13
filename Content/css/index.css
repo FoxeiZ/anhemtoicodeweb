@@ -74,6 +74,7 @@ section {
     border-radius: 10px;
     background-color: #FFFFFF;
     margin: 14px;
+    overflow: hidden;
 }
 
 .product-image {
