@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Management;
 using System.Web.Mvc;
@@ -25,9 +26,33 @@ namespace anhemtoicodeweb.Controllers
             {
                 return View();
             }
-            IEnumerable<Product> searchQuery = database.Products.Where(x => x.NamePro.Contains(query));
+            query = NormalizeDiacriticalCharacters(query);
+            List<Product> searchQuery = new List<Product>();
+
+            string norm_name;
+            foreach (var item in database.Products)
+            {
+                norm_name = NormalizeDiacriticalCharacters(item.NamePro);
+                if (norm_name.Contains(query))
+                {
+                    searchQuery.Add(item);
+                }
+            }
             return View(searchQuery);
         }
+
+        private string NormalizeDiacriticalCharacters(string value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            var normalised = value.Normalize(NormalizationForm.FormD).ToLower().ToCharArray();
+
+            return new string(normalised.Where(c => (int)c <= 127).ToArray());
+        }
+
         public ActionResult ProductDetails()
         {
             return View();
