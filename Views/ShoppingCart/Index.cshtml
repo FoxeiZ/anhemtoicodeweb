@@ -59,6 +59,15 @@
         table {
             margin: 20px 0;
         }
+
+        .close {
+            position: absolute;
+            font-size: 25px;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            transform: rotate(45deg);
+        }
     </style>
 }
 
@@ -101,7 +110,9 @@
                 <td>
                     @item._product.Price
                 </td>
-                <td></td>
+                <td class="position-relative">
+                    <a href="/ShoppingCart/RemoveCart/@item._product.ProductID" class="no-select close">+</a>
+                </td>
             </tr>
         }
         <tr>

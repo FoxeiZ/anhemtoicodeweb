@@ -43,7 +43,7 @@ img {
 .AddToCart {
     color: white;
     display: flex;
-    width: 120px;
+    padding: 0px 20px;
     height: 40px;
     justify-content: center;
     align-items: center;
