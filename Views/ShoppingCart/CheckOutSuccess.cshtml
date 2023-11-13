@@ -1,0 +1,14 @@
+﻿@model anhemtoicodeweb.Models.OrderPro
+
+
+@{
+    ViewBag.Title = "CheckOutSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center align-items-center flex-column pt-3">
+    <h2>Đơn hàng của bạn đã được thanh toán thành công!</h2>
+    <h3>Sẽ được giao trong vòng 2-3 ngày tiếp theo.</h3>
+    <h3>Mã đơn hàng: @Model.ID</h3>
+    <a href="@Url.Action("Index", "Home")">&#8592 Quay lại trang chủ</a>
+</div>

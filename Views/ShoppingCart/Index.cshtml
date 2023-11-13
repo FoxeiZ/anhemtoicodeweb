@@ -33,90 +33,81 @@
             border-radius: 6px;
             border: #5b5b5b solid 1px;
         }
+
         .text h3 {
             font-size: 12px;
+        }
+
+        .empty-cart {
+            border-radius: 10px;
+            margin: 20px 0px;
+            width: 100%;
+            background-color: white;
+            height: 10vh;
+            line-height: 10vh;
+            text-align: center;
+            font-size: x-large;
         }
     </style>
 }
 
 <h2>Giỏ hàng của bạn</h2>
 <a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
-<body>
-    @if (Model != null && Model.Items.Count() > 0)
+@if (Model != null && Model.Items.Count() > 0)
+{
+    foreach (var item in Model.Items)
     {
-        foreach (var item in Model.Items)
-        {
-            decimal total = item._quantity * (decimal)item._product.Price;
-            <div class="item-container">
-                <div class="flex-container">
-                    <div class="image-wrapper">
-                        <img class="w-100" src="@Url.Content(item._product.ImagePro)" />
-                    </div>
-                    <div>
-                        <h2>@item._product.NamePro</h2>
-                        @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
-                        {
-                            <input type="hidden" value="@item._product.ProductID" name="idPro" />
-                            <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
-                            <input type="submit" value="Update" />
-                        }
-                    </div>
-                    <div style="padding-left:250px; color:red">
-                        <a href="/ShoppingCart/RemoveCart/@item._product.ProductID">X</a>
-                    </div>
-                     
-
-
+        decimal total = item._quantity * (decimal)item._product.Price;
+        <div class="item-container">
+            <div class="flex-container">
+                <div class="image-wrapper">
+                    <img class="w-100" src="@Url.Content(item._product.ImagePro)" />
                 </div>
-                <h3 class="text-end">Thành tiền sản phẩm: @total đ</h3>
-                <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
+                <div>
+                    <h2>@item._product.NamePro</h2>
+                    @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
+                    {
+                        <input type="hidden" value="@item._product.ProductID" name="idPro" />
+                        <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
+                        <input type="submit" value="Update" />
+                    }
+                </div>
+                <div style="padding-left:250px; color:red">
+                    <a href="/ShoppingCart/RemoveCart/@item._product.ProductID">X</a>
+                </div>
+
+
+
             </div>
-            <div colspan=6 style="text-align:right;font-size: 30px"> Tổng tiền: @Model.TotalMoney() đ </div>
-
-        }
+            <h3 class="text-end">Thành tiền sản phẩm: @total đ</h3>
+            <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
+        </div>
+        <div style="text-align:right;font-size: 24px"> Tổng tiền: @Model.TotalMoney() đ </div>
     }
-    else
-    {
-        Html.RenderPartial("EmptyCart");
-    }
-
-</body>
-
-<tfooter>
-    <div colspan="2"></div>
-    <div colspan="4">
-        @if (Session["UserID"] == null)
+    <div class="d-flex flex-column mt-5 align-items-center">
+        @if (Session["UserId"] != null)
         {
-            using (Html.BeginForm("CheckOut", "ShoppingCart"))
+            using (Html.BeginForm("Checkout", "ShoppingCart"))
             {
-                <table style="border-collapse:separate;border-spacing:5px;">
-                    <tr>
-                        <td>Số điện thoại</td>
-                        <td><input type="number" name="PhoneNumber" required /></td>
-                    </tr>
-                    <tr>
-                        <td>Địa chỉ giao hàng</td>
-                        <td><input type="text" name="AddressDelivery" required /></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="submit" value="CheckOut" class="btn btn-success" />
-                            <a href="@Url.Action("RegisterUser","Login")" class="btn btn-success">Register</a>
-                        </td>
-                    </tr>
-                </table>
+                <input type="hidden" value="@Session["UserId"]" name="CodeCustomer"/>
+                <label>Địa chỉ giao hàng</label>
+                <input style="border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" required />
+                <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />
             }
         }
         else
         {
-            <input type="submit" value="CheckOut" class="btn btn-success" />
-
+            <div>Bạn cần phải đăng nhập hoặc đăng ký trước khi thanh toán</div>
+            <div>
+                <a href="@Url.Action("Index","Login")" class="btn btn-success">Đăng nhập</a>
+                <a href="@Url.Action("RegisterUser","Login")" class="btn btn-success">Đăng ký</a>
+            </div>
         }
-
     </div>
-
-</tfooter>
-
-
-
+}
+else
+{
+    <div class="empty-cart">
+        Chưa có sản phầm nào trong giỏ hàng...
+    </div>
+}
