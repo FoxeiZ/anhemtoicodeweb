@@ -64,7 +64,7 @@
                     <img class="w-100" src="@Url.Content(item._product.ImagePro)" />
                 </div>
                 <div>
-                    <h2>@item._product.NamePro</h2>
+                    <h2 style="padding-left:10px">@item._product.NamePro</h2>
                     @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
                     {
                         <input type="hidden" value="@item._product.ProductID" name="idPro" />
@@ -72,8 +72,8 @@
                         <input type="submit" value="Update" />
                     }
                 </div>
-                <div style="padding-left:250px; color:red">
-                    <a href="/ShoppingCart/RemoveCart/@item._product.ProductID">X</a>
+                <div>
+                    <a href="/ShoppingCart/RemoveCart/@item._product.ProductID" style="padding-left:150px;color:red;">X</a>
                 </div>
 
 
@@ -82,14 +82,15 @@
             <h3 class="text-end">Thành tiền sản phẩm: @total đ</h3>
             <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
         </div>
-        <div style="text-align:right;font-size: 24px"> Tổng tiền: @Model.TotalMoney() đ </div>
+
     }
+    <div style="text-align:right;font-size: 24px"> Tổng tiền: @Model.TotalMoney() đ </div>
     <div class="d-flex flex-column mt-5 align-items-center">
         @if (Session["UserId"] != null)
         {
             using (Html.BeginForm("Checkout", "ShoppingCart"))
             {
-                <input type="hidden" value="@Session["UserId"]" name="CodeCustomer"/>
+                <input type="hidden" value="@Session["UserId"]" name="CodeCustomer" />
                 <label>Địa chỉ giao hàng</label>
                 <input style="border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" required />
                 <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />
