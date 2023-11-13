@@ -3,14 +3,16 @@
 @{
     ViewBag.Title = "CheckOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal total = 0;
 }
 
 <h2>Kiểm tra thanh toán</h2>
 @if (Model == null)
 {
-    <div class="d-flex justify-content-center align-items-center " style="height: 40vh">
-        <h1>Đơn hàng không tồn tại!</h1>
-    </div>
+    <form method="get" class="d-flex justify-content-center align-items-center flex-column" style="height: 40vh">
+        <h1>Nhập mã đơn hàng cần kiểm tra</h1>
+        <input style="border-radius: 10px; height: 10vh; text-align: center; font-size: larger" type="text" name="id">
+    </form>
 }
 else
 {
@@ -25,13 +27,18 @@ else
         </tr>
         @foreach (var item in Model)
         {
+            total += (decimal)item._product.Price * item._quantity;
             <tr>
-                <td><img width="24" height="24" src="@Url.Content(item._product.ImagePro)" /></td>
-                <td>
-                    @item._product.NamePro
+                <td class="d-flex justify-content-center">
+                    <img width="24" height="24" src="@Url.Content(item._product.ImagePro)" />
                 </td>
                 <td>
-                    @item._product.Category.NameCate
+                    <a href="@Url.Action("Details", "Products", new { id = item._product.ProductID })">@item._product.NamePro</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Categories", new { id = item._product.Category.Id })">
+                        @item._product.Category.NameCate
+                    </a>
                 </td>
                 <td>
                     @item._quantity
@@ -42,6 +49,6 @@ else
                 <td></td>
             </tr>
         }
-
     </table>
+    <h2>Thành tiền: @total</h2>
 }

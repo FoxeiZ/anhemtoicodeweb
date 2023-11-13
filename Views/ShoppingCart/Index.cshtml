@@ -48,6 +48,13 @@
             text-align: center;
             font-size: x-large;
         }
+
+        .preview-img {
+            aspect-ratio: 1;
+            width: 30px;
+            position: relative;
+            transform: translateX(30%);
+        }
     </style>
 }
 
@@ -55,41 +62,52 @@
 <a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
 @if (Model != null && Model.Items.Count() > 0)
 {
-    foreach (var item in Model.Items)
-    {
-        decimal total = item._quantity * (decimal)item._product.Price;
-        <div class="item-container">
-            <div class="flex-container">
-                <div class="image-wrapper">
-                    <img class="w-100" src="@Url.Content(item._product.ImagePro)" />
-                </div>
-                <div>
-                    <h2>@item._product.NamePro</h2>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Tên mặt hàng</th>
+            <th>Hãng</th>
+            <th>Số lượng</th>
+            <th>Giá tiền(đơn)</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Items)
+        {
+            decimal total = item._quantity * (decimal)item._product.Price;
+            <tr>
+                <td class="">
+                    <img class="preview-img" src="@Url.Content(item._product.ImagePro)" />
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Products", new { id = item._product.ProductID })">@item._product.NamePro</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Categories", new { id = item._product.Category.Id })">
+                        @item._product.Category.NameCate
+                    </a>
+                </td>
+                <td>
                     @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
                     {
                         <input type="hidden" value="@item._product.ProductID" name="idPro" />
                         <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
                         <input type="submit" value="Update" />
                     }
-                </div>
-                <div style="padding-left:250px; color:red">
-                    <a href="/ShoppingCart/RemoveCart/@item._product.ProductID">X</a>
-                </div>
-
-
-
-            </div>
-            <h3 class="text-end">Thành tiền sản phẩm: @total đ</h3>
-            <a href="/ShoppingCart/RemoveCart/@item._product.ProductID"></a>
-        </div>
-        <div style="text-align:right;font-size: 24px"> Tổng tiền: @Model.TotalMoney() đ </div>
-    }
+                </td>
+                <td>
+                    @item._product.Price
+                </td>
+                <td></td>
+            </tr>
+        }
+    </table>
+        <h2>Thành tiền: @Model.TotalMoney()</h2>
     <div class="d-flex flex-column mt-5 align-items-center">
         @if (Session["UserId"] != null)
         {
             using (Html.BeginForm("Checkout", "ShoppingCart"))
             {
-                <input type="hidden" value="@Session["UserId"]" name="CodeCustomer"/>
+                <input type="hidden" value="@Session["UserId"]" name="CodeCustomer" />
                 <label>Địa chỉ giao hàng</label>
                 <input style="border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" required />
                 <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />

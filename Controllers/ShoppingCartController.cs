@@ -74,6 +74,10 @@ namespace KetNoiDatabase.Controllers
             try
             {
                 Cart cart = Session["Cart"] as Cart;
+                if (cart == null)
+                {
+                    return RedirectToAction("Index");
+                }
                 OrderPro _order = new OrderPro(); //Bang Hoa Don San pham
 
                 _order.DateOrder = DateTime.Now;
@@ -107,8 +111,12 @@ namespace KetNoiDatabase.Controllers
             return View(_order);
         }
 
-        public ActionResult CheckOrder(int id)
+        public ActionResult CheckOrder(int? id)
         {
+            if (id == null)
+            {
+                return View();
+            }
             OrderPro _order = database.OrderProes.Where(x => x.ID == id).FirstOrDefault();
             if (_order == null)
             {
