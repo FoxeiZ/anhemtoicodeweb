@@ -100,8 +100,13 @@
                 <td></td>
             </tr>
         }
+        <tr>
+            <td colspan="3"></td>
+            <td>Thành tiền:</td>
+            <td style="font-weight: 700">@Model.TotalMoney()</td>
+            <td></td>
+        </tr>
     </table>
-        <h2>Thành tiền: @Model.TotalMoney()</h2>
     <div class="d-flex flex-column mt-5 align-items-center">
         @if (Session["UserId"] != null)
         {
