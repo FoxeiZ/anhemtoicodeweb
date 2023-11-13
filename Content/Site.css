@@ -42,6 +42,10 @@ a {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
+.btn-success {
+    background: #4E6C50;
+}
+
 .no-select {
     -webkit-user-select: none;
     -moz-user-select: none;
