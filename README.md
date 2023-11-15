@@ -1,7 +1,7 @@
 # Anh em tôi collab làm đồ án
 on god on god, deadass, fr fr, no cap, facts
 
-Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại sao chúng ta không được dùng nextjs, fking BS)
+Project được viết trên ASP MVC, Bootstrap5 (~~maybe tailwind?~~ no tailwind.) (và tại sao chúng ta không được dùng nextjs, *f-ing BS*)
 
 ## Người tham gia thực hiện
   - Nguyễn Ngọc Duy Bảo
@@ -10,7 +10,7 @@ Project được viết trên ASP MVC, Bootstrap5 (maybe tailwind?) (và tại s
   - Huỳnh Tấn Thiên Ân
 
 # Todo
-> More Todo to come...
+> Done?
 - [x] Landing Page
 - [x] Image Slideshow
 - [x] Product Detail Page
