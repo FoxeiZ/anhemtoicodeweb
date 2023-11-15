@@ -16,7 +16,7 @@
 
 <div>
     <div class="product-container">
-        <div class=" image">
+        <div class="image">
             <div>
                 <img src="@Url.Content(Model.ImagePro)" alt="Product image" />
                 @*<img src="~/Image/Product/BanChaiTre.png" alt="Product image" />*@
@@ -30,7 +30,7 @@
                 <l>@Html.DisplayFor(model => model.DecriptionPro) </l>
             </div>
             <div>
-                <b style="color: #4E6C50">@Html.DisplayFor(model => model.Price) đ </b>
+                <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
             </div>
             <div class="button-container">
                 <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">

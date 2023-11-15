@@ -44,11 +44,11 @@ else
                     @item._quantity
                 </td>
                 <td>
-                    @item._product.Price
+                    @(String.Format("{0:#,#.##}", item._product.Price))đ
                 </td>
                 <td></td>
             </tr>
         }
     </table>
-    <h2>Thành tiền: @total</h2>
+    <h2>Thành tiền: @(String.Format("{0:#,#.##}", total))đ</h2>
 }

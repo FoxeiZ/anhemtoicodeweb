@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "ShowCart";
+    string placeholder_addr = TempData["Address"] != null ? "Bỏ trống nếu muốn dùng địa chỉ cũ" : "Địa chỉ giao hàng";
 }
 
 @section Styles {
@@ -108,7 +109,7 @@
                     }
                 </td>
                 <td>
-                    @item._product.Price
+                    @(String.Format("{0:#,#.##}", item._product.Price))đ
                 </td>
                 <td class="position-relative">
                     <a href="/ShoppingCart/RemoveCart/@item._product.ProductID" class="no-select close">+</a>
@@ -118,7 +119,7 @@
         <tr>
             <td colspan="3"></td>
             <td>Thành tiền:</td>
-            <td style="font-weight: 700">@Model.TotalMoney()</td>
+            <td style="font-weight: 700">@(String.Format("{0:#,#.##}", Model.TotalMoney()))đ</td>
             <td></td>
         </tr>
     </table>
@@ -128,7 +129,7 @@
             using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post, new { style = "display: flex; gap: 10px;" }))
             {
                 <input type="hidden" value="@Session["UserId"]" name="CodeCustomer" />
-                <input style="text-indent: 5px; border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" placeholder="Địa chỉ giao hàng" />
+                <input style="text-indent: 5px; border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" placeholder="@placeholder_addr" title="@placeholder_addr" />
                 <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />
             }
         }
