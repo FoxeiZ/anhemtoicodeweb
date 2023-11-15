@@ -10,6 +10,19 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("Styles", false)
+    <style>
+        .error-info {
+            border-radius: 10px;
+            font-size: large;
+            text-align: center;
+            background: #ff000070;
+            border: #ff0000b5 2px solid;
+            width: max-content;
+            height: max-content;
+            line-height: normal;
+            padding: 5px;
+        }
+    </style>
 </head>
 <body class="m-0">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-header">
@@ -58,30 +71,38 @@
                             <img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />
                         </a>
                     }
-                <div class="d-flex flex-column gap-2 p-2 profile-popup">
-                    @if (Session["UserID"] != null)
-                    {
-                        <div>Hello, <b>@Session["NameCus"]</b>!</div>
+                    <div class="d-flex flex-column gap-2 p-2 profile-popup">
+                        @if (Session["UserID"] != null)
+                        {
+                            <div>Hello, <b>@Session["NameCus"]</b>!</div>
+                            <hr style="margin: 0.3em 0;" />
+                            <a href="@Url.Action("Index", "Profile")">Profile</a>
+                            <a href="@Url.Action("LogoutUser", "Login")">Logout</a>
+                        }
+                        else
+                        {
+                            <div>Hello, Anonymous user</div>
+                            <hr style="margin: 0.3em 0;" />
+                            <a href="@Url.Action("Index", "Login")">Đăng nhập</a>
+                            <a href="@Url.Action("RegisterUser", "Login")">Đăng ký</a>
+                        }
                         <hr style="margin: 0.3em 0;" />
-                        <a href="@Url.Action("Index", "Profile")">Profile</a>
-                        <a href="@Url.Action("LogoutUser", "Login")">Logout</a>
-                    }
-                    else
-                    {
-                        <div>Hello, Anonymous user</div>
-                        <hr style="margin: 0.3em 0;" />
-                        <a href="@Url.Action("Index", "Login")">Đăng nhập</a>
-                        <a href="@Url.Action("RegisterUser", "Login")">Đăng ký</a>
-                    }
-                    <hr style="margin: 0.3em 0;" />
-                    <a href="@Url.Action("CheckOrder", "ShoppingCart")">Kiểm tra đơn hàng</a>
-                </div>
+                        <a href="@Url.Action("CheckOrder", "ShoppingCart")">Kiểm tra đơn hàng</a>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4" style="min-height: calc(100vh - 450px);">
+        @if (TempData["Error"] != null)
+        {
+            <div class="error-info">@TempData["Error"]</div>
+        }
+        @if (ViewBag.Error != null)
+        {
+            <div class="error-info">@ViewBag.Error</div>
+        }
         @RenderBody()
     </div>
 
@@ -119,7 +140,7 @@
             <hr />
             <h2>plxtshop.com.vn</h2>
         </div>
-        
+
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
