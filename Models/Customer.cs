@@ -25,6 +25,8 @@ namespace anhemtoicodeweb.Models
 
         public string EmailCus { get; set; }
 
+        public string AddressName { get; set; }
+
         public string PasswordCus { get; set; }
 
         [NotMapped]
