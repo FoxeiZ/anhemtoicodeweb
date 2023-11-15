@@ -19,6 +19,13 @@ namespace KetNoiDatabase.Controllers
                 return View();
             }
             Cart cart = Session["Cart"] as Cart;
+
+            int _id = (int?)Session["UserId"] ?? -1;
+            if (_id > -1)
+            {
+                Customer _cus = database.Customers.FirstOrDefault(x => x.IDCus == _id);
+                TempData["Address"] = _cus.AddressName;
+            }
             return View(cart);
         }
 
@@ -82,7 +89,7 @@ namespace KetNoiDatabase.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                
+
                 if (form["AddressDelivery"] == null)
                 {
                     if (_user.AddressName == null)
