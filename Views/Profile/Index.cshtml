@@ -9,17 +9,75 @@
         font-size: large;
         margin: inherit;
     }
+
     button {
         border-radius: 7px;
+    }
+
+    .edit,
+    .dropbtn {
+        background-color: #4E6C50;
+        color: white;
+        font-size: 16px;
+        border: none;
+        padding: 10px;
+        padding-bottom: 10px;
+        border-radius: 7px;
+        max-height: 41px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .profile-info p {
+        font-size: 24px;
     }
 </style>
 @if (Session["IsAdmin"] is false)
 {
     <h2>Profile</h2>
-    <p>Name: <b>@Model.NameCus</b></p>
-    <p>Email: <b>@Model.EmailCus</b></p>
-    <p>Phone number: <b>@Model.PhoneCus</b></p>
-    <button><a href="@Url.Action("LogoutUser", "Login")">Log out</a></button>
+    <div class="profile-info">
+        <p>Tên người dùng: <b>@Model.NameCus</b></p>
+        <p>Email: <b>@Model.EmailCus</b></p>
+        <p>Số điện thoại: <b>@Model.PhoneCus</b></p>
+        <p>Địa chỉ hiện tại: <b>@Model.AddressName</b></p>
+        <div class="dropdown">
+            <button class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>
+            <div style=" border-radius: 7px;" class="dropdown-content">
+                @foreach (var order in Model.OrderProes)
+                {
+                    <a href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID</a>
+                }
+            </div>
+        </div>
+        <a href="@Url.Action("EditProfile")" class="no-select edit">Chỉnh sửa thông tin</a>
+    </div>
 }
 else
 {
