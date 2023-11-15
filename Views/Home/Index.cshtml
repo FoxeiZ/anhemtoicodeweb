@@ -88,7 +88,7 @@
                             <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
                         </div>
                         <div class="d-flex gap-4">
-                            <a href="/ShoppingCart/AddToCart/@product.ProductID" class="no-select BuyNowBtn">Buy Now</a>
+                            <a href="/ShoppingCart/BuyNow/@product.ProductID" class="no-select BuyNowBtn">Buy Now</a>
                             @*<div class="no-select BuyNowBtn">Buy Now</div>*@
                             <img src="~/Image/svg/cart.svg" alt="cart button">
                         </div>
@@ -127,7 +127,7 @@
                             <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
                         </div>
                         <div class="d-flex gap-4">
-                            <a href="/ShoppingCart/AddToCart/@product.ProductID" class="no-select BuyNowBtn">Buy Now</a>
+                            <a href="/ShoppingCart/BuyNow/@product.ProductID" class="no-select BuyNowBtn">Buy Now</a>
                             <img src="~/Image/svg/cart.svg" alt="cart button">
                         </div>
                     </div>

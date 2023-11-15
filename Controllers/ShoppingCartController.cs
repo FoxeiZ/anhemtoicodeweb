@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace KetNoiDatabase.Controllers
 {
@@ -74,10 +75,37 @@ namespace KetNoiDatabase.Controllers
             try
             {
                 Cart cart = Session["Cart"] as Cart;
+                int _userId = (int)Session["UserId"];
+                var _user = database.Customers.FirstOrDefault(x => x.IDCus == _userId);
+
                 if (cart.Items.Count() == 0)
                 {
                     return RedirectToAction("Index");
                 }
+                
+                if (form["AddressDelivery"] == null)
+                {
+                    if (_user.AddressName == null)
+                    {
+                        TempData["Error"] = "Bạn cần phải nhập địa chỉ giao hàng";
+                        return RedirectToAction("Index");
+                    }
+                    form["AddressDelivery"] = _user.AddressName;
+                }
+
+                if (form["CodeCustomer"] == null)
+                {
+                    form["CodeCustomer"] = _user.IDCus.ToString();
+
+                }
+
+                if (_user.AddressName == null)
+                {
+                    _user.AddressName = form["AddressDelivery"];
+                    database.Entry<Customer>(_user).State = EntityState.Modified;
+                    database.SaveChanges();
+                }
+
                 OrderPro _order = new OrderPro(); //Bang Hoa Don San pham
 
                 _order.DateOrder = DateTime.Now;
@@ -102,8 +130,31 @@ namespace KetNoiDatabase.Controllers
             }
             catch
             {
-                return Content("Error, Grabbing your IP....");
+                return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult BuyNow(int id)
+        {
+            Cart cart = GetCart();
+            var _pro = database.Products.SingleOrDefault(s => s.ProductID == id);
+            if (_pro != null)
+            {
+                cart.AddProductCart(_pro);
+                if (Session["UserId"] == null)
+                {
+                    TempData["Error"] = "Bạn cần phải đăng nhập trước khi thanh toán";
+                    return RedirectToAction("Index");
+                }
+                int _userId = (int)Session["UserId"];
+                var _user = database.Customers.FirstOrDefault(x => x.IDCus == _userId);
+                FormCollection form = new FormCollection();
+                form["AddressDelivery"] = _user.AddressName;
+                form["CodeCustomer"] = _user.IDCus.ToString();
+                return RedirectToAction("CheckOut", "ShoppingCart", form);
+            }
+            TempData["Error"] = "Sản phẩm không tồn tại hoặc đã bị xóa";
+            return RedirectToAction("Index", "Products");
         }
 
         public ActionResult CheckOutSuccess(OrderPro _order)
