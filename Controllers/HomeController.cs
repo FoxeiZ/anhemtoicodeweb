@@ -20,6 +20,28 @@ namespace anhemtoicodeweb.Controllers
             var tuple = new Tuple<IEnumerable<Product>, IEnumerable<Category>>(productList, categoriesList);
             return View(tuple);
         }
+
+        private void SearchInCategory(string query, ref List<Product> searchQuery)
+        {
+            var CateSearchList = new List<Product>();
+            
+            string norm_name;
+            foreach (var item in database.Categories)
+            {
+                norm_name = NormalizeDiacriticalCharacters(item.NameCate);
+                if (norm_name.Contains(query))
+                {
+                    foreach (var prod in item.Products)
+                    {
+                        if (!searchQuery.Contains(prod))
+                        {
+                            searchQuery.Add(prod);
+                        }
+                    }
+                }
+            }
+        }
+
         public ActionResult Search(string query)
         {
             if (query == null || query.Length == 0)
@@ -38,6 +60,7 @@ namespace anhemtoicodeweb.Controllers
                     searchQuery.Add(item);
                 }
             }
+            SearchInCategory(query, ref searchQuery);
             return View(searchQuery);
         }
 
