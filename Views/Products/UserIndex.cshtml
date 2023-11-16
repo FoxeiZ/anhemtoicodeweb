@@ -17,6 +17,12 @@
         @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
     </p>
 }
+<div style="margin-bottom: 24px" class="list-href">
+    <a href="/">Nhà</a>
+    >
+    <a href="/Products"><b>Danh sách sản phầm</b></a>
+</div>
+
 <div class="container-wrap product" style="justify-content: center; gap: 12px">
     @foreach (var product in Model)
     {

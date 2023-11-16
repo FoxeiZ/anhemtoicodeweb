@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
 @section Styles {
@@ -12,7 +11,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
 }
 
-<h2>Details</h2>
+<div style="margin-bottom: 24px" class="list-href">
+    <a href="/">Nhà</a>
+    >
+    <a href="/Products">Danh sách sản phầm</a>
+    >
+    <a href="/Categories/Details/@Model.Category.IDCate">@Model.Category.NameCate</a>
+    >
+    <a href="@Request.Path"><b>@Model.NamePro</b></a>
+</div>
+
 
 <div>
     <div class="product-container">
