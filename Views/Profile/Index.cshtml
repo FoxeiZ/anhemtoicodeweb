@@ -65,27 +65,9 @@
         font-size: 24px;
     }
 </style>
-@if (Session["IsAdmin"] is false)
-{
-    <h2>Profile</h2>
-    <div class="profile-info">
-        <p>Tên người dùng: <b>@Model.NameCus</b></p>
-        <p>Email: <b>@Model.EmailCus</b></p>
-        <p>Số điện thoại: <b>@Model.PhoneCus</b></p>
-        <p>Địa chỉ hiện tại: <b>@Model.AddressName</b></p>
-        <div class="dropdown">
-            <button class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>
-            <div style=" border-radius: 7px;" class="dropdown-content">
-                @foreach (var order in Model.OrderProes)
-                {
-                    <a href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID</a>
-                }
-            </div>
-        </div>
-        <a href="@Url.Action("EditProfile")" class="no-select edit">Chỉnh sửa thông tin</a>
-    </div>
-}
-else
+
+<h2>Profile</h2>
+@if (Session["IsAdmin"] is true)
 {
     <h2 class="py-3">Admin Panel</h2>
     <p>
@@ -111,3 +93,22 @@ else
         <hr />
     </div>
 }
+
+<hr />
+
+<div class="profile-info">
+    <p>Tên người dùng: <b>@Model.NameCus</b></p>
+    <p>Email: <b>@Model.EmailCus</b></p>
+    <p>Số điện thoại: <b>@Model.PhoneCus</b></p>
+    <p>Địa chỉ hiện tại: <b>@Model.AddressName</b></p>
+    <div class="dropdown">
+        <button class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>
+        <div style=" border-radius: 7px;" class="dropdown-content">
+            @foreach (var order in Model.OrderProes)
+            {
+                <a href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID</a>
+            }
+        </div>
+    </div>
+    <a href="@Url.Action("EditProfile")" class="no-select edit">Chỉnh sửa thông tin</a>
+</div>
