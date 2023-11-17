@@ -60,6 +60,8 @@
         @Html.EditorFor(model => model.AddressName, new { htmlAttributes = new { @class = "input-edit" } })
     </div>
 
+
+    <hr class="my-4"/>
     <div class="d-flex flex-row gap-3 my-3">
         <div class="label">Mật khẩu: </div>
         @Html.EditorFor(model => model.PasswordCus, new { htmlAttributes = new { @class = "input-edit", title = "Bỏ trống nếu dùng mật khẩu cũ", placeholder = "Bỏ trống nếu dùng mật khẩu cũ", @Value = "", autocomplete = "off", @Type = "password" } })
