@@ -13,6 +13,7 @@ namespace anhemtoicodeweb.Controllers
     public class ProductsController : Controller
     {
         private Model1 db = new Model1();
+
         // GET: Products
         public ActionResult Index()
         {
@@ -46,6 +47,9 @@ namespace anhemtoicodeweb.Controllers
             return View();
         }
 
+        // POST: Products/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro")] Product product)
@@ -77,6 +81,9 @@ namespace anhemtoicodeweb.Controllers
             return View(product);
         }
 
+        // POST: Products/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro")] Product product)
@@ -91,6 +98,7 @@ namespace anhemtoicodeweb.Controllers
             return View(product);
         }
 
+        // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
