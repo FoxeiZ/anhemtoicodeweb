@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Management;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace anhemtoicodeweb.Controllers
 {
@@ -23,8 +24,6 @@ namespace anhemtoicodeweb.Controllers
 
         private void SearchInCategory(string query, ref List<Product> searchQuery)
         {
-            var CateSearchList = new List<Product>();
-            
             string norm_name;
             foreach (var item in database.Categories)
             {
@@ -42,7 +41,7 @@ namespace anhemtoicodeweb.Controllers
             }
         }
 
-        public ActionResult Search(string query)
+        public ActionResult Search(string query, int? page = 1)
         {
             if (query == null || query.Length == 0)
             {
@@ -61,7 +60,15 @@ namespace anhemtoicodeweb.Controllers
                 }
             }
             SearchInCategory(query, ref searchQuery);
-            return View(searchQuery);
+
+            int maxPage = Math.Max(1, searchQuery.Count() / 10);
+            if (page > maxPage)
+            {
+                page = maxPage;
+            }
+            ViewBag.MaxPage = maxPage;
+            ViewBag.CurrentPage = page;
+            return View(searchQuery.Skip(((int)page - 1) * 10).Take(10));
         }
 
         private string NormalizeDiacriticalCharacters(string value)

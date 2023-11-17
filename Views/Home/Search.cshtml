@@ -1,13 +1,47 @@
-﻿@model List<anhemtoicodeweb.Models.Product>
+﻿@model IEnumerable<anhemtoicodeweb.Models.Product>
 
 @{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int CurrentPage = (int)ViewBag.CurrentPage;
+    int MaxPage = (int)ViewBag.MaxPage;
+    string query = Request.Params.Get("query");
 }
 
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .page-nav {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid-nav-page {
+            display: grid;
+            border: #4E6C50 2px solid;
+            border-radius: 5px;
+            overflow: hidden;
+            border-right-style: hidden;
+        }
+
+        .page-btn {
+            grid-row: 1;
+            width: 24px;
+            color: black;
+            background-color: white;
+            text-align: center;
+            border-right: #4E6C50 2px solid;
+        }
+
+        .skip-btn {
+            letter-spacing: -5px;
+            text-indent: -5px;
+            font-weight: 500;
+        }
+    </style>
 }
 
 <h2>Kết quả tìm kiếm</h2>
@@ -23,16 +57,36 @@
                 </div>
                 <div class="product-content">
                     <div class="main-content">
-                        <div class="product-price">@(product.Price)đ</div>
-                        <a href="ProductDetails" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
+                        <div class="product-price">@(String.Format("{0:#,#.##}", product.Price))đ</div>
+                        <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration: none">
+                            <div class="product-name">@product.NamePro</div>
+                        </a>
                     </div>
                     <div class="d-flex gap-4">
-                        <div class="no-select BuyNowBtn">Buy Now</div>
-                        <img src="~/Image/svg/cart.svg" alt="cart button">
+                        <a href="/ShoppingCart/AddToCart/@product.ProductID" class="no-select BuyNowBtn">Thêm vào giỏ</a>
+                        <img src="~/Image/svg/heart.svg" alt="favorite" />
                     </div>
                 </div>
             </div>
         }
+    </div>
+    <div class="page-nav">
+        <div class="grid-nav-page">
+            @if (CurrentPage > 1)
+            {
+                <a class="page-btn" href="@Url.Action("Search", new { query = query, page = 1 })">&#171;</a>
+                <a class="page-btn" href="@Url.Action("Search", new { query = query, page = CurrentPage - 1 })">&#8249;</a>
+            }
+            @for (var i = 1; i <= Math.Min(MaxPage, 5); i++)
+            {
+                <a class="page-btn" href="@Url.Action("Search", new { query = query, page = i })">@i</a>
+            }
+            @if (CurrentPage < MaxPage)
+            {
+                <a class="page-btn" href="@Url.Action("Search", new { query = query, page = CurrentPage + 1 })">&#8250;</a>
+                <a class="page-btn" href="@Url.Action("Search", new { query = query, page = MaxPage })">&#187;</a>
+            }
+        </div>
     </div>
 }
 else

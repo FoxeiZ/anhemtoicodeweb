@@ -84,8 +84,8 @@
     <div class="grid-nav-page">
         @if (CurrentPage > 1)
         {
-            <a class="page-btn skip-btn" href="@Url.Action("Index", new { page = 1 })"><<</a>
-            <a class="page-btn" href="@Url.Action("Index", new { page = CurrentPage - 1 })"><</a>
+            <a class="page-btn" href="@Url.Action("Index", new { page = 1 })">&#171;</a>
+            <a class="page-btn" href="@Url.Action("Index", new { page = CurrentPage - 1 })">&#8249;</a>
         }
         @for (var i = 1; i <= Math.Min(MaxPage, 5); i++)
         {
@@ -93,8 +93,8 @@
         }
         @if (CurrentPage < MaxPage)
         {
-            <a class="page-btn" href="@Url.Action("Index", new { page = CurrentPage + 1 })">></a>
-            <a class="page-btn skip-btn" href="@Url.Action("Index", new { page = MaxPage })">>></a>
+            <a class="page-btn" href="@Url.Action("Index", new { page = CurrentPage + 1 })">&#8250;</a>
+            <a class="page-btn" href="@Url.Action("Index", new { page = MaxPage })">&#187;</a>
         }
     </div>
 </div>

@@ -22,7 +22,7 @@ namespace anhemtoicodeweb.Controllers
                 return PartialView(db.Products.ToList());
             }
             ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
-            int maxPage = db.Products.Count() / 10;
+            int maxPage = Math.Max(1, db.Products.Count() / 10);
             if (page > maxPage)
             {
                 page = maxPage;

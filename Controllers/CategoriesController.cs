@@ -27,7 +27,7 @@ namespace anhemtoicodeweb.Controllers
         }
 
         // GET: Categories/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string id, int page = 1)
         {
             if (id == null)
             {
@@ -38,8 +38,17 @@ namespace anhemtoicodeweb.Controllers
             {
                 return HttpNotFound();
             }
-            IEnumerable<Product> productList = db.Products.Where(x => x.IDCate == category.IDCate).ToList();
-            var tuple = new Tuple<Category, IEnumerable<Product>>(category, productList);
+            IEnumerable<Product> productList = category.Products.ToList();
+
+            int maxPage = Math.Max(1,productList.Count() / 10);
+            if (page > maxPage)
+            {
+                page = maxPage;
+            }
+            ViewBag.MaxPage = maxPage;
+            ViewBag.CurrentPage = page;
+
+            var tuple = new Tuple<Category, IEnumerable<Product>>(category, productList.Skip((page - 1) * 10).Take(10));
             return View(tuple);
         }
 
