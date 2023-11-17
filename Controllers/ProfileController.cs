@@ -41,10 +41,20 @@ namespace anhemtoicodeweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(Customer customer)
+        public ActionResult EditProfile(Customer customer, string PrevPassword)
         {
             if (ModelState.IsValid)
             {
+                if (customer.PasswordCus != customer.ConfirmPasswordCus)
+                {
+                    TempData["Error"] = "Mật khẩu nhập lại không trùng";
+                    return View();
+                }
+
+                if (customer.PasswordCus == "" || customer.PasswordCus == null)
+                {
+                    customer.PasswordCus = PrevPassword;
+                }
                 database.Entry(customer).State = EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("Index");
