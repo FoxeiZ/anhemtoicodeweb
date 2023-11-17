@@ -76,6 +76,7 @@ section {
     margin: 14px;
     overflow: hidden;
     transition: all 0.2s ease;
+    position: relative;
 }
 
     .product-box:hover {

@@ -3,9 +3,16 @@
 @{
     ViewBag.Title = "ShowCart";
     string placeholder_addr = TempData["Address"] != null ? "Bỏ trống nếu muốn dùng địa chỉ cũ" : "Địa chỉ giao hàng";
+    string TotalMoney = "";
+    if (Model != null && Model.Items.Count() > 0)
+    {
+        TotalMoney = String.Format(": {0:#,#.##}đ", Model.TotalMoney());
+    }
 }
 
 @section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
     <style>
         .item-container {
             display: flex;
@@ -30,7 +37,7 @@
         }
 
         .quantity-input {
-            width: 64px;
+            width: 85%;
             border-radius: 6px;
             border: #5b5b5b solid 1px;
         }
@@ -62,70 +69,55 @@
         }
 
         .close {
+            opacity: 0;
+            visibility: hidden;
             position: absolute;
-            font-size: 25px;
-            top: 0;
-            left: 0;
+            font-size: 35px;
+            top: -10px;
+            right: 0;
             cursor: pointer;
             transform: rotate(45deg);
-            color:red;
+            color: red;
+            transition: all 0.2s ease;
         }
-        
-        
+
+        .product-box:hover .close {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 }
 
-<h2>Giỏ hàng của bạn</h2>
+<h2>Giỏ hàng của bạn@(TotalMoney)</h2>
 <a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
 @if (Model != null && Model.Items.Count() > 0)
 {
-    <table class="table">
-        <tr>
-            <th></th>
-            <th>Tên mặt hàng</th>
-            <th>Hãng</th>
-            <th>Số lượng</th>
-            <th>Giá tiền(đơn)</th>
-            <th></th>
-        </tr>
+    <div class="container-wrap product" style="justify-content: center; gap: 12px">
         @foreach (var item in Model.Items)
         {
-            decimal total = item._quantity * (decimal)item._product.Price;
-            <tr>
-                <td class="">
-                    <img class="preview-img" src="@Url.Content(item._product.ImagePro)" />
-                </td>
-                <td>
-                    <a href="@Url.Action("Details", "Products", new { id = item._product.ProductID })">@item._product.NamePro</a>
-                </td>
-                <td>
-                    <a href="@Url.Action("Details", "Categories", new { id = item._product.Category.Id })">
-                        @item._product.Category.NameCate
-                    </a>
-                </td>
-                <td>
+            <div class="product-box">
+                <a href="/ShoppingCart/RemoveCart/@item._product.ProductID" class="no-select close">+</a>
+                <div class="product-image">
+                    <img src="@Url.Content(item._product.ImagePro)" />
+                </div>
+                <div class="product-content">
+                    <div class="main-content">
+                        <div class="product-price">@(String.Format("{0:#,#.##}", item._product.Price))đ</div>
+                        <a href="@Url.Action("Details", "Products", new { id = item._product.ProductID })" style="text-decoration: none">
+                            <div class="product-name">@item._product.NamePro</div>
+                        </a>
+                    </div>
                     @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
                     {
+                        <div style="padding-bottom: 5px">Số lượng</div>
                         <input type="hidden" value="@item._product.ProductID" name="idPro" />
                         <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
-                        <input type="submit" value="Update" />
+                        <input style="background-color: transparent; border: none" type="submit" value="✓" />
                     }
-                </td>
-                <td>
-                    @(String.Format("{0:#,#.##}", item._product.Price))đ
-                </td>
-                <td class="position-relative">
-                    <a href="/ShoppingCart/RemoveCart/@item._product.ProductID" class="no-select close">+</a>
-                </td>
-            </tr>
+                </div>
+            </div>
         }
-        <tr>
-            <td colspan="3"></td>
-            <td>Thành tiền:</td>
-            <td style="font-weight: 700">@(String.Format("{0:#,#.##}", Model.TotalMoney()))đ</td>
-            <td></td>
-        </tr>
-    </table>
+    </div>
     <div class="d-flex flex-column mt-5 align-items-center">
         @if (Session["UserId"] != null)
         {
