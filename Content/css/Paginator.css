@@ -11,6 +11,7 @@
     border-radius: 5px;
     overflow: hidden;
     border-right-style: hidden;
+    box-shadow: 4px 4px 7px 1px rgba(0,0,0,0.2);
 }
 
 .page-btn {
