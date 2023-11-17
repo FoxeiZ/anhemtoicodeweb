@@ -15,15 +15,21 @@ namespace anhemtoicodeweb.Controllers
         private Model1 db = new Model1();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var products = db.Products.Include(p => p.Category);
             if (ControllerContext.IsChildAction)
             {
-                return PartialView(products.ToList());
+                return PartialView(db.Products.ToList());
             }
             ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
-            return View("UserIndex", products.ToList());
+            int maxPage = db.Products.Count() / 10;
+            if (page > maxPage)
+            {
+                page = maxPage;
+            }
+            ViewBag.MaxPage = maxPage;
+            ViewBag.CurrentPage = page;
+            return View("UserIndex", db.Products.OrderBy(x => x.NamePro).Skip((page - 1) * 10).Take(10).ToList());
         }
 
         public ActionResult Details(int? id)
