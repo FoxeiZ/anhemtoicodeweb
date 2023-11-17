@@ -11,37 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
-    <style>
-        .page-nav {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .grid-nav-page {
-            display: grid;
-            border: #4E6C50 2px solid;
-            border-radius: 5px;
-            overflow: hidden;
-            border-right-style: hidden;
-        }
-
-        .page-btn {
-            grid-row: 1;
-            width: 24px;
-            color: black;
-            background-color: white;
-            text-align: center;
-            border-right: #4E6C50 2px solid;
-        }
-
-        .skip-btn {
-            letter-spacing: -5px;
-            text-indent: -5px;
-            font-weight: 500;
-        }
-    </style>
+    <link href="@Url.Content("~/Content/css/Paginator.css")" rel="stylesheet" type="text/css" />
 }
 
 @if (Session["IsAdmin"] is true)
@@ -51,7 +21,7 @@
     </p>
 }
 <div style="margin-bottom: 24px" class="list-href">
-    <a href="/">Nhà</a>
+    <a href="/">Trang chủ</a>
     >
     <a href="/Products"><b>Danh sách sản phẩm</b></a>
     >
