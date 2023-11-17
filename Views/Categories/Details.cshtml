@@ -11,8 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/css/ProductDetails.css")" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
     <link href="@Url.Content("~/Content/css/Paginator.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ForAdmin.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
 
 }
 
@@ -35,6 +36,15 @@
     @foreach (var product in Model.Item2)
     {
         <div class="product-box">
+            @if (Session["IsAdmin"] is true)
+            {
+                <div class="admin-btn">
+                    <a href="/Products/Delete/@product.ProductID" class="no-select remove">&#x2715;</a>
+                    <a href="/Products/Edit/@product.ProductID" class="no-select remove">
+                        <img src="@Url.Content("~/Image/svg/pencil.svg")" />
+                    </a>
+                </div>
+            }
             <div class="product-image">
                 <img src="@Url.Content(product.ImagePro)" />
             </div>

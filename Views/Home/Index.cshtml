@@ -8,6 +8,7 @@
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ForAdmin.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
 }
 
@@ -42,34 +43,6 @@
                     </a>
                 </div>
             }
-            @*<div class="category-box">
-                    <img src="~/Image/logoforcategory/anecologo.jpg" />
-                    <h3>AnEco</h3>
-                </div>
-                <div class="category-box">
-                    <img src="~/Image/logoforcategory/NaturallyClean.jpg" />
-                    <h3>Naturally Clean</h3>
-                </div>
-                <div class="category-box">
-                    <img src="~/Image/logoforcategory/TreShop.jpg" />
-                    <h3>Tre Shop</h3>
-                </div>
-                <div class="category-box">
-                    <img src="~/Image/logoforcategory/CleverChanges.jpg" />
-                    <h3>Clever Changes</h3>
-                </div>
-                <div class="category-box">
-                    <img src="~/Image/logoforcategory/SapChangSen.png" />
-                    <h3>Sạp Chàng Sen</h3>
-                </div>
-                <div class="category-box">
-                    <img src="~/Image/logoforcategory/ECO.png" />
-                    <h3>ECOLIFE</h3>
-                </div>
-                <div class="category-box">
-                    <img src="~/Image/logoforcategory/TheBamboo.png" />
-                    <h3>The Bamboo</h3>
-                </div>*@
         </div>
     </section>
     <section>
@@ -79,6 +52,15 @@
             @foreach (var product in Model.Item1.Take(10))
             {
                 <div class="product-box">
+                    @if (Session["IsAdmin"] is true)
+                    {
+                        <div class="admin-btn">
+                            <a href="/Products/Delete/@product.ProductID" class="no-select remove">&#x2715;</a>
+                            <a href="/Products/Edit/@product.ProductID" class="no-select remove">
+                                <img src="@Url.Content("~/Image/svg/pencil.svg")" />
+                            </a>
+                        </div>
+                    }
                     <div class="product-image">
                         <img src="@Url.Content(product.ImagePro)" />
                     </div>
@@ -118,6 +100,15 @@
             @foreach (var product in Model.Item1.Skip(10).Take(10))
             {
                 <div class="product-box">
+                    @if (Session["IsAdmin"] is true)
+                    {
+                        <div class="admin-btn">
+                            <a href="/Products/Delete/@product.ProductID" class="no-select remove">&#x2715;</a>
+                            <a href="/Products/Edit/@product.ProductID" class="no-select remove">
+                                <img src="@Url.Content("~/Image/svg/pencil.svg")" />
+                            </a>
+                        </div>
+                    }
                     <div class="product-image">
                         <img src="@Url.Content(product.ImagePro)" />
                     </div>

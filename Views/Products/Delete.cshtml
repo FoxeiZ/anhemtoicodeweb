@@ -5,61 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+}
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bạn có chắc muốn xóa sản phẩm này?</h3>
 <div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.NameCate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category.NameCate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NamePro)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NamePro)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DecriptionPro)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DecriptionPro)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePro)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImagePro)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-primary" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <div class="product-box">
+        <div class="product-image">
+            <img src="@Url.Content(Model.ImagePro)" />
         </div>
-    }
+        <div class="product-content">
+            <div class="main-content">
+                <div class="product-price">@(String.Format("{0:#,#.##}", Model.Price))đ</div>
+                <a href="@Url.Action("Details", "Products", new { id = Model.ProductID })" style="text-decoration: none">
+                    <div class="product-name">@Model.NamePro</div>
+                </a>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Xóa sản phẩm" class="btn btn-warning" />
+                </div>
+            }
+        </div>
+    </div>
 </div>

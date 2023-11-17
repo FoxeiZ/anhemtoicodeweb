@@ -156,6 +156,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\ForAdmin.css" />
     <Content Include="Content\css\Index.css" />
     <Content Include="Content\css\Login.css" />
     <Content Include="Content\css\Paginator.css" />
@@ -198,6 +199,7 @@
     <Content Include="Image\banner2.jpg" />
     <Content Include="Image\banner3.png" />
     <Content Include="Image\svg\cart.svg" />
+    <Content Include="Image\svg\pencil.svg" />
     <Content Include="Image\svg\heart.svg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

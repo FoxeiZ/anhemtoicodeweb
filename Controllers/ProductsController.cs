@@ -49,6 +49,10 @@ namespace anhemtoicodeweb.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
+            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            {
+                return RedirectToAction("Index");
+            }
             ViewBag.IDCate = new SelectList(db.Categories, "IDCate", "NameCate");
             return View();
         }
@@ -60,6 +64,16 @@ namespace anhemtoicodeweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro")] Product product)
         {
+            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (product.ImagePro == null)
+            {
+                product.ImagePro = "~/Image/Product/CuonTuiRac.jpg";
+            }
+
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
@@ -74,6 +88,11 @@ namespace anhemtoicodeweb.Controllers
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            {
+                return RedirectToAction("Index");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -94,6 +113,11 @@ namespace anhemtoicodeweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro")] Product product)
         {
+            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            {
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
@@ -107,6 +131,11 @@ namespace anhemtoicodeweb.Controllers
         // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            {
+                return RedirectToAction("Index");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
