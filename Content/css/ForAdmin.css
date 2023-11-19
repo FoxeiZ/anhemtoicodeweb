@@ -15,7 +15,7 @@
 .product-box:hover .admin-btn {
     opacity: 1;
     visibility: visible;
-    background-color: #a7a7a78a;
+    background-color: #8dd717d6;
     border-radius: 5px;
     padding: 5px 5px;
 }
