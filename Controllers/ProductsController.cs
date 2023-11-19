@@ -29,7 +29,7 @@ namespace anhemtoicodeweb.Controllers
             }
             ViewBag.MaxPage = maxPage;
             ViewBag.CurrentPage = page;
-            return View("UserIndex", db.Products.OrderBy(x => x.NamePro).Skip((page - 1) * 10).Take(10).ToList());
+            return View("UserIndex", db.Products.OrderBy(x => x.NamePro).Skip((page - 1) * 15).Take(15).ToList());
         }
 
         public ActionResult Details(int? id)
