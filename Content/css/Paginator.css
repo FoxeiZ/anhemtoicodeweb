@@ -20,8 +20,9 @@
     color: black;
     background-color: white;
     text-align: center;
-    font-size: 24px;
-/*    border-right: #4E6C50 2px solid;*/
+    font-size: 22px;
+    /*    border-right: #4E6C50 2px solid;*/
+    padding: 2px 0px;
 }
 
 .skip-btn {
