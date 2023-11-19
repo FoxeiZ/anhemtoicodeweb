@@ -5,70 +5,88 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .product-box {
+            padding-bottom: 15px;
+            height: auto;
+        }
 
-@using (Html.BeginForm())
-{
+        .container-wrap {
+            justify-content: normal;
+        }
+
+        .product-content {
+            gap: 10px
+        }
+
+        .edit-product-name {
+            height: 3.15em;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+        }
+
+        input.product-price,
+        textarea.edit-product-name {
+            width: 100%;
+            border: none;
+        }
+
+        #big-ass-arrow {
+            display: flex;
+            align-items: center;
+            font-size: 100px;
+        }
+    </style>
+}
+
+<h2>Chỉnh sửa sản phẩm</h2>
+<form action="/Products/Edit/@Model.ProductID" method="post" onsubmit="sanitizePrice(this)">
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Product</h4>
-    <hr />
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ProductID)
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.NamePro, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NamePro, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NamePro, "", new { @class = "text-danger" })
+    <div class="container-wrap product">
+        <div class="product-box">
+            <div class="product-image">
+                <img src="@Url.Content(Model.ImagePro)" />
+                <input type="hidden" id="ImagePro" name="ImagePro" value="@Model.ImagePro" />
+            </div>
+            <div class="product-content">
+                <div class="main-content">
+                    <input class="product-price" name="Price" id="Price" type="text" value="@String.Format("{0:#,#.##}", Model.Price)đ" />
+                    <textarea class="edit-product-name" id="NamePro" name="NamePro" rows="12" cols="50">@Model.NamePro</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="IDCate">Hãng sản phẩm</label>
+                    <div class="d-flex">
+                        @Html.DropDownList("IDCate", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="IDCate">Số lượng tồn kho</label>
+                    <div class="d-flex">
+                        <input class="form-control" type="number" name="InvQuantity" min="0" max="9999" id="InvQuantity" value="@Model.InvQuantity" />
+                        @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <input style="background-color: transparent; border: none" type="submit" value="✓" />
+            </div>
         </div>
     </div>
+</form>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DecriptionPro, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DecriptionPro, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DecriptionPro, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.IDCate, "IDCate", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDCate", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ImagePro, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ImagePro, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ImagePro, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Image preview</label>
-        <div class="col-md-10">
-            <img style="width: 10vw; height: 10vw;" src="@Url.Content(Model.ImagePro)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10 mt-2">
-            <input style="margin-right:4px" type="submit" value="Save" class="btn btn-primary" />
-            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-primary" })
-        </div>
-    </div>
-</div>
+@section JavaScript{
+    <script>
+        function sanitizePrice(div) {
+            var price = div.querySelector(".product-price");
+            price.value = price.value.replace("đ", "").replace(",", "");
+            debugger;
+        }
+    </script>
 }

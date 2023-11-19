@@ -54,7 +54,7 @@ namespace anhemtoicodeweb.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.IDCate = new SelectList(db.Categories, "IDCate", "NameCate");
-            return View();
+            return View(new Product());
         }
 
         // POST: Products/Create
@@ -62,7 +62,7 @@ namespace anhemtoicodeweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro,InvQuantity")] Product product)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
@@ -72,6 +72,11 @@ namespace anhemtoicodeweb.Controllers
             if (product.ImagePro == null)
             {
                 product.ImagePro = "~/Image/Product/CuonTuiRac.jpg";
+            }
+
+            if (product.InvQuantity == 0)
+            {
+                product.InvQuantity = 1000;
             }
 
             if (ModelState.IsValid)
@@ -111,7 +116,7 @@ namespace anhemtoicodeweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro,InvQuantity")] Product product)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {

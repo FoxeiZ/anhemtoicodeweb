@@ -12,12 +12,15 @@ namespace anhemtoicodeweb.Models
         public Product()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            Price = 0;
             ImagePro = "~/Image/Product/CuonTuiRac.jpg";
         }
 
         public int ProductID { get; set; }
 
         public string NamePro { get; set; }
+
+        public int InvQuantity { get; set; }
 
         public string DecriptionPro { get; set; }
 
