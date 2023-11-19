@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "ShowCart";
-    string placeholder_addr = TempData["Address"] != null ? "Bỏ trống nếu muốn dùng địa chỉ cũ" : "Địa chỉ giao hàng";
+    string placeholder_addr = (TempData["Address"] != null && (string)TempData["Address"] != "") ? "Bỏ trống nếu muốn dùng địa chỉ cũ" : "Nhập địa chỉ giao hàng";
     string TotalMoney = "";
     if (Model != null && Model.Items.Count() > 0)
     {

@@ -90,9 +90,11 @@ namespace KetNoiDatabase.Controllers
                     return RedirectToAction("Index");
                 }
 
-                if (form["AddressDelivery"] == null)
+                var p = form["AddressDelivery"];
+
+                if (form["AddressDelivery"] == "")
                 {
-                    if (_user.AddressName == null)
+                    if (_user.AddressName == null || _user.AddressName == "")
                     {
                         TempData["Error"] = "Bạn cần phải nhập địa chỉ giao hàng";
                         return RedirectToAction("Index");
