@@ -111,7 +111,7 @@
                     {
                         <div style="padding-bottom: 5px">Số lượng</div>
                         <input type="hidden" value="@item._product.ProductID" name="idPro" />
-                        <input class="quantity-input" type="number" min="0" value="@item._quantity" name="cartQuantity" />
+                        <input class="quantity-input" type="number" min="0" max="@item._product.InvQuantity" value="@item._quantity" name="cartQuantity" />
                         <input style="background-color: transparent; border: none" type="submit" value="✓" />
                     }
                 </div>
