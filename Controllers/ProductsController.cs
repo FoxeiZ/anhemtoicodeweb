@@ -14,6 +14,11 @@ namespace anhemtoicodeweb.Controllers
     {
         private Model1 db = new Model1();
 
+        public PartialViewResult PartialProduct(Product product)
+        {
+            return PartialView(product);
+        }
+
         // GET: Products
         public ActionResult Index(int page = 1)
         {

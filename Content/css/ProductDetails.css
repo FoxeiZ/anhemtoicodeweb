@@ -69,3 +69,23 @@ img {
     display: flex;
     flex-direction: row;
 }
+
+.out-of-stock {
+    background-color: #5c5c5c;
+}
+
+.out-of-stock-hover {
+    content: "Out of stock";
+}
+
+.out-of-stock-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #0000008c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: xx-large;
+    color: red;
+}

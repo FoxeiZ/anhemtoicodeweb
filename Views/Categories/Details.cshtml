@@ -10,7 +10,7 @@
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/css/ProductDetails.css")" rel="stylesheet" type="text/css" />
+    @*<link href="@Url.Content("~/Content/css/ProductDetails.css")" rel="stylesheet" type="text/css" />*@
     <link href="@Url.Content("~/Content/css/Paginator.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/css/ForAdmin.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
@@ -35,32 +35,7 @@
 <div class="container-wrap product" style="justify-content: center; gap: 12px">
     @foreach (var product in Model.Item2)
     {
-        <div class="product-box">
-            @if (Session["IsAdmin"] is true)
-            {
-                <div class="admin-btn">
-                    <a href="/Products/Delete/@product.ProductID" class="no-select remove">&#x2715;</a>
-                    <a href="/Products/Edit/@product.ProductID" class="no-select remove">
-                        <img src="@Url.Content("~/Image/svg/pencil.svg")" />
-                    </a>
-                </div>
-            }
-            <div class="product-image">
-                <img src="@Url.Content(product.ImagePro)" />
-            </div>
-            <div class="product-content">
-                <div class="main-content">
-                    <div class="product-price">@(product.Price)đ</div>
-                    <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration: none">
-                        <div class="product-name">@product.NamePro</div>
-                    </a>
-                </div>
-                <div class="d-flex gap-4">
-                    <div class="no-select BuyNowBtn">Buy Now</div>
-                    <img src="~/Image/svg/cart.svg" alt="cart button">
-                </div>
-            </div>
-        </div>
+        Html.RenderPartial("../Products/PartialProduct", product, ViewData);
     }
 </div>
 <div class="page-nav">
