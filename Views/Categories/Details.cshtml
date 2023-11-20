@@ -28,7 +28,7 @@
     @if (Session["IsAdmin"] is true)
     {
         <div style="padding-left:20px">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.Id }, new { style = "width:80px", @class = "no-select EditBtn" })
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.Id }, new { style = "width:80px", @class = "no-select btn btn-success" })
         </div>
     }
 </div>
