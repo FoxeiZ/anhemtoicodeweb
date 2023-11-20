@@ -8,44 +8,11 @@
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
-    <style>
-        .product-box {
-            padding-bottom: 15px;
-            height: auto;
-        }
-
-        .container-wrap {
-            justify-content: normal;
-        }
-
-        .product-content {
-            gap: 10px
-        }
-
-        .edit-product-name {
-            height: 3.15em;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 20px;
-        }
-
-        input.product-price,
-        textarea.edit-product-name {
-            width: 100%;
-            border: none;
-        }
-
-        #big-ass-arrow {
-            display: flex;
-            align-items: center;
-            font-size: 100px;
-        }
-    </style>
+    <link href="@Url.Content("~/Content/css/CreateEditProducts.css")" rel="stylesheet" type="text/css" />
 }
 
 <h2>Chỉnh sửa sản phẩm</h2>
-<form action="/Products/Edit/@Model.ProductID" method="post" onsubmit="sanitizePrice(this)">
+<form action="/Products/Edit/@Model.ProductID" enctype="multipart/form-data" method="post" onsubmit="sanitizePrice(this)">
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -53,7 +20,11 @@
     <div class="container-wrap product">
         <div class="product-box">
             <div class="product-image">
-                <img src="@Url.Content(Model.ImagePro)" />
+                <div id="upload-image-overlay" onclick="document.getElementById('selectedFile').click();">
+                    <div class="plus-button"></div>
+                    <input id="selectedFile" name="UploadImage" class="d-none" type="file" onchange="ChangeImage(this)" />
+                </div>
+                <img id="preview-img" src="@Url.Content(Model.ImagePro)" />
                 <input type="hidden" id="ImagePro" name="ImagePro" value="@Model.ImagePro" />
             </div>
             <div class="product-content">
@@ -86,7 +57,19 @@
         function sanitizePrice(div) {
             var price = div.querySelector(".product-price");
             price.value = price.value.replace("đ", "").replace(",", "");
-            debugger;
+        }
+
+        function ChangeImage(UploadImage) {
+            var previewImg = document.getElementById("preview-img");
+            if (UploadImage.files && UploadImage.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(previewImg).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(UploadImage.files[0]);
+
+                document.getElementById("ImagePro").value = `~/Image/Product/${UploadImage.files[0].name}`;
+            }
         }
     </script>
 }

@@ -5,6 +5,7 @@ namespace anhemtoicodeweb.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web;
 
     public partial class Product
     {
@@ -30,6 +31,9 @@ namespace anhemtoicodeweb.Models
         public decimal? Price { get; set; }
 
         public string ImagePro { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase UploadImage {  get; set; }
 
         public virtual Category Category { get; set; }
 
