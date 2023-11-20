@@ -18,6 +18,8 @@ section {
     /*Category section*/
     .container-wrap.category {
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
 .category-box {
@@ -30,22 +32,23 @@ section {
     justify-content: space-between;
 }
 
-    .category-box img {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
 
-    .category-box h3 {
-        padding: 12px 4px 12px 4px;
-        font-size: 22px;
-        line-height: 24px;
-        text-align: center;
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.category-box img {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.category-box h3 {
+    padding: 12px 4px 12px 4px;
+    font-size: 22px;
+    line-height: 24px;
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .moreButton {
     display: flex;
@@ -184,4 +187,58 @@ section {
     aspect-ratio: 3.1;
     height: auto;
     object-fit: cover;
+}
+
+@media (max-width: 1200px) {
+    .category-box, .product-box {
+        width: calc( 100% / 5 - 15px);
+    }
+
+    .container-wrap.category, .container-wrap.product {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .category-box {
+        width: calc( 100% / 4 - 15px);
+    }
+
+    .category-box h3 {
+        font-size: 16px;
+        line-height: 1rem;
+    }
+
+    .product-box {
+        width: calc( 100% / 3 - 30px);
+    }
+}
+
+@media (max-width: 768px) {
+    .category-box {
+        width: calc( 100% / 3 - 5px);
+    }
+
+    .product-box {
+        width: calc( 100% / 2 - 30px);
+    }
+    .product-box .btn-section {
+        gap: 4px !important;
+    }
+}
+
+@media (max-width: 512px) {
+    .category-box {
+        width: calc( 100%/2 - 5px);
+        height: fit-content;
+        height: -moz-fit-content;
+    }
+}
+
+@media (max-width: 400px) {
+    .product-box {
+        width: 100%;
+        height: fit-content;
+        height: -moz-fit-content;
+    }
 }

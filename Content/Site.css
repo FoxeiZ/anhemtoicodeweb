@@ -106,7 +106,7 @@ a {
 footer {
     background: linear-gradient(270deg, rgba(78, 108, 80, 0.50) 0%, rgba(170, 139, 86, 0.50) 100%);
     width: auto;
-    height: 450px;
+    padding: 24px 0;
     margin-top: 85px;
 }
 
@@ -121,6 +121,7 @@ footer {
     width: fit-content;
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .title {
@@ -171,3 +172,5 @@ footer {
         transition-delay: 0.2s;
         visibility: visible;
     }
+
+
