@@ -29,9 +29,9 @@
                 @Html.DisplayFor(modelItem => item.NameCate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.IDCate }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IDCate }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IDCate })
+                @Html.ActionLink("Edit", "Edit", new { id = item.IDCate.Trim() }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IDCate.Trim() }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IDCate.Trim() })
             </td>
         </tr>
     }
