@@ -139,6 +139,13 @@ namespace anhemtoicodeweb.Controllers
                 product.UploadImage.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last()));
             }
 
+            if (product.OldImagePro != null && product.ImagePro != product.OldImagePro)
+            {
+                var oldfile = Path.Combine(Server.MapPath("~/Image/Product/"), product.OldImagePro.Split('/').Last());
+                var file = Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last());
+                System.IO.File.Move(oldfile, file);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;

@@ -33,6 +33,9 @@ namespace anhemtoicodeweb.Models
         public string ImagePro { get; set; }
 
         [NotMapped]
+        public string OldImagePro { get; set; }
+
+        [NotMapped]
         public HttpPostedFileBase UploadImage {  get; set; }
 
         public virtual Category Category { get; set; }

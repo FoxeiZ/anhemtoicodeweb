@@ -25,7 +25,6 @@
                     <input id="selectedFile" name="UploadImage" class="d-none" type="file" onchange="ChangeImage(this)" />
                 </div>
                 <img id="preview-img" src="@Url.Content(Model.ImagePro)" />
-                <input type="hidden" id="ImagePro" name="ImagePro" value="@Model.ImagePro" />
             </div>
             <div class="product-content">
                 <div class="main-content">
@@ -44,6 +43,14 @@
                     <div class="d-flex">
                         <input class="form-control" type="number" name="InvQuantity" min="0" max="9999" id="InvQuantity" value="@Model.InvQuantity" />
                         @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="ImagePro">Đường dẫn hình ảnh</label>
+                    <div class="d-flex">
+                        <input class="form-control" type="text" id="ImagePro" name="ImagePro" value="@Model.ImagePro" />
+                        <input class="form-control" type="hidden" id="OldImagePro" name="OldImagePro" value="@Model.ImagePro"/>
+                        @Html.ValidationMessageFor(model => model.ImagePro, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <input style="background-color: transparent; border: none" type="submit" value="✓" />
@@ -67,8 +74,11 @@
                     $(previewImg).attr('src', e.target.result);
                 }
                 reader.readAsDataURL(UploadImage.files[0]);
-
                 document.getElementById("ImagePro").value = `~/Image/Product/${UploadImage.files[0].name}`;
+
+                try {
+                    document.getElementById("OldImagePro").remove();
+                } catch { }
             }
         }
     </script>
