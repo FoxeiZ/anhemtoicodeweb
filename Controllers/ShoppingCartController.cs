@@ -112,7 +112,6 @@ namespace KetNoiDatabase.Controllers
                 {
                     _user.AddressName = form["AddressDelivery"];
                     database.Entry<Customer>(_user).State = EntityState.Modified;
-                    database.SaveChanges();
                 }
 
                 OrderPro _order = new OrderPro(); //Bang Hoa Don San pham
@@ -131,6 +130,10 @@ namespace KetNoiDatabase.Controllers
                         Quantity = item._quantity
                     };
                     database.OrderDetails.Add(_order_detail);
+
+                    var _prod = database.Products.Find(item._product.ProductID);
+                    _prod.InvQuantity = Math.Max(_prod.InvQuantity - item._quantity, 0);
+                    database.Entry(_prod).State = EntityState.Modified;
                 }
 
                 database.SaveChanges();

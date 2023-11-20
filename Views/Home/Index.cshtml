@@ -51,31 +51,7 @@
         <div class="container-wrap product">
             @foreach (var product in Model.Item1.Take(10))
             {
-                <div class="product-box">
-                    @if (Session["IsAdmin"] is true)
-                    {
-                        <div class="admin-btn">
-                            <a href="/Products/Delete/@product.ProductID" class="no-select remove">&#x2715;</a>
-                            <a href="/Products/Edit/@product.ProductID" class="no-select remove">
-                                <img src="@Url.Content("~/Image/svg/pencil.svg")" />
-                            </a>
-                        </div>
-                    }
-                    <div class="product-image">
-                        <img src="@Url.Content(product.ImagePro)" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">@String.Format("{0:#,#.##}", product.Price)đ</div>
-                            <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
-                        </div>
-                        <div class="d-flex gap-4 btn-section">
-                            <a href="/ShoppingCart/AddToCart/@product.ProductID" class="no-select BuyNowBtn">Thêm vào giỏ</a>
-                            @*<div class="no-select BuyNowBtn">Buy Now</div>*@
-                            <img src="~/Image/svg/heart.svg" alt="favorite" />
-                        </div>
-                    </div>
-                </div>
+                Html.RenderPartial("../Products/PartialProduct", product, ViewData);
             }
         </div>
         <a href="@Url.Action("Index", "Products")">
@@ -99,30 +75,7 @@
 
             @foreach (var product in Model.Item1.Skip(10).Take(10))
             {
-                <div class="product-box">
-                    @if (Session["IsAdmin"] is true)
-                    {
-                        <div class="admin-btn">
-                            <a href="/Products/Delete/@product.ProductID" class="no-select remove">&#x2715;</a>
-                            <a href="/Products/Edit/@product.ProductID" class="no-select remove">
-                                <img src="@Url.Content("~/Image/svg/pencil.svg")" />
-                            </a>
-                        </div>
-                    }
-                    <div class="product-image">
-                        <img src="@Url.Content(product.ImagePro)" />
-                    </div>
-                    <div class="product-content">
-                        <div class="main-content">
-                            <div class="product-price">@String.Format("{0:#,#.##}", product.Price)đ</div>
-                            <a href="@Url.Action("Details", "Products", new { id = product.ProductID })" style="text-decoration: none"><div class="product-name">@product.NamePro</div></a>
-                        </div>
-                        <div class="d-flex gap-4">
-                            <a href="/ShoppingCart/AddToCart/@product.ProductID" class="no-select BuyNowBtn">Thêm vào giỏ</a>
-                            <img src="~/Image/svg/heart.svg" alt="favorite" />
-                        </div>
-                    </div>
-                </div>
+                Html.RenderPartial("../Products/PartialProduct", product, ViewData);
             }
         </div>
         <a href="@Url.Action("Index", "Products")">

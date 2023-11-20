@@ -1,0 +1,39 @@
+﻿@model anhemtoicodeweb.Models.Product
+
+<div class="product-box">
+    @if (Session["IsAdmin"] is true)
+    {
+        <div class="admin-btn">
+            <a href="/Products/Delete/@Model.ProductID" class="no-select remove">&#x2715;</a>
+            <a href="/Products/Edit/@Model.ProductID" class="no-select remove">
+                <img src="@Url.Content("~/Image/svg/pencil.svg")" />
+            </a>
+        </div>
+    }
+    <div class="position-relative product-image">
+        @if (Model.InvQuantity == 0)
+        {
+            <div class="no-select out-of-stock-overlay">Hết hàng</div>
+        }
+        <img src="@Url.Content(Model.ImagePro)" />
+    </div>
+    <div class="product-content">
+        <div class="main-content">
+            <div class="product-price">@(String.Format("{0:#,#.##}", Model.Price))đ</div>
+            <a href="@Url.Action("Details", "Products", new { id = Model.ProductID })" style="text-decoration: none">
+                <div class="product-name">@Model.NamePro</div>
+            </a>
+        </div>
+        <div class="d-flex gap-4">
+            @if (Model.InvQuantity == 0)
+            {
+                <a class="no-select BuyNowBtn out-of-stock">Thêm vào giỏ</a>
+            }
+            else
+            {
+                <a href="/ShoppingCart/AddToCart/@Model.ProductID" class="no-select BuyNowBtn">Thêm vào giỏ</a>
+            }
+            <img src="~/Image/svg/heart.svg" alt="favorite" />
+        </div>
+    </div>
+</div>

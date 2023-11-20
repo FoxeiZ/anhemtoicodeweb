@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,6 +14,11 @@ namespace anhemtoicodeweb.Controllers
     public class ProductsController : Controller
     {
         private Model1 db = new Model1();
+
+        public PartialViewResult PartialProduct(Product product)
+        {
+            return PartialView(product);
+        }
 
         // GET: Products
         public ActionResult Index(int page = 1)
@@ -62,7 +68,7 @@ namespace anhemtoicodeweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro,InvQuantity")] Product product)
+        public ActionResult Create(Product product)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
@@ -77,6 +83,11 @@ namespace anhemtoicodeweb.Controllers
             if (product.InvQuantity == 0)
             {
                 product.InvQuantity = 1000;
+            }
+
+            if (product.UploadImage != null)
+            {
+                product.UploadImage.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last()));
             }
 
             if (ModelState.IsValid)
@@ -116,11 +127,16 @@ namespace anhemtoicodeweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,NamePro,DecriptionPro,IDCate,Price,ImagePro,InvQuantity")] Product product)
+        public ActionResult Edit(Product product)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
                 return RedirectToAction("Index");
+            }
+
+            if (product.UploadImage != null)
+            {
+                product.UploadImage.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last()));
             }
 
             if (ModelState.IsValid)

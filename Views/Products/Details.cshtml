@@ -26,8 +26,12 @@
 <div>
     <div class="product-container">
         <div class="image">
-            <div>
-                <img src="@Url.Content(Model.ImagePro)" alt="Product image" />
+            <div style="position: relative; border-radius:20px; overflow: hidden;">
+                @if (Model.InvQuantity == 0)
+                {
+                    <div class="no-select out-of-stock-overlay">Hết hàng</div>
+                }
+                <img src="@Url.Content(Model.ImagePro)" style="width: 100%" alt="Product image" />
                 @*<img src="~/Image/Product/BanChaiTre.png" alt="Product image" />*@
             </div>
         </div>
@@ -43,8 +47,14 @@
             </div>
             <div class="button-container">
                 <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">
-                    <a href="/ShoppingCart/AddToCart/@Model.ProductID" class="no-select AddToCart">Thêm vào giỏ hàng</a>
-                    <a href="/ShoppingCart/AddToCart/@Model.ProductID" class="no-select BuyNowBtn">Mua ngay</a>
+                    @if (Model.InvQuantity == 0)
+                    {
+                        <a class="no-select AddToCart out-of-stock">Thêm vào giỏ hàng</a>
+                    }
+                    else
+                    {
+                        <a href="/ShoppingCart/AddToCart/@Model.ProductID" class="no-select AddToCart">Thêm vào giỏ hàng</a>
+                    }
                 </div>
                 @if (Session["IsAdmin"] is true)
                 {

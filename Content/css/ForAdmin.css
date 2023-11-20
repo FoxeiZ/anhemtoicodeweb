@@ -10,6 +10,7 @@
     transition: all 0.2s ease;
     top: 5px;
     right: 5px;
+    z-index: 9999;
 }
 
 .product-box:hover .admin-btn {
