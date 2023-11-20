@@ -10,43 +10,24 @@ using anhemtoicodeweb.Models;
 
 namespace anhemtoicodeweb.Controllers
 {
-    public class CategoriesController : Controller
+    public class CustomersController : Controller
     {
         private Model1 db = new Model1();
 
         public ActionResult Index()
         {
-            var category = db.Categories.ToList();
+            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var customers = db.Customers.ToList();
             if (ControllerContext.IsChildAction)
             {
-                return PartialView(category.ToList());
+                return PartialView(customers.ToList());
             }
-            return RedirectToAction("Details", new { id = "1" });
-        }
-
-        public ActionResult Details(string id, int page = 1)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            IEnumerable<Product> productList = category.Products.ToList();
-
-            int maxPage = Math.Max(1,productList.Count() / 10);
-            if (page > maxPage)
-            {
-                page = maxPage;
-            }
-            ViewBag.MaxPage = maxPage;
-            ViewBag.CurrentPage = page;
-
-            var tuple = new Tuple<Category, IEnumerable<Product>>(category, productList.Skip((page - 1) * 10).Take(10));
-            return View(tuple);
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            return View(customers.ToList());
         }
 
         public ActionResult Create()
@@ -61,7 +42,7 @@ namespace anhemtoicodeweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDCate,Id,NameCate")] Category category)
+        public ActionResult Create([Bind(Include = "IDCus,NameCus,PhoneCus,EmailCus,AddressName,PasswordCus")] Customer customer)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
@@ -70,15 +51,15 @@ namespace anhemtoicodeweb.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.Customers.Add(customer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(customer);
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
@@ -89,17 +70,17 @@ namespace anhemtoicodeweb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(customer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDCate,Id,NameCate")] Category category)
+        public ActionResult Edit([Bind(Include = "IDCus,NameCus,PhoneCus,EmailCus,AddressName,PasswordCus")] Customer customer)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
@@ -108,14 +89,14 @@ namespace anhemtoicodeweb.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(customer);
         }
 
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
@@ -126,25 +107,25 @@ namespace anhemtoicodeweb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(customer);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            Customer customer = db.Customers.Find(id);
+            db.Customers.Remove(customer);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

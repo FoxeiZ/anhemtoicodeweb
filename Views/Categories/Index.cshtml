@@ -5,8 +5,11 @@
     Layout = ViewBag.Layout;
 }
 
+@*<h2>Danh sách các hãng</h2>*@
+<h4>Sửa bảng <b>hãng sản phẩm</b></h4>
+
 <p>
-    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Tạo mới", "Create", "", new { @class = "btn btn-success" })
 </p>
 <table class="table">
     <tr>
@@ -29,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.NameCate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.IDCate.Trim() }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IDCate.Trim() }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IDCate.Trim() })
+                @Html.ActionLink("Sửa", "Edit", new { id = item.IDCate.Trim() }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.IDCate.Trim() }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.IDCate.Trim() })
             </td>
         </tr>
     }

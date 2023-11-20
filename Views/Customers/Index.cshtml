@@ -1,0 +1,55 @@
+﻿@model IEnumerable<anhemtoicodeweb.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.Layout;
+}
+
+<h2>Danh sách khách hàng</h2>
+
+<p>
+    @Html.ActionLink("Tạo mới", "Create", "", new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameCus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneCus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailCus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressName)
+        </th>
+        <th>Action</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameCus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneCus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailCus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressName)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.IDCus }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.IDCus })
+
+            </td>
+            <td></td>
+        </tr>
+    }
+
+</table>

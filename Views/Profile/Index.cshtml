@@ -77,18 +77,25 @@
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
             Category
         </button>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#customersCollapse" aria-expanded="false" aria-controls="customersCollapse">
+            Customers
+        </button>
     </p>
     <div class="px-3 collapse" id="productsCollapse">
-        <h4>Editing <b>Product</b> table</h4>
         @{
             Html.RenderAction("Index", "Products");
         }
         <hr />
     </div>
     <div class="px-3 collapse" id="categoryCollapse">
-        <h4>Editing <b>Categories</b> table</h4>
         @{
             Html.RenderAction("Index", "Categories");
+        }
+        <hr />
+    </div>
+    <div class="px-3 collapse" id="customersCollapse">
+        @{
+            Html.RenderAction("Index", "Customers");
         }
         <hr />
     </div>
