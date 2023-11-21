@@ -1,4 +1,5 @@
 # Anh em tôi collab làm đồ án
+Finally done with this. Never gonna see you again MVC. rest in piss
 on god on god, deadass, fr fr, no cap, facts
 
 Project được viết trên ASP MVC, Bootstrap5 (~~maybe tailwind?~~ no tailwind.) (và tại sao chúng ta không được dùng nextjs, *f-ing BS*)
