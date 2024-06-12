@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Net;
+using System.IO;
 
 namespace KetNoiDatabase.Controllers
 {
@@ -40,14 +42,25 @@ namespace KetNoiDatabase.Controllers
             return cart;
         }
 
-        public ActionResult AddToCart(int id)
+        [HttpPost]
+        public ActionResult AddToCart()
         {
+            int id;
+            using (StreamReader reader = new StreamReader(HttpContext.Request.InputStream))
+            {
+                if (!int.TryParse(reader.ReadLine(), out id))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            }
+
             var _pro = database.Products.SingleOrDefault(s => s.ProductID == id);
             if (_pro != null)
             {
                 GetCart().AddProductCart(_pro);
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-            return RedirectToAction("Index", "ShoppingCart");
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
         public ActionResult RemoveCart(int id)

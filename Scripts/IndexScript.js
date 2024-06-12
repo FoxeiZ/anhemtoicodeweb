@@ -7,13 +7,15 @@
         nextArrow: "#slide1 .slick-next"
     });
 
-    $('#slide2 .slide-container').slick({
+    $('#product-slider .slide-container').slick({
         lazyLoad: 'ondemand',
-        autoplay: true,
-        autoplaySpeed: 2000,
-        prevArrow: "#slide2 .slick-prev",
-        nextArrow: "#slide2 .slick-next"
+        slidesToShow: 5,
+        draggable: false,
+        infinite: false,
+        prevArrow: "#product-slider .slick-prev-prod",
+        nextArrow: "#product-slider .slick-next-prod",
     });
+
 
     //$("div.category").slick({
     //    lazyLoad: 'ondemand',

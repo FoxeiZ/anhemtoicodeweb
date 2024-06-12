@@ -40,6 +40,7 @@
             width: 85%;
             border-radius: 6px;
             border: #5b5b5b solid 1px;
+            text-indent: 4px;
         }
 
         .text h3 {
@@ -88,7 +89,7 @@
     </style>
 }
 
-<h2>Giỏ hàng của bạn@(TotalMoney)</h2>
+<h2>Giỏ hàng của bạn</h2>
 <a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
 @if (Model != null && Model.Items.Count() > 0)
 {
@@ -117,6 +118,10 @@
                 </div>
             </div>
         }
+        <div class="w-100">
+            <hr />
+            <h2 class="text-end">Tổng tiền@(TotalMoney)</h2>
+        </div>
     </div>
     <div class="d-flex flex-column mt-5 align-items-center">
         @if (Session["UserId"] != null)

@@ -6,7 +6,7 @@
         <div class="admin-btn">
             <a href="/Products/Delete/@Model.ProductID" class="no-select remove">&#x2715;</a>
             <a href="/Products/Edit/@Model.ProductID" class="no-select remove">
-                <img src="@Url.Content("~/Image/svg/pencil.svg")" />
+                <img class="edit-btn" src="@Url.Content("~/Image/svg/pencil.svg")" />
             </a>
         </div>
     }
@@ -31,7 +31,7 @@
             }
             else
             {
-                <a href="/ShoppingCart/AddToCart/@Model.ProductID" class="no-select BuyNowBtn">Thêm vào giỏ</a>
+                <div onclick="postAddCart(@Model.ProductID)" class="no-select BuyNowBtn">Thêm vào giỏ</div>
             }
             <img src="~/Image/svg/heart.svg" alt="favorite" />
         </div>

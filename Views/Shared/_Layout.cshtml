@@ -27,27 +27,24 @@
 <body class="m-0">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-header">
         <div class="container">
-            <a href="@Url.Action("Index", "Home")">
-                <div class="logo">
-                    <img src="~/Image/logo.jpg" class="logo" />
-                </div>
+            <a class="logo" href="@Url.Action("Index", "Home")">
+                testing
             </a>
-            <form class="searchBox" method="get" action="@Url.Action("Search", "Home")">
-                <input type="text" class="searchBar" placeholder="Tìm kiếm..." name="query" />
-                <button type="submit" class="searchBtn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_1_2737)">
-                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="white" />
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_1_2737">
-                                <rect width="24" height="24" fill="white" />
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </button>
-            </form>
-            <div class="d-flex flex-row gap-4">
+            <div class="nav-button">
+                <a id="nav-home" href="@Url.Action("Index", "Home")">
+                    Home
+                </a>
+                <a id="nav-shop" href="@Url.Action("Index", "Home")">
+                    Shop
+                </a>
+                <a id="nav-products" href="@Url.Action("Index", "Products")">
+                    Products
+                </a>
+                <a id="nav-sale" href="@Url.Action("Index", "Home")">
+                    Sale
+                </a>
+            </div>
+            <div class="d-flex flex-row gap-2">
                 <a href="@Url.Action("Index", "Home")">
                     <div class="box-link">
                         <img src="~/Image/svg/heart.svg" alt="favorite list" />
@@ -68,7 +65,9 @@
                     else
                     {
                         <a class="profile-link" href="@Url.Action("Index", "Login")">
-                            <img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />
+                            <div class="box-link">
+                                <img src="~/Image/svg/person.svg" alt="profile image" />
+                            </div>
                         </a>
                     }
                     <div class="d-flex flex-column gap-2 p-2 profile-popup">
@@ -94,7 +93,7 @@
         </div>
     </nav>
 
-    <div class="container mt-4" style="min-height: calc(100vh - 450px);">
+    <div class="container index-container mt-4" style="min-height: calc(100vh - 450px);">
         @if (TempData["Error"] != null)
         {
             <div class="error-info">@TempData["Error"]</div>
@@ -108,43 +107,22 @@
 
     <footer>
         <div class="container">
-            <div style="display: flex; flex-direction: row; justify-content: space-between; padding-bottom: 34px; padding-top: 60px; gap: 12px; flex-wrap: wrap;">
-                <div class="frame-wrap">
-                    <div class="footer-docs">
-                        <div class="title">More info</div>
-                        <div class="item">Facebook</div>
-                        <div class="item">Tiktok</div>
-                        <div class="item">Instagram</div>
-                    </div>
-                    <div class="footer-docs">
-                        <div class="title">Service</div>
-                        <div class="item">Chính sách hoàn tiền</div>
-                        <div class="item">Chính sách giao hàng</div>
-                        <div class="item">Điều khoản dịch vụ</div>
-                    </div>
-                    <div class="footer-docs">
-                        <div class="title">Danh mục phổ biến</div>
-                        <div class="item">AnEco</div>
-                        <div class="item">Naturally Clean</div>
-                        <div class="item">Tre Shop</div>
-                        <div class="item">The Bamboo</div>
-                    </div>
-                </div>
-                <div class="frame-wrap about-us">
-                    <div class="title">Liên hệ</div>
-                    <div class="item">plxtshop@gmail.com</div>
-                    <div class="item">081 9727 643</div>
-                    @*<div class="item">item</div>*@
-                </div>
+            <div class="wrapper">
+                <a class="logo" href="@Url.Action("Index", "Home")">
+                    testing
+                </a>
             </div>
             <hr />
-            <h2>plxtshop.com.vn</h2>
+            <div class="wrapper">
+                <div>© 2024 <b>testing</b>. All rights reserved</div>
+            </div>
         </div>
 
-    </footer>
+</footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/_Layout.js")
     @RenderSection("JavaScript", false)
 
 </body>

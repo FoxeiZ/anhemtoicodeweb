@@ -14,21 +14,19 @@
 <body class="m-0" style="height: 100vh;">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-header">
         <div class="container">
-            <a href="@Url.Action("Index", "Home")">
-                <div class="logo">
-                    <img src="~/Image/logo.jpg" class="size-img" />
-                </div>
+            <a class="logo" href="@Url.Action("Index", "Home")">
+                testing
             </a>
             <a href="#">
                 <div>
-                    <img src="~/Image/profile.png" class="profile-img" />
+                    <img src="~/Image/svg/person.svg" alt="profile image" />
                 </div>
             </a>
         </div>
     </nav>
 
-    <div class="container">
-        @RenderBody()
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); ">
+            @RenderBody()
     </div>
 
     @Scripts.Render("~/bundles/jquery")

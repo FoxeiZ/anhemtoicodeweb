@@ -4,28 +4,18 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
+/* Override the default bootstrap behavior where horizontal description listswill truncate terms that are too long to fit in the left column*/
 .dl-horizontal dt {
     white-space: normal;
 }
-
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
+input, select, textarea {
     max-width: 300px;
 }
 
 html {
     scrollbar-width: none;
     font-family: 'Montserrat', sans-serif;
-}
-
-body {
-    background-color: #ECF4FF;
 }
 
 a {
@@ -37,10 +27,34 @@ a {
     display: none;
 }
 
+.logo {
+    font-weight: 700;
+    font-size: x-large;
+}
+
 .navbar-header {
     background: #FFF;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid #cfcfcf;
+    /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
 }
+
+.nav-button {
+    margin-right: 15%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: larger;
+    font-weight: 400;
+}
+
+    .nav-button a {
+        color: #bdbdbd;
+    }
+
+        .nav-button a.selected {
+            color: black;
+        }
 
 .btn-success {
     background: #4E6C50;
@@ -55,46 +69,9 @@ a {
 
 .box-link {
     display: flex;
-    width: 46px;
-    height: 46px;
     padding: 11px;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
-    background: #ECF4FF;
-}
-
-.searchBox {
-    width: 396px;
-    height: 46px;
-    display: flex;
-    flex-direction: row;
-}
-
-.searchBar {
-    max-width: 396px;
-    width: 100%;
-    height: 46px;
-    border-radius: 8px 0px 0px 8px;
-    border: 1px solid var(--stroke-primary, #E4E7EE);
-    background: rgba(255, 255, 255, 0.10);
-    text-indent: 5px;
-}
-
-    .searchBar:focus {
-        outline: 0.5px solid black;
-    }
-
-.searchBtn {
-    display: flex;
-    width: 60px;
-    height: 46px;
-    padding: 11px 18px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 0px 8px 8px 0px;
-    background: #4E6C50;
 }
 
 .profile-img {
@@ -104,11 +81,21 @@ a {
 }
 
 footer {
-    background: linear-gradient(270deg, rgba(78, 108, 80, 0.50) 0%, rgba(170, 139, 86, 0.50) 100%);
+    background: #e1e1e1;
     width: auto;
     padding: 24px 0;
     margin-top: 85px;
 }
+
+    footer .container .wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-bottom: 34px;
+        padding-top: 60px;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
 
 .footer-docs {
     width: 190px;
@@ -166,11 +153,8 @@ footer {
     transition-delay: 0.3s;
 }
 
-    .profile-link:hover ~ .profile-popup,
-    .profile-popup:hover {
+    .profile-link:hover ~ .profile-popup, .profile-popup:hover {
         opacity: 1;
         transition-delay: 0.2s;
         visibility: visible;
     }
-
-
