@@ -58,7 +58,7 @@
                         {
                             <img src=@Url.Content(category.PicCate) />
                         }
-                        <a href="@Url.Action("Details", "Categories", new { id = category.Id })">
+                        <a href="@Url.Action("Details", "Categories", new { id = category.IDCate.Trim() })">
                             <h3>@category.NameCate</h3>
                         </a>
                     </div>

@@ -109,7 +109,7 @@ section {
 }
 
 .product-price {
-    color: #4E6C50;
+    color: black;
     font-size: 22px;
     font-style: normal;
     font-weight: 500;
@@ -118,11 +118,11 @@ section {
 
 .product-name {
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    height: 3.15em;
+    -webkit-line-clamp: 3;
+    height: 4.15em;
     display: -webkit-box;
     overflow: hidden;
-    font-size: 14px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
@@ -136,7 +136,7 @@ section {
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    background: #4E6C50;
+    background: #e13636;
     cursor: pointer;
 }
 

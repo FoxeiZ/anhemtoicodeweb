@@ -30,6 +30,7 @@ namespace anhemtoicodeweb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Category category = db.Categories.Find(id);
             if (category == null)
             {
@@ -37,7 +38,7 @@ namespace anhemtoicodeweb.Controllers
             }
             IEnumerable<Product> productList = category.Products.ToList();
 
-            int maxPage = Math.Max(1,productList.Count() / 10);
+            int maxPage = Math.Max(1, productList.Count() / 10);
             if (page > maxPage)
             {
                 page = maxPage;

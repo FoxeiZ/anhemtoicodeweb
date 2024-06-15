@@ -132,16 +132,38 @@ namespace KetNoiDatabase.Controllers
                 _order.DateOrder = DateTime.Now;
                 _order.AddressDelivery = form["AddressDelivery"];
                 _order.IDCus = int.Parse(form["CodeCustomer"]);
-                database.OrderProes.Add(_order);
+
+                decimal totalDiscount = 0;
+                decimal totalPrice = 0;
+                decimal totalTax = 0;
+                int totalQuantity = 0;
+
                 foreach (var item in cart.Items)
                 {
+                    var prodTotal = (item._quantity * item._product.Price);
+                    var tax = prodTotal * item._product.Tax;
+                    var discount = item._product.Discount;
+                    if (discount >= 0 && discount <= 1)
+                    {
+                        discount = prodTotal * discount;
+                    }
+
                     OrderDetail _order_detail = new OrderDetail
                     {
-                        IDOrder = _order.ID,
                         IDProduct = item._product.ProductID,
-                        UnitPrice = (double)item._product.Price,
-                        Quantity = item._quantity
+                        IDOrder = _order.ID,
+
+                        Quantity = item._quantity,
+                        UnitPrice = item._product.Price,
+                        Total = prodTotal - discount + tax,
+                        Discount = item._product.Discount,
+                        Tax = item._product.Tax,
                     };
+
+                    totalQuantity += item._quantity;
+                    totalDiscount += _order_detail.Discount;
+                    totalPrice += _order_detail.Total;
+                    totalTax += _order_detail.Tax;
                     database.OrderDetails.Add(_order_detail);
 
                     var _prod = database.Products.Find(item._product.ProductID);
@@ -149,6 +171,12 @@ namespace KetNoiDatabase.Controllers
                     database.Entry(_prod).State = EntityState.Modified;
                 }
 
+                _order.TotalMoney = totalPrice;
+                _order.TotalTax = totalTax;
+                _order.TotalDiscount = totalDiscount;
+                _order.TotalAmount = totalQuantity;
+
+                database.OrderProes.Add(_order);
                 database.SaveChanges();
                 cart.ClearCart();
                 return View("CheckOutSuccess", _order);

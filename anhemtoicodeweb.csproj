@@ -169,35 +169,26 @@
     <Content Include="Image\image 6.png" />
     <Content Include="Image\image 7.png" />
     <Content Include="Image\banner1.png" />
-    <Content Include="Image\logoforcategory\anecologo.jpg" />
-    <Content Include="Image\logoforcategory\CleverChanges.jpg" />
-    <Content Include="Image\logoforcategory\ECO.png" />
-    <Content Include="Image\logoforcategory\NaturallyClean.jpg" />
-    <Content Include="Image\logoforcategory\SapChangSen.png" />
-    <Content Include="Image\logoforcategory\TheBamboo.png" />
-    <Content Include="Image\logoforcategory\TreShop.jpg" />
-    <Content Include="Image\Product\BanChaiTre.png" />
-    <Content Include="Image\Product\BatChenGao.jpg" />
-    <Content Include="Image\Product\BatGoTramBamboo.jpg" />
-    <Content Include="Image\Product\BongTayTrangToTam.jpg" />
-    <Content Include="Image\Product\CoBinhXoDua.png" />
-    <Content Include="Image\Product\cocbamianong.jpg" />
-    <Content Include="Image\Product\CuonTuiDungThucPham.jpg" />
-    <Content Include="Image\Product\CuonTuiRac.jpg" />
-    <Content Include="Image\Product\DiaTreCuon.jpg" />
-    <Content Include="Image\Product\Hop100onghutPhanHuy.jpg" />
-    <Content Include="Image\Product\HopBaMia.jpg" />
-    <Content Include="Image\Product\HopComboDaoThiaNia.png" />
-    <Content Include="Image\Product\LuocTre.png" />
-    <Content Include="Image\Product\MuoiCanhTre.jpg" />
-    <Content Include="Image\Product\OngHutBotGo.jpg" />
-    <Content Include="Image\Product\thanh-than-tre.jpg" />
-    <Content Include="Image\Product\TuiDungThucPham%28hopnau%29.jpg" />
-    <Content Include="Image\Product\TuiDungThucPham.jpg" />
-    <Content Include="Image\Product\TuiTuHuySinhHoc.jpg" />
-    <Content Include="Image\Product\TuiXachQuaiDaBamboo.png" />
-    <Content Include="Image\profile.png" />
-    <Content Include="Image\logo.jpg" />
+    <Content Include="Image\Product\adapter-sac-type-c-pd-gan-30w-xmobile-ds230-trang-thumb-600x600.png" />
+    <Content Include="Image\Product\camera-ip-360-do-1080p-ezviz-c6n-trang-thumb-2-600x600.png" />
+    <Content Include="Image\Product\camera-ip-360-do-1080p-tp-link-tapo-tc70-trang-thumb-2-600x600.png" />
+    <Content Include="Image\Product\chuot-bluetooth-silent-logitech-m240-thumb-600x600.png" />
+    <Content Include="Image\Product\citizen-em0990-81l-nu-thumb-fix-1-600x600.png" />
+    <Content Include="Image\Product\citizen-ew2590-85d-nu-thumb-600x600.png" />
+    <Content Include="Image\Product\citizen-fe6088-87a-thumb-600x600.png" />
+    <Content Include="Image\Product\dong-ho-eco-drive-nu-day-kim-loai-citizen-em0639-8-thumb-600x600.png" />
+    <Content Include="Image\Product\dong-ho-kim-nam-day-kim-loai-citizen-bi1050-81e-de-thumb-600x600.png" />
+    <Content Include="Image\Product\dong-ho-kim-nu-day-kim-loai-citizen-be9174-55l-xan-thumb-600x600.png" />
+    <Content Include="Image\Product\dong-ho-thong-minh-befit-hunter1-48mm-den-tb-1-600x600.png" />
+    <Content Include="Image\Product\hp-14-ep0126tu-i3-8u233pa-031123-113016-600x600.png" />
+    <Content Include="Image\Product\hp-pavilion-15-eg3033tx-i5-8u6l6pa-thumb-600x600.png" />
+    <Content Include="Image\Product\hp-pavilion-15-eg3035tx-i7-8u6l7pa-thumb-600x600.png" />
+    <Content Include="Image\Product\hp-pavilion-15-eg3098tu-i3-8c5l9pa-thumb-3-600x600.png" />
+    <Content Include="Image\Product\hp-pavilion-x360-14-ek1048tu-i5-80r26pa-thumb-lap-600x600.png" />
+    <Content Include="Image\Product\mi-band-7-pro-den-thumb-600x600.png" />
+    <Content Include="Image\Product\oppo-n2-flip-den-thumb-600x600.png" />
+    <Content Include="Image\Product\vivo-y17s-thumb-600x600.png" />
+    <Content Include="Image\Product\xiaomi-redmi-12-xanh-duong-thumb-1-1-600x600.png" />
     <Content Include="Image\banner2.jpg" />
     <Content Include="Image\banner3.png" />
     <Content Include="Image\svg\cart.svg" />
@@ -265,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Image\logoforcategory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
