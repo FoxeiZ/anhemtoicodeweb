@@ -169,6 +169,13 @@
     <Content Include="Image\image 6.png" />
     <Content Include="Image\image 7.png" />
     <Content Include="Image\banner1.png" />
+    <Content Include="Image\Product\camera.png" />
+    <Content Include="Image\Product\banphim.png" />
+    <Content Include="Image\Product\laptop.png" />
+    <Content Include="Image\Product\chuot.png" />
+    <Content Include="Image\Product\dienthoai.png" />
+    <Content Include="Image\Product\dongho.png" />
+    <Content Include="Image\Product\sac.png" />
     <Content Include="Image\Product\adapter-sac-type-c-pd-gan-30w-xmobile-ds230-trang-thumb-600x600.png" />
     <Content Include="Image\Product\camera-ip-360-do-1080p-ezviz-c6n-trang-thumb-2-600x600.png" />
     <Content Include="Image\Product\camera-ip-360-do-1080p-tp-link-tapo-tc70-trang-thumb-2-600x600.png" />

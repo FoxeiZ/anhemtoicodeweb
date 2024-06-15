@@ -21,7 +21,8 @@ namespace anhemtoicodeweb.Controllers
             {
                 return PartialView(category.ToList());
             }
-            return RedirectToAction("Details", new { id = "1" });
+
+            return RedirectToAction("Details", new { id = db.Categories.Where(e => e.Id == 1) });
         }
 
         public ActionResult Details(string id, int page = 1)

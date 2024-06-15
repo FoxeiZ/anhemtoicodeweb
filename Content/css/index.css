@@ -23,14 +23,21 @@ section {
     }
 
 .category-box {
-    width: calc( 100% / 7 - 15px);
+    width: calc(100% / 7 - 15px);
     overflow: hidden;
     border-radius: 10px;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 25px;
+    transition: transform 0.5s
 }
+
+    .category-box:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s
+    }
 
     .category-box img {
         width: 100%;
@@ -261,6 +268,7 @@ section {
 
 .out-of-stock {
     background-color: #5c5c5c;
+    cursor: not-allowed;
 }
 
 .out-of-stock-overlay {

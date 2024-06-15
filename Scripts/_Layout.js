@@ -22,4 +22,6 @@ function postAddCart(id) {
     })
 }
 
-markNav()
+markNav();
+Bs5Utils.defaults.toasts.position = 'bottom-right';
+window.bs5Utils = new Bs5Utils();

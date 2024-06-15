@@ -53,7 +53,7 @@
                     }
                     else
                     {
-                        <a href="/ShoppingCart/AddToCart/@Model.ProductID" class="no-select AddToCart">Thêm vào giỏ hàng</a>
+                        <a onclick="postAddCart(@Model.ProductID)" class="no-select AddToCart">Thêm vào giỏ hàng</a>
                     }
                 </div>
                 @if (Session["IsAdmin"] is true)
