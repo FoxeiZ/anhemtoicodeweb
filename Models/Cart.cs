@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace anhemtoicodeweb.Models
 {
@@ -29,11 +27,13 @@ namespace anhemtoicodeweb.Models
                     _quantity = quantity,
                     _product = product
                 });
+                return;
             }
-            else
-            {
-                item._quantity += quantity;
-            }
+
+            var tempQ = quantity + item._quantity;
+            if (tempQ > product.InvQuantity)
+                tempQ = product.InvQuantity;
+            item._quantity = tempQ;
         }
 
         public int TotalQuantity()
@@ -44,7 +44,7 @@ namespace anhemtoicodeweb.Models
         public decimal TotalMoney()
         {
             var total = items.Sum(s => s._quantity * s._product.Price);
-            return (decimal)total;
+            return total;
         }
 
         public void UpdateQuantity(int id, int new_quantity)

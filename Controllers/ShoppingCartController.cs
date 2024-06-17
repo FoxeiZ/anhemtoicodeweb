@@ -1,12 +1,11 @@
 ﻿using anhemtoicodeweb.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Data.Entity;
-using System.Net;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
 
 namespace KetNoiDatabase.Controllers
 {
@@ -55,12 +54,13 @@ namespace KetNoiDatabase.Controllers
             }
 
             var _pro = database.Products.SingleOrDefault(s => s.ProductID == id);
-            if (_pro != null)
+            if (_pro == null)
             {
-                GetCart().AddProductCart(_pro);
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            GetCart().AddProductCart(_pro);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         public ActionResult RemoveCart(int id)

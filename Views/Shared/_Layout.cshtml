@@ -62,7 +62,10 @@
                     @if (Session["UserID"] != null)
                     {
                         <a class="profile-link" href="@Url.Action("Index", "Profile")">
-                            <img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />
+                            @*<img src="@Url.Content("/Image/profile.png")" alt="profile image" class="profile-img" />*@
+                            <div class="box-link">
+                                <img src="~/Image/svg/person.svg" alt="profile image" />
+                            </div>
                         </a>
                     }
                     else

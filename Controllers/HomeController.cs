@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Management;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace anhemtoicodeweb.Controllers
 {

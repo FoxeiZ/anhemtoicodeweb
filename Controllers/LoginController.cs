@@ -1,10 +1,5 @@
 ﻿using anhemtoicodeweb.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Net.Http;
-using System.Web;
 using System.Web.Mvc;
 
 namespace anhemtoicodeweb.Controllers
@@ -48,7 +43,7 @@ namespace anhemtoicodeweb.Controllers
             return View();
         }
 
-        public ActionResult RegisterUser() 
+        public ActionResult RegisterUser()
         {
             return View();
         }
