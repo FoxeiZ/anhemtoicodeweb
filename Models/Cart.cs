@@ -11,7 +11,7 @@ namespace anhemtoicodeweb.Models
 
     public class Cart
     {
-        List<CartItem> items = new List<CartItem>();
+        private readonly List<CartItem> items = new List<CartItem>();
         public IEnumerable<CartItem> Items
         {
             get { return items; }

@@ -10,7 +10,7 @@ namespace anhemtoicodeweb.Controllers
 {
     public class HomeController : Controller
     {
-        private Model1 database = new Model1();
+        private readonly Model1 database = new Model1();
         public ActionResult Index()
         {
             IEnumerable<Product> productList = database.Products.OrderByDescending(x => x.NamePro).ToList();

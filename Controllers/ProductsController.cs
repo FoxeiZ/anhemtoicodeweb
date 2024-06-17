@@ -11,7 +11,7 @@ namespace anhemtoicodeweb.Controllers
 {
     public class ProductsController : Controller
     {
-        private Model1 db = new Model1();
+        private readonly Model1 db = new Model1();
 
         public PartialViewResult PartialProduct(Product product)
         {

@@ -12,7 +12,7 @@ namespace KetNoiDatabase.Controllers
     public class ShoppingCartController : Controller
     {
         // GET: ShoppingCart
-        Model1 database = new Model1();
+        private readonly Model1 database = new Model1();
         public ActionResult Index()
         {
             if (Session["Cart"] == null)

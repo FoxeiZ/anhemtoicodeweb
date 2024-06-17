@@ -8,7 +8,7 @@ namespace anhemtoicodeweb.Controllers
 {
     public class ProfileController : Controller
     {
-        Model1 database = new Model1();
+        private readonly Model1 database = new Model1();
         public ActionResult Index()
         {
             int _userId = (int?)Session["UserId"] ?? -1;

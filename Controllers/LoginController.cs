@@ -6,7 +6,7 @@ namespace anhemtoicodeweb.Controllers
 {
     public class LoginController : Controller
     {
-        Model1 database = new Model1();
+        private readonly Model1 database = new Model1();
 
         // GET: LoginUser
         public ActionResult Index()
