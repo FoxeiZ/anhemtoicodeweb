@@ -49,47 +49,49 @@
         @Html.ActionLink("Tạo mới", "Create", "", new { @class = "btn btn-success" })
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.NameCate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NamePro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DecriptionPro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr onmouseover="show(@item.ProductID)" onmouseout="hide(@item.ProductID)" onmousemove="move(@item.ProductID, event)">
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.NameCate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NamePro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DecriptionPro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
-            </td>
-            <td class="hover-image-wrapper" id="@item.ProductID">
-                <img src="@Url.Content(item.ImagePro)" />
-            </td>
+<div style="overflow-x: auto">
+    <table class="table" style="width: max-content;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.NameCate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NamePro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DecriptionPro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr onmouseover="show(@item.ProductID)" onmouseout="hide(@item.ProductID)" onmousemove="move(@item.ProductID, event)">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.NameCate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NamePro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DecriptionPro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                </td>
+                <td class="hover-image-wrapper" id="@item.ProductID">
+                    <img src="@Url.Content(item.ImagePro)" />
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
