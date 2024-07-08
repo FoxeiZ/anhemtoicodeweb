@@ -9,8 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/css/ForAdmin.css")" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
+    <link href="@Url.Content("~/Content/Slick/slick.min.css")" rel="stylesheet" type="text/css" />
     <style>
+        body {
+            display: none;
+        }
+
         .index-container {
             all: unset;
             margin-top: 0.5rem !important;
@@ -27,8 +31,8 @@
 }
 
 @section Javascript {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Slick/slick.min.js")" defer></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/IndexScript.js")" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous"></script>
 }
 
 <main class="h-auto">

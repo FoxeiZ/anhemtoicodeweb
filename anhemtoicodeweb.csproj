@@ -163,6 +163,7 @@
     <Content Include="Content\css\Login.css" />
     <Content Include="Content\css\Paginator.css" />
     <Content Include="Content\css\ProductDetails.css" />
+    <Content Include="Content\Slick\slick.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -220,6 +221,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ScriptsForFunction\Slideshow.js" />
+    <Content Include="Scripts\Slick\slick.min.js" />
+    <Content Include="Scripts\_Layout.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

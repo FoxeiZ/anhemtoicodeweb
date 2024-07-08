@@ -16,6 +16,8 @@
         nextArrow: "#product-slider .slick-next-prod",
     });
 
+    $('body').css('display', 'block');
+
 
     //$("div.category").slick({
     //    lazyLoad: 'ondemand',

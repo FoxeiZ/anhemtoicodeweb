@@ -5,6 +5,41 @@
     Layout = ViewBag.Layout;
 }
 
+<style>
+    .hover-image-wrapper {
+        position: absolute;
+        left: 45%;
+        margin-top: 45px;
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.2s opacity;
+    }
+
+        .hover-image-wrapper.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .hover-image-wrapper img {
+            max-height: 10rem
+        }
+</style>
+<script>
+    function show(n) {
+        document.getElementById(n).classList.add("show")
+    }
+
+    function hide(n) {
+        document.getElementById(n).classList.remove("show")
+    }
+
+    function move(n, e) {
+        let div = document.getElementById(n);
+        div.style.left = e.pageX + "px";
+        div.style.top = e.pageY + "px";
+    }
+</script>
+
 <h4>Sửa bảng <b>sản phẩm</b></h4>
 
 
@@ -33,7 +68,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr onmouseover="show(@item.ProductID)" onmouseout="hide(@item.ProductID)" onmousemove="move(@item.ProductID, event)">
             <td>
                 @Html.DisplayFor(modelItem => item.Category.NameCate)
             </td>
@@ -50,6 +85,9 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+            </td>
+            <td class="hover-image-wrapper" id="@item.ProductID">
+                <img src="@Url.Content(item.ImagePro)" />
             </td>
         </tr>
     }
