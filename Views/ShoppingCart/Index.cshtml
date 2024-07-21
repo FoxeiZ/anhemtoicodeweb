@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "ShowCart";
-    string placeholder_addr = (TempData["Address"] != null && (string)TempData["Address"] != "") ? "Bỏ trống nếu muốn dùng địa chỉ cũ" : "Nhập địa chỉ giao hàng";
+    string placeholder_addr = (TempData["Address"] != null && (string)TempData["Address"] != "") ? (string)TempData["Address"] : "Nhập địa chỉ giao hàng";
+    string placeholder_phone = (TempData["PhoneNumber"] != null && (string)TempData["PhoneNumber"] != "") ? (string)TempData["PhoneNumber"] : "Nhập số điện thoại liên hệ";
     string FirstTotal = "";
     string TotalMoney = "";
     string TotalDiscount = "";
@@ -145,10 +146,19 @@
             </div>
         }
         <div class="w-100">
-            <hr />
-            <h2 class="text-end">Tổng tiền sản phẩm@(FirstTotal)</h2>
-            <h2 class="text-end">Tổng thuế@(TotalTax)</h2>
-            <h2 class="text-end">Tổng khuyến mãi@(TotalDiscount)</h2>
+            @if (total != Model.TotalMoney())
+            {
+                <hr />
+                <h2 class="text-end">Tổng tiền sản phẩm@(FirstTotal)</h2>
+            }
+            @if (totalTax > 0)
+            {
+                <h2 class="text-end">Tổng thuế@(TotalTax)</h2>
+            }
+            @if (totalDiscount > 0)
+            {
+                <h2 class="text-end">Tổng khuyến mãi@(TotalDiscount)</h2>
+            }
             <hr />
             <h2 class="text-end">Tổng tiền@(TotalMoney)</h2>
         </div>
@@ -160,6 +170,7 @@
             {
                 <input type="hidden" value="@Session["UserId"]" name="CodeCustomer" />
                 <input style="text-indent: 5px; border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" placeholder="@placeholder_addr" title="@placeholder_addr" />
+                <input style="text-indent: 5px; border-radius: 6px; border: black 1px solid" type="text" name="PhoneNumber" placeholder="@placeholder_phone" title="@placeholder_phone" />
                 <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />
             }
         }

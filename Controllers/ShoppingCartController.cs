@@ -26,6 +26,7 @@ namespace anhemtoicodeweb.Controllers
             {
                 Customer _cus = database.Customers.FirstOrDefault(x => x.IDCus == _id);
                 TempData["Address"] = _cus.AddressName;
+                TempData["PhoneNumber"] = _cus.PhoneCus;
             }
             return View(cart);
         }
@@ -109,8 +110,6 @@ namespace anhemtoicodeweb.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var p = form["AddressDelivery"];
-
                 if (form["AddressDelivery"] == "")
                 {
                     if (_user.AddressName == null || _user.AddressName == "")
@@ -121,10 +120,19 @@ namespace anhemtoicodeweb.Controllers
                     form["AddressDelivery"] = _user.AddressName;
                 }
 
+                if (form["PhoneNumber"] == "")
+                {
+                    if (_user.PhoneCus == null || _user.PhoneCus == "")
+                    {
+                        TempData["Error"] = "Bạn cần phải nhập số điện thoại để liên hệ khi giao hàng";
+                        return RedirectToAction("Index");
+                    }
+                    form["PhoneNumber"] = _user.PhoneCus;
+                }
+
                 if (form["CodeCustomer"] == null)
                 {
                     form["CodeCustomer"] = _user.IDCus.ToString();
-
                 }
 
                 if (_user.AddressName == null)
@@ -137,7 +145,9 @@ namespace anhemtoicodeweb.Controllers
 
                 _order.DateOrder = DateTime.Now;
                 _order.AddressDelivery = form["AddressDelivery"];
+                _order.PhoneNumber = form["PhoneNumber"];
                 _order.IDCus = int.Parse(form["CodeCustomer"]);
+                _order.State = "Đang xử lý";
 
                 decimal totalDiscount = 0;
                 decimal totalPrice = 0;

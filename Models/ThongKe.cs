@@ -10,22 +10,16 @@ namespace anhemtoicodeweb.Models.ThongKe
 {
     public class ChiTiet
     {
-        public ChiTiet(int idsp, int? tongSo, decimal? tongThu)
+        public ChiTiet(int idsp, int? tongSo, decimal? tongThu, string tenSP)
         {
             IDSP = idsp;
             TongSo = tongSo;
             TongThu = tongThu;
-        }
-
-        public ChiTiet(int ten, int? tongSo, string donViTinh, decimal? tongThu)
-        {
-            IDSP = ten;
-            TongSo = tongSo;
-            DonViTinh = donViTinh;
-            TongThu = tongThu;
+            TenSP = tenSP;
         }
 
         public int IDSP { get; set; }
+        public string TenSP { get; set; }
         public int? TongSo { get; set; }
         public string DonViTinh { get; set; }
         public decimal? TongThu { get; set; }
@@ -47,18 +41,18 @@ namespace anhemtoicodeweb.Models.ThongKe
     public class ThongKeNgay
     {
         public ThongKeNgay() { }
-        public ThongKeNgay(decimal tongDoanhThu, int tongKhacHang, int tongLichHen)
+        public ThongKeNgay(decimal tongDoanhThu, int tongKhacHang, int tongDatHang)
         {
             TongDoanhThu = tongDoanhThu;
             TongKhacHang = tongKhacHang;
-            TongLichHen = tongLichHen;
+            TongDatHang = tongDatHang;
 
             ChiTietSanPham = new DanhSachChiTiet();
         }
 
         public decimal TongDoanhThu { get; set; }
         public int TongKhacHang { get; set; }
-        public int TongLichHen { get; set; }
+        public int TongDatHang { get; set; }
 
         public DanhSachChiTiet ChiTietSanPham { get; set; } = new DanhSachChiTiet();
 
@@ -73,6 +67,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                 db.OrderDetails.Where(x => x.IDOrder == item.ID)
                     .ForEach(x =>
                     {
+                        self.TongDatHang += 1;
                         self.ChiTietSanPham.TongThu += x.Total;
                         var isSet = self.ChiTietSanPham.ChiTiet.Where(
                             sp => sp.IDSP == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
@@ -87,7 +82,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                                 sp => sp.ProductID == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
                                 {
                                     self.ChiTietSanPham.ChiTiet.Add(
-                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total));
+                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.NamePro));
                                 });
                         }
                     });
@@ -99,18 +94,18 @@ namespace anhemtoicodeweb.Models.ThongKe
     public class ThongKeThang
     {
         public ThongKeThang() { }
-        public ThongKeThang(decimal tongDoanhThu, int tongKhacHang, int tongLichHen)
+        public ThongKeThang(decimal tongDoanhThu, int tongKhacHang, int tongDatHang)
         {
             TongDoanhThu = tongDoanhThu;
             TongKhacHang = tongKhacHang;
-            TongLichHen = tongLichHen;
+            TongDatHang = tongDatHang;
 
             ChiTietSanPham = new DanhSachChiTiet();
         }
 
         public decimal TongDoanhThu { get; set; }
         public int TongKhacHang { get; set; }
-        public int TongLichHen { get; set; }
+        public int TongDatHang { get; set; }
 
         public DanhSachChiTiet ChiTietSanPham { get; set; } = new DanhSachChiTiet();
 
@@ -137,6 +132,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                 db.OrderDetails.Where(x => x.IDOrder == item.ID)
                     .ForEach(x =>
                     {
+                        self.TongDatHang += 1;
                         self.ChiTietSanPham.TongThu += x.Total;
                         var isSet = self.ChiTietSanPham.ChiTiet.Where(
                             sp => sp.IDSP == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
@@ -151,7 +147,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                                 sp => sp.ProductID == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
                                 {
                                     self.ChiTietSanPham.ChiTiet.Add(
-                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total));
+                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.NamePro));
                                 });
                         }
                     });
@@ -159,22 +155,22 @@ namespace anhemtoicodeweb.Models.ThongKe
             return self;
         }
     }
- 
+
     public class ThongKeNam
     {
         public ThongKeNam() { }
-        public ThongKeNam(decimal tongDoanhThu, int tongKhacHang, int tongLichHen)
+        public ThongKeNam(decimal tongDoanhThu, int tongKhacHang, int tongDatHang)
         {
             TongDoanhThu = tongDoanhThu;
             TongKhacHang = tongKhacHang;
-            TongLichHen = tongLichHen;
+            TongDatHang = tongDatHang;
 
             ChiTietSanPham = new DanhSachChiTiet();
         }
 
         public decimal TongDoanhThu { get; set; }
         public int TongKhacHang { get; set; }
-        public int TongLichHen { get; set; }
+        public int TongDatHang { get; set; }
 
         public DanhSachChiTiet ChiTietSanPham { get; set; } = new DanhSachChiTiet();
 
@@ -195,6 +191,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                 db.OrderDetails.Where(x => x.IDOrder == item.ID)
                     .ForEach(x =>
                     {
+                        self.TongDatHang += 1;
                         self.ChiTietSanPham.TongThu += x.Total;
                         var isSet = self.ChiTietSanPham.ChiTiet.Where(
                             sp => sp.IDSP == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
@@ -209,7 +206,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                                 sp => sp.ProductID == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
                                 {
                                     self.ChiTietSanPham.ChiTiet.Add(
-                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total));
+                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.NamePro));
                                 });
                         }
                     });

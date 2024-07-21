@@ -1,0 +1,293 @@
+﻿@model Tuple<anhemtoicodeweb.Models.ThongKe.ThongKeNgay, anhemtoicodeweb.Models.ThongKe.ThongKeThang, anhemtoicodeweb.Models.ThongKe.ThongKeNam>
+
+@{
+    ViewBag.Title = "ThongKe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section JavaScript {
+    <script>
+        function selfToggle(n) {
+            $("#" + n).collapse("toggle")
+        }
+    </script>
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/NoSession.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .card {
+            margin-bottom: 1rem;
+        }
+
+        .table {
+            margin: unset !important;
+        }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .card-extra {
+            border: black 2px solid;
+            border-radius: 8px;
+            margin: 12px;
+            text-align: center;
+        }
+
+            .card-extra .big-text {
+                font-weight: bold;
+                font-size: 32px;
+            }
+
+            .card-extra .small-text {
+                font-size: 12px;
+            }
+
+        .card-body .card-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+}
+
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button onclick="selfToggle('collapseOne')" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Thống kê hàng ngày
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="d-flex">
+                <div class="card-body card-extra">
+                    Tổng doanh thu
+                    <div class="big-text">
+                        @(Model.Item1.TongDoanhThu != 0 ? String.Format("{0:#,#.##}", Model.Item1.TongDoanhThu) : 0)đ
+                    </div>
+                    <div onclick="selfToggle('collapseDetailDT1')" class="small-text fw-normal user-select-none cursor-pointer">
+                        Xem thêm &darr;
+                    </div>
+                </div>
+                <div class="card-body card-extra">
+                    Tổng số lượng khách hàng
+                    <div class="big-text">
+                        @Model.Item1.TongKhacHang
+                    </div>
+                </div>
+                <div class="card-body card-extra">
+                    Tổng số đơn hàng xử lý
+                    <div class="big-text">
+                        @Model.Item1.TongDatHang
+                    </div>
+                </div>
+            </div>
+            <div id="collapseDetailDT1" class="collapse show">
+                <div onclick="selfToggle('collapseDetailDT1_collapseSP')" class="card-body card-detail cursor-pointer">
+                    <h3>Doanh thu theo sản phẩm</h3>
+                    <div class="big-text">
+                        @(Model.Item1.ChiTietSanPham.TongThu != 0 ? String.Format("{0:#,#.##}", Model.Item1.ChiTietSanPham.TongThu) : 0)đ
+                    </div>
+                </div>
+                <div id="collapseDetailDT1_collapseSP" class="collapse">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Tên dịch vụ
+                            </th>
+                            <th>
+                                Tổng số
+                            </th>
+                            <th>
+                                Tổng thu
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.Item1.ChiTietSanPham.ChiTiet)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details", "Products", new { id = item.IDSP })">@item.TenSP</a>
+                                </td>
+                                <td>
+                                    @item.TongSo
+                                </td>
+                                <td>
+                                    @(item.TongThu != 0 ? String.Format("{0:#,#.##}", item.TongThu) : 0)đ
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header d-flex flex-row" id="headingTwo">
+        <h5 class="mb-0">
+            <button onclick="selfToggle('collapseTwo')" class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                @if (ViewBag.Month != null)
+                {
+                    @Html.Raw($"Thống kê của tháng {ViewBag.Month}");
+                }
+                else
+                {
+                    @Html.Raw("Thống kê hàng tháng");
+                }
+            </button>
+        </h5>
+        <input onfocusout="window.location.href=`/Profile/ThongKe?month=${this.value.split('-')[1]}&year=${this.value.split('-')[0]}`" style="width: 21px; border: unset; background: unset" type="date" />
+    </div>
+
+    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="d-flex">
+            <div class="card-body card-extra">
+                Tổng doanh thu
+                <div class="big-text">
+                    @(Model.Item2.TongDoanhThu != 0 ? String.Format("{0:#,#.##}", Model.Item2.TongDoanhThu) : 0)đ
+                </div>
+                <div onclick="selfToggle('collapseDetailDT2')" class="small-text fw-normal user-select-none cursor-pointer">
+                    Xem thêm &darr;
+                </div>
+            </div>
+            <div class="card-body card-extra">
+                Tổng số lượng khách hàng
+                <div class="big-text">
+                    @Model.Item2.TongKhacHang
+                </div>
+            </div>
+            <div class="card-body card-extra">
+                Tổng số đơn hàng xử lý
+                <div class="big-text">
+                    @Model.Item2.TongDatHang
+                </div>
+            </div>
+        </div>
+        <div id="collapseDetailDT2" class="collapse">
+            <div class="card-body card-extra">
+                <div onclick="selfToggle('collapseDetailDT2_collapseSP')" class="card-body card-detail cursor-pointer">
+                    <h3>Doanh thu theo sản phẩm</h3>
+                    <div class="big-text">
+                        @(Model.Item2.ChiTietSanPham.TongThu != 0 ? String.Format("{0:#,#.##}", Model.Item2.ChiTietSanPham.TongThu) : 0)đ
+                    </div>
+                </div>
+                <div id="collapseDetailDT2_collapseSP" class="collapse">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Tên dịch vụ
+                            </th>
+                            <th>
+                                Tổng số
+                            </th>
+                            <th>
+                                Tổng thu
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.Item2.ChiTietSanPham.ChiTiet)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details", "Products", new { id = item.IDSP })">@item.TenSP</a>
+                                </td>
+                                <td>
+                                    @item.TongSo
+                                </td>
+                                <td>
+                                    @(item.TongThu != 0 ? String.Format("{0:#,#.##}", item.TongThu) : 0)đ
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header d-flex flex-row" id="headingThree">
+        <h5 class="mb-0">
+            <button onclick="selfToggle('collapseThree')" class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                @if (ViewBag.Year != null)
+                {
+                    @Html.Raw($"Thống kê của năm {ViewBag.Year}");
+                }
+                else
+                {
+                    @Html.Raw("Thống kê hàng năm");
+                }
+            </button>
+        </h5>
+        <input onfocusout="window.location.href=`/Profile/ThongKe?month=${this.value.split('-')[1]}&year=${this.value.split('-')[0]}`" style="width: 21px; border: unset; background: unset" type="date" />
+    </div>
+
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="d-flex">
+            <div class="card-body card-extra">
+                Tổng doanh thu
+                <div class="big-text">
+                    @(Model.Item3.TongDoanhThu != 0 ? String.Format("{0:#,#.##}", Model.Item3.TongDoanhThu) : 0)đ
+                </div>
+                <div onclick="selfToggle('collapseDetailDT3')" class="small-text fw-normal user-select-none cursor-pointer">
+                    Xem thêm &darr;
+                </div>
+            </div>
+            <div class="card-body card-extra">
+                Tổng số lượng khách hàng
+                <div class="big-text">
+                    @Model.Item3.TongKhacHang
+                </div>
+            </div>
+            <div class="card-body card-extra">
+                Tổng số đơn hàng xử lý
+                <div class="big-text">
+                    @Model.Item3.TongDatHang
+                </div>
+            </div>
+        </div>
+        <div id="collapseDetailDT3" class="collapse">
+            <div class="card-body card-extra">
+                <div onclick="selfToggle('collapseDetailDT3_collapseSP')" class="card-body card-detail cursor-pointer">
+                    <h3>Doanh thu theo sản phẩm</h3>
+                    <div class="big-text">
+                        @(Model.Item3.ChiTietSanPham.TongThu != 0 ? String.Format("{0:#,#.##}", Model.Item3.ChiTietSanPham.TongThu) : 0)đ
+                    </div>
+                </div>
+                <div id="collapseDetailDT3_collapseSP" class="collapse">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Tên dịch vụ
+                            </th>
+                            <th>
+                                Tổng số
+                            </th>
+                            <th>
+                                Tổng thu
+                            </th>
+                        </tr>
+                        @foreach (var item in Model.Item3.ChiTietSanPham.ChiTiet)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details", "Products", new { id = item.IDSP })">@item.TenSP</a>
+                                </td>
+                                <td>
+                                    @item.TongSo
+                                </td>
+                                <td>
+                                    @(item.TongThu != 0 ? String.Format("{0:#,#.##}", item.TongThu) : 0)đ
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,70 +1,106 @@
 ﻿@model anhemtoicodeweb.Models.Customer
 
 @{
+    var listID = Model.OrderProes.ToList().Select(x => x.ID);
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .p {
-        font-size: large;
-        margin: inherit;
-    }
 
-    button {
-        border-radius: 7px;
-    }
 
-    .edit,
-    .dropbtn {
-        background-color: #4E6C50;
-        color: white;
-        font-size: 16px;
-        border: none;
-        padding: 10px;
-        padding-bottom: 10px;
-        border-radius: 7px;
-        max-height: 41px;
-    }
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ForAdmin.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Slick/slick.min.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .navbar-header {
+            border-bottom: unset;
+        }
 
-    .dropbtn {
-        margin-bottom: 4px
-    }
+        .p {
+            font-size: large;
+            margin: inherit;
+        }
 
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
+        button {
+            border-radius: 7px;
+        }
 
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 165px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        border-radius: 7px;
-        overflow: hidden;
-    }
+        .edit,
+        .dropbtn {
+            background-color: #4E6C50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            padding: 10px;
+            padding-bottom: 10px;
+            border-radius: 7px;
+            max-height: 41px;
+        }
 
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
+        .dropbtn {
+            margin-bottom: 4px
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 165px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
             display: block;
         }
 
-            .dropdown-content a:hover {
-                background-color: #ddd;
+        .profile-info p {
+            font-size: 24px;
+        }
+
+        .container-wrap {
+            justify-content: start;
+        }
+    </style>
+}
+
+@section Javascript {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Slick/slick.min.js")" defer></script>
+    <script>
+        @foreach (var d in Model.OrderProes)
+        {
+            @:$(document).ready(function () {
+                @:$('#product-slider@(d.ID) .slide-container').slick({
+                    @:lazyLoad: 'ondemand',
+                    @:slidesToShow: 5,
+                    @:draggable: false,
+                    @:infinite: false,
+                    @:prevArrow: "#product-slider@(d.ID) .slick-prev-prod",
+                    @:nextArrow: "#product-slider@(d.ID) .slick-next-prod",
+                @:});
             }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .profile-info p {
-        font-size: 24px;
-    }
-</style>
+        });
+    </script>
+}
 
 <h2>Profile</h2>
 @if (Session["IsAdmin"] is true)
@@ -72,13 +108,16 @@
     <h2 class="py-3">Admin Panel</h2>
     <p>
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#productsCollapse" aria-expanded="false" aria-controls="productsCollapse">
-            Products
+            Sản phẩm
         </button>
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
-            Category
+            Hãng
         </button>
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#customersCollapse" aria-expanded="false" aria-controls="customersCollapse">
-            Customers
+            Khách hàng
+        </button>
+        <button class="btn btn-primary" type="button" onclick="window.location.href='/Profile/ThongKe'">
+            Thống kê
         </button>
     </p>
     <div class="px-3 collapse" id="productsCollapse">
@@ -109,8 +148,8 @@
     <p>Số điện thoại: <b>@Model.PhoneCus</b></p>
     <p>Địa chỉ hiện tại: <b>@Model.AddressName</b></p>
     <div class="dropdown">
-        <button class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>
-        <div style=" border-radius: 7px;" class="dropdown-content">
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#orderCollapse" aria-expanded="false" aria-controls="orderCollapse" class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>
+        <div style="border-radius: 7px;" class="dropdown-content">
             @foreach (var order in Model.OrderProes)
             {
                 <a href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID</a>
@@ -118,4 +157,34 @@
         </div>
     </div>
     <a href="@Url.Action("EditProfile")" class="no-select edit">Chỉnh sửa thông tin</a>
+</div>
+
+<hr />
+<div class="collapse" id="orderCollapse">
+    @foreach (var order in Model.OrderProes)
+    {
+        <h2>Đơn hàng số @order.ID</h2>
+        <div class="position-relative" id="product-slider@(order.ID)">
+            <button class="slick-prev-prod slick-arrow"><</button>
+            <button class="slick-next-prod slick-arrow">></button>
+            <div class="slide-container">
+                @for (int i = 0; i <= order.OrderDetails.Count(); i++)
+                {
+                    if (i % 2 != 0)
+                    {
+                        continue;
+                    }
+                    <div>
+                        <div class="container-wrap product">
+                            @foreach (var dt in order.OrderDetails.Skip(i).Take(2))
+                            {
+                                Html.RenderPartial("../Products/PartialProduct", dt.Product, ViewData);
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <hr />
+    }
 </div>

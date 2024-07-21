@@ -1,4 +1,6 @@
 ﻿using anhemtoicodeweb.Models;
+using anhemtoicodeweb.Models.ThongKe;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -58,6 +60,29 @@ namespace anhemtoicodeweb.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ThongKe(int? month, int? year, bool? iframe)
+        {
+            var s = ThongKeNgay.UseDB(database);
+            var ss = ThongKeThang.UseDB(database, month, year);
+            var sss = ThongKeNam.UseDB(database, year);
+
+            if (iframe.HasValue)
+            {
+                ViewBag.iframe = iframe.Value;
+            }
+            if (month.HasValue)
+            {
+                ViewBag.Month = month.Value;
+            }
+
+            if (year.HasValue)
+            {
+                ViewBag.Year = year.Value;
+            }
+
+            return View(new Tuple<ThongKeNgay, ThongKeThang, ThongKeNam>(s, ss, sss));
         }
     }
 }

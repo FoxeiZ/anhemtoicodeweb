@@ -22,9 +22,9 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            context.Products.ForEach(p =>
+            context.OrderProes.ForEach(p =>
             {
-                p.FinalPrice = p.Price + (p.Price * p.Tax) - (p.Price * p.Discount);
+                p.State = "Đang giao hàng";
             });
         }
     }

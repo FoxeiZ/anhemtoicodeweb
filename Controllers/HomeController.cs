@@ -1,4 +1,5 @@
 ﻿using anhemtoicodeweb.Models;
+using anhemtoicodeweb.Models.ThongKe;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
