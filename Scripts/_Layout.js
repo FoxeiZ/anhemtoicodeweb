@@ -15,9 +15,13 @@ function postAddCart(id) {
         body: id
     }).then((response) => {
         if (!response.ok) {
-            console.error("wrongg!")
+            return console.error("wrongg!")
         }
         bs5Utils.Snack.show('secondary', 'Thêm vào giỏ hàng thành công!', 2500, true);
+        const div = document.getElementById("cart_number");
+        const quantity = Number(div.innerHTML)
+        div.style.display = "flex";
+        div.innerHTML = quantity + 1;
         return console.log("ok!")
     })
 }

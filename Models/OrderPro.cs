@@ -16,7 +16,7 @@ namespace anhemtoicodeweb.Models
         public int ID { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? DateOrder { get; set; }
+        public DateTime DateOrder { get; set; }
 
         public int? IDCus { get; set; }
         public int PhoneNumber { get; set; }

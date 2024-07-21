@@ -19,7 +19,7 @@ namespace anhemtoicodeweb.Models
             Discount = 0;
             Tax = 0;
 
-            ImagePro = "~/Image/Product/CuonTuiRac.jpg";
+            ImagePro = "~/Image/Product/banphim.png";
         }
 
         public int ProductID { get; set; }
@@ -36,6 +36,7 @@ namespace anhemtoicodeweb.Models
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
         public decimal Tax { get; set; }
+        public decimal FinalPrice { get; set; }
 
         public string ImagePro { get; set; }
 

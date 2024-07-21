@@ -17,7 +17,7 @@
     <script>
         function sanitizePrice(div) {
             var price = div.querySelector(".product-price");
-            price.value = price.value.replace("đ", "").replace(",", "");
+            price.value = price.value.replace("đ", "").replace(/,/g, "");
         }
 
         function ChangeImage(UploadImage) {
@@ -40,33 +40,62 @@
 <form action="/Products/Create" enctype="multipart/form-data" method="post" onsubmit="sanitizePrice(this)">
     @Html.AntiForgeryToken()
 
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ProductID)
     <div class="container-wrap product">
         <div class="product-box">
             <div class="product-image">
                 <div id="upload-image-overlay" onclick="document.getElementById('selectedFile').click();">
                     <div class="plus-button"></div>
-                    <input id="selectedFile" name="UploadImage" class="d-none" type="file" onchange="ChangeImage(this)"/>
+                    <input id="selectedFile" name="UploadImage" class="d-none" type="file" onchange="ChangeImage(this)" />
                 </div>
                 <img id="preview-img" src="@Url.Content(Model.ImagePro)" />
-                <input type="hidden" id="ImagePro" name="ImagePro" value="@Model.ImagePro" />
             </div>
             <div class="product-content">
                 <div class="main-content">
-                    <input class="product-price" name="Price" id="Price" type="text" value="@(Model.Price)đ" />
-                    <textarea class="edit-product-name" id="NamePro" name="NamePro" rows="12" cols="50" placeholder="Tên sản phẩm">@Model.NamePro</textarea>
+                    <input class="product-price" name="Price" id="Price" type="text" value="@String.Format("{0:#,#.##}", 1000)đ" />
+                    <textarea class="edit-product-name" id="NamePro" name="NamePro" rows="12" cols="50">NewProductName</textarea>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="IDCate">Hãng sản phẩm</label>
-                    <div class="d-flex">
-                        @Html.DropDownList("IDCate", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-column">
+                        <div class="form-group">
+                            <label class="control-label" for="IDCate">Hãng sản phẩm</label>
+                            <div class="d-flex">
+                                @Html.DropDownList("IDCate", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="IDCate">Số lượng tồn kho</label>
+                            <div class="d-flex">
+                                <input class="form-control" type="number" name="InvQuantity" min="0" max="9999" id="InvQuantity" value="@Model.InvQuantity" />
+                                @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="ImagePro">Đường dẫn hình ảnh</label>
+                            <div class="d-flex">
+                                <input class="form-control" type="text" id="ImagePro" name="ImagePro" value="@Model.ImagePro" />
+                                <input class="form-control" type="hidden" id="OldImagePro" name="OldImagePro" value="@Model.ImagePro" />
+                                @Html.ValidationMessageFor(model => model.ImagePro, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="IDCate">Số lượng tồn kho</label>
-                    <div class="d-flex">
-                        <input class="form-control" type="number" name="InvQuantity" min="0" max="9999" id="InvQuantity" value="@Model.InvQuantity" />
-                        @Html.ValidationMessageFor(model => model.IDCate, "", new { @class = "text-danger" })
+                    <div class="d-flex flex-column">
+                        <div class="form-group">
+                            <label class="control-label" for="Discount">Khuyến Mãi</label>
+                            <div class="d-flex">
+                                <input class="form-control" type="number" name="Discount" id="Discount" value="@Model.Discount" />
+                                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="Tax">Thuế</label>
+                            <div class="d-flex">
+                                <input class="form-control" type="number" name="Tax" id="Tax" value="@Model.Tax" />
+                                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <input style="background-color: transparent; border: none" type="submit" value="✓" />

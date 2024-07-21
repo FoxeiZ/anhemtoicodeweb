@@ -40,6 +40,9 @@ namespace anhemtoicodeweb.Controllers
 
         public ActionResult Search(string query, int? page = 1)
         {
+            ViewBag.CurrentPage = 0;
+            ViewBag.MaxPage = 0;
+
             if (query == null || query.Length == 0)
             {
                 return View();

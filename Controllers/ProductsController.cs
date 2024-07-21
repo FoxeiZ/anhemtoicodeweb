@@ -88,6 +88,8 @@ namespace anhemtoicodeweb.Controllers
                 product.UploadImage.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last()));
             }
 
+            product.FinalPrice = product.Price + (product.Price * product.Tax) - (product.Price * product.Discount);
+
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
@@ -144,14 +146,15 @@ namespace anhemtoicodeweb.Controllers
                 System.IO.File.Move(oldfile, file);
             }
 
+            product.FinalPrice = product.Price + (product.Price * product.Tax) - (product.Price * product.Discount);
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = product.ProductID });
             }
             ViewBag.IDCate = new SelectList(db.Categories, "IDCate", "NameCate", product.IDCate);
-            return View(product);
+            return View(db.Products.Where(p => p.ProductID == product.ProductID).FirstOrDefault());
         }
 
         // GET: Products/Delete/5

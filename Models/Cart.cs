@@ -17,7 +17,7 @@ namespace anhemtoicodeweb.Models
             get { return items; }
         }
 
-        public void AddProductCart(Product product, int quantity = 1)
+        public bool AddProductCart(Product product, int quantity = 1)
         {
             var item = Items.FirstOrDefault(s => s._product.ProductID == product.ProductID);
             if (item == null)
@@ -27,13 +27,17 @@ namespace anhemtoicodeweb.Models
                     _quantity = quantity,
                     _product = product
                 });
-                return;
+                return true;
             }
 
             var tempQ = quantity + item._quantity;
             if (tempQ > product.InvQuantity)
-                tempQ = product.InvQuantity;
+            {
+                item._quantity = product.InvQuantity;
+                return false;
+            }
             item._quantity = tempQ;
+            return true;
         }
 
         public int TotalQuantity()

@@ -3,10 +3,28 @@
 @{
     ViewBag.Title = "ShowCart";
     string placeholder_addr = (TempData["Address"] != null && (string)TempData["Address"] != "") ? "Bỏ trống nếu muốn dùng địa chỉ cũ" : "Nhập địa chỉ giao hàng";
+    string FirstTotal = "";
     string TotalMoney = "";
+    string TotalDiscount = "";
+    string TotalTax = "";
+
+    decimal totalDiscount = 0;
+    decimal totalTax = 0;
+    decimal total = 0;
     if (Model != null && Model.Items.Count() > 0)
     {
-        TotalMoney = String.Format(": {0:#,#.##}đ", Model.TotalMoney());
+        //TotalMoney = String.Format(": {0:#,#.##}đ", Model.TotalMoney());
+        foreach (var item in Model.Items)
+        {
+            var prodTotal = (item._quantity * item._product.Price);
+            totalDiscount += prodTotal * item._product.Discount;
+            totalTax += prodTotal * item._product.Tax;
+            total += prodTotal - (prodTotal * item._product.Discount) + (prodTotal * item._product.Tax);
+        }
+        FirstTotal = String.Format(": {0:#,#.##}đ", Model.TotalMoney());
+        TotalMoney = String.Format(": {0:#,#.##}đ", total);
+        TotalDiscount = String.Format(": -{0:#,#.##}đ", totalDiscount);
+        TotalTax = String.Format(": +{0:#,#.##}đ", totalTax);
     }
 }
 
@@ -93,7 +111,7 @@
 <a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
 @if (Model != null && Model.Items.Count() > 0)
 {
-    <div class="container-wrap product" style="justify-content: center; gap: 12px">
+    <div class="container-wrap product" style="justify-content: flex-start; gap: 12px">
         @foreach (var item in Model.Items)
         {
             <div class="product-box">
@@ -103,7 +121,15 @@
                 </div>
                 <div class="product-content">
                     <div class="main-content">
-                        <div class="product-price">@(String.Format("{0:#,#.##}", item._product.Price))đ</div>
+                        @if (item._product.Discount > 0)
+                        {
+                            <div class="product-price" style="font-size: 12px;color: red;text-decoration: line-through;line-height: unset;">@(String.Format("{0:#,#.##}", item._product.Price))đ</div>
+                            <div class="product-price">@(String.Format("{0:#,#.##}", item._product.Price - (item._product.Price * item._product.Discount) ))đ</div>
+                        }
+                        else
+                        {
+                            <div class="product-price">@(String.Format("{0:#,#.##}", item._product.Price ))đ</div>
+                        }
                         <a href="@Url.Action("Details", "Products", new { id = item._product.ProductID })" style="text-decoration: none">
                             <div class="product-name">@item._product.NamePro</div>
                         </a>
@@ -119,6 +145,10 @@
             </div>
         }
         <div class="w-100">
+            <hr />
+            <h2 class="text-end">Tổng tiền sản phẩm@(FirstTotal)</h2>
+            <h2 class="text-end">Tổng thuế@(TotalTax)</h2>
+            <h2 class="text-end">Tổng khuyến mãi@(TotalDiscount)</h2>
             <hr />
             <h2 class="text-end">Tổng tiền@(TotalMoney)</h2>
         </div>

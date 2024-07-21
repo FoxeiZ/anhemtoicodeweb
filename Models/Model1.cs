@@ -1,3 +1,4 @@
+using anhemtoicodeweb.Migrations;
 using System.Data.Entity;
 
 namespace anhemtoicodeweb.Models
@@ -7,6 +8,8 @@ namespace anhemtoicodeweb.Models
         public Model1()
             : base("name=Database")
         {
+            Database.SetInitializer
+         (new MigrateDatabaseToLatestVersion<Model1, Configuration>());
         }
 
         public virtual DbSet<AdminUser> AdminUsers { get; set; }

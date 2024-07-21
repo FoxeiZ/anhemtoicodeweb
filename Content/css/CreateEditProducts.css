@@ -1,6 +1,7 @@
 ﻿.product-box {
-    padding-bottom: 15px;
+    width: 100%;
     height: auto;
+    flex-direction: row;
 }
 
 .container-wrap {
@@ -20,10 +21,21 @@
     line-height: 20px;
 }
 
-input.product-price,
-textarea.edit-product-name {
+input,
+textarea,
+select {
+    max-width: unset;
+}
+
+    input.product-price,
+    textarea.edit-product-name {
+        width: fit-content;
+        border: none;
+        resize: both;
+    }
+
+.d-flex.flex-column {
     width: 100%;
-    border: none;
 }
 
 #big-ass-arrow {
@@ -46,6 +58,10 @@ textarea.edit-product-name {
 
 .product-image {
     position: relative;
+    max-width: 400px;
+    height: 100%;
+    aspect-ratio: unset;
+    object-fit: unset;
 }
 
 #upload-image-overlay {
@@ -66,4 +82,16 @@ textarea.edit-product-name {
 .product-image:hover #upload-image-overlay {
     opacity: 1;
     visibility: visible;
+}
+
+#preview-img {
+    width: 100%;
+    height: auto;
+    object-fit: scale-down;
+    aspect-ratio: unset;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
 }

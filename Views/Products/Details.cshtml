@@ -39,12 +39,25 @@
             <div>
                 <h2> @Html.DisplayFor(model => model.NamePro) </h2>
             </div>
-            <div>
-                <l>@Html.DisplayFor(model => model.DecriptionPro) </l>
-            </div>
-            <div>
+            @if (Model.DecriptionPro != null && Model.DecriptionPro != "None")
+            {
+                <div>
+                    <l>@Html.DisplayFor(model => model.DecriptionPro) </l>
+                </div>
+            }
+        <div>
+            @if (Model.Discount > 0)
+            {
+                <b style="color: red; text-decoration-line: line-through; font-size: 18px">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
+                <b style="color: red; font-size: 18px">-@String.Format("{0:P2}", Model.Discount)</b>
+                <br />
+                <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price - (Model.Price * Model.Discount) ))đ</b>
+            }
+            else
+            {
                 <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
-            </div>
+            }
+        </div>
             <div class="button-container">
                 <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">
                     @if (Model.InvQuantity == 0)

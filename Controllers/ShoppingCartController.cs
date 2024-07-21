@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
-namespace KetNoiDatabase.Controllers
+namespace anhemtoicodeweb.Controllers
 {
     public class ShoppingCartController : Controller
     {
@@ -59,8 +59,14 @@ namespace KetNoiDatabase.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
-            GetCart().AddProductCart(_pro);
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            if (GetCart().AddProductCart(_pro))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         public ActionResult RemoveCart(int id)
