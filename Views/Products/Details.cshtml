@@ -6,10 +6,49 @@
 
 }
 
+@section JavaScript {
+    <script>
+        function selfToggle(n) {
+            $("#" + n).collapse("toggle")
+        }
+    </script>
+}
+
 @section Styles {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="@Url.Content("~/Content/css/ProductDetails.css")" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" />
+    <style>
+        .card {
+            margin-bottom: 1rem;
+        }
+
+        .table {
+            margin: unset !important;
+        }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .card-extra {
+            margin: 8px;
+        }
+
+            .card-extra .big-text {
+                font-weight: bold;
+                font-size: 32px;
+            }
+
+            .card-extra .small-text {
+                font-size: 12px;
+            }
+
+        .card-body .card-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 }
 
 <div style="margin-bottom: 24px" class="list-href">
@@ -45,19 +84,19 @@
                     <l>@Html.DisplayFor(model => model.DecriptionPro) </l>
                 </div>
             }
-        <div>
-            @if (Model.Discount > 0)
-            {
-                <b style="color: red; text-decoration-line: line-through; font-size: 18px">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
-                <b style="color: red; font-size: 18px">-@String.Format("{0:P2}", Model.Discount)</b>
-                <br />
-                <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price - (Model.Price * Model.Discount) ))đ</b>
-            }
-            else
-            {
-                <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
-            }
-        </div>
+            <div>
+                @if (Model.Discount > 0)
+                {
+                    <b style="color: red; text-decoration-line: line-through; font-size: 18px">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
+                    <b style="color: red; font-size: 18px">-@String.Format("{0:P2}", Model.Discount)</b>
+                    <br />
+                    <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price - (Model.Price * Model.Discount) ))đ</b>
+                }
+                else
+                {
+                    <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
+                }
+            </div>
             <div class="button-container">
                 <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">
                     @if (Model.InvQuantity == 0)
@@ -72,9 +111,27 @@
                 @if (Session["IsAdmin"] is true)
                 {
                     <div class="d-flex gap-4" style="padding-left:20px;padding-top:10px">
-                        @Html.ActionLink("Edit product", "Edit", new { id = Model.ProductID }, new { @class = "no-select EditBtn" })
+                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ProductID }, new { @class = "no-select EditBtn" })
                     </div>
                 }
+            </div>
+            <div id="accordion" style="margin-left: 30px; margin-top: 24px;">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button onclick="selfToggle('collapseOne')" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Mô tả sản phẩm
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div style="min-height: 140px" class="d-flex">
+                            <div class="card-body card-extra p-3">
+                                @Model.DecriptionPro
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

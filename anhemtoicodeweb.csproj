@@ -124,6 +124,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OrderProesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
@@ -267,10 +268,14 @@
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Profile\ThongKe.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Products\PartialOrdersProduct.cshtml" />
+    <Content Include="Views\ShoppingCart\EditOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\logoforcategory\" />
+    <Folder Include="Views\OrderProes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

@@ -237,23 +237,67 @@ namespace anhemtoicodeweb.Controllers
             {
                 return View();
             }
+
             OrderPro _order = database.OrderProes.Where(x => x.ID == id).FirstOrDefault();
             if (_order == null)
             {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(_order);
+        }
+
+        public ActionResult EditOrder(int? id)
+        {
+            if (id == null)
+            {
                 return View();
             }
-            //List<OrderDetail> order_items = new List<OrderDetail>();
 
-            Product product;
-            List<CartItem> cartItems = new List<CartItem>();
-            var order_items = database.OrderDetails.Where(x => x.IDOrder == _order.ID).ToList();
-            foreach (var item in order_items)
+            OrderPro _order = database.OrderProes.Where(x => x.ID == id).FirstOrDefault();
+            if (_order == null)
             {
-                product = database.Products.Where(x => x.ProductID == item.ID).FirstOrDefault();
-                CartItem cartItem = new CartItem { _quantity = (int)item.Quantity, _product = item.Product };
-                cartItems.Add(cartItem);
+                return RedirectToAction("Index", "Home");
             }
-            return View(cartItems);
+
+            var l = new List<String>()
+            {
+                "Đang xử lý",
+                "Đã xử lý",
+                "Đang giao hàng",
+                "Đã giao hàng",
+                "Đang hủy",
+                "Đã hủy",
+            };
+
+            ViewBag.State = l.Select(x => new SelectListItem { Text = x, Value = x, Selected = (x == _order.State) }).ToList();
+            return View(_order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOrder([Bind(Include = "ID,DateOrder,IDCus,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
+        {
+            if (ModelState.IsValid)
+            {
+                database.Entry(orderPro).State = EntityState.Modified;
+                database.SaveChanges();
+                return RedirectToAction("CheckOrder", new { id = orderPro.ID });
+            }
+
+            var l = new List<String>()
+            {
+                "Đang xử lý",
+                "Đã xử lý",
+                "Đang giao hàng",
+                "Đã giao hàng",
+                "Đang hủy",
+                "Đã hủy",
+            };
+
+            ViewBag.State = l.Select(x => new SelectListItem { Text = x, Value = x, Selected = (x == orderPro.State) }).ToList();
+
+            return View(orderPro);
         }
     }
 }

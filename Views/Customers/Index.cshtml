@@ -10,7 +10,8 @@
 <p>
     @Html.ActionLink("Tạo mới", "Create", "", new { @class = "btn btn-success" })
 </p>
-<table class="table">
+<input type="text" id="myInput" onkeyup="searchCus('myInput', 'cusTable')" placeholder="Tìm kiếm khách hàng..">
+<table id="cusTable" class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.NameCus)
@@ -30,7 +31,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="clickable" onclick="window.location.href='/Customers/Details/@item.IDCus'">
             <td>
                 @Html.DisplayFor(modelItem => item.NameCus)
             </td>

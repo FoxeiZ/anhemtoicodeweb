@@ -1,54 +1,169 @@
-﻿@model IEnumerable<anhemtoicodeweb.Models.CartItem>
+﻿@model anhemtoicodeweb.Models.OrderPro
 
 @{
-    ViewBag.Title = "CheckOrder";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ShowCart";
+    string FirstTotal = "";
+    string TotalMoney = "";
+    string TotalDiscount = "";
+    string TotalTax = "";
+
+    decimal totalDiscount = 0;
+    decimal totalTax = 0;
+    decimal firstTotal = 0;
     decimal total = 0;
+    if (Model != null && Model.OrderDetails.Count() > 0)
+    {
+        //TotalMoney = String.Format(": {0:#,#.##}đ", Model.TotalMoney());
+        foreach (var item in Model.OrderDetails)
+        {
+            var prodTotal = (item.Quantity * item.Product.Price);
+            firstTotal += prodTotal;
+            totalDiscount += prodTotal * item.Product.Discount;
+            totalTax += prodTotal * item.Product.Tax;
+            total += prodTotal - (prodTotal * item.Product.Discount) + (prodTotal * item.Product.Tax);
+        }
+        FirstTotal = String.Format(": {0:#,#.##}đ", firstTotal);
+        TotalMoney = String.Format(": {0:#,#.##}đ", total);
+        TotalDiscount = String.Format(": -{0:#,#.##}đ", totalDiscount);
+        TotalTax = String.Format(": +{0:#,#.##}đ", totalTax);
+    }
 }
 
-<h2>Kiểm tra thanh toán</h2>
-@if (Model == null)
-{
-    <form method="get" class="d-flex justify-content-center align-items-center flex-column" style="height: 40vh">
-        <h1>Nhập mã đơn hàng cần kiểm tra</h1>
-        <input style="border-radius: 10px; height: 10vh; text-align: center; font-size: larger" type="text" name="id">
-    </form>
-}
-else
-{
-    <table class="table">
-        <tr>
-            <th></th>
-            <th>Tên mặt hàng</th>
-            <th>Hãng</th>
-            <th>Số lượng</th>
-            <th>Giá tiền(đơn)</th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            total += (decimal)item._product.Price * item._quantity;
-            <tr>
-                <td class="d-flex justify-content-center">
-                    <img width="24" height="24" src="@Url.Content(item._product.ImagePro)" />
-                </td>
-                <td>
-                    <a href="@Url.Action("Details", "Products", new { id = item._product.ProductID })">@item._product.NamePro</a>
-                </td>
-                <td>
-                    <a href="@Url.Action("Details", "Categories", new { id = item._product.Category.Id })">
-                        @item._product.Category.NameCate
-                    </a>
-                </td>
-                <td>
-                    @item._quantity
-                </td>
-                <td>
-                    @(String.Format("{0:#,#.##}", item._product.Price))đ
-                </td>
-                <td></td>
-            </tr>
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .item-container {
+            display: flex;
+            height: 100%;
+            max-height: 320px;
+            overflow: hidden;
+            background: white;
+            padding: 12px;
+            margin: 10px 0px 20px 0px;
+            border-radius: 10px;
+            flex-direction: column;
         }
-    </table>
-    <h2>Thành tiền: @(String.Format("{0:#,#.##}", total))đ</h2>
+
+        .flex-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .image-wrapper {
+            height: 100%;
+            width: 15%;
+        }
+
+        .quantity-input {
+            width: 85%;
+            border-radius: 6px;
+            border: #5b5b5b solid 1px;
+            text-indent: 4px;
+        }
+
+        .text h3 {
+            font-size: 12px;
+        }
+
+        .empty-cart {
+            border-radius: 10px;
+            margin: 20px 0px;
+            width: 100%;
+            background-color: white;
+            height: 10vh;
+            line-height: 10vh;
+            text-align: center;
+            font-size: x-large;
+        }
+
+        .preview-img {
+            aspect-ratio: 1;
+            width: 60px;
+            position: relative;
+            transform: translateX(30%);
+        }
+
+        table {
+            margin: 20px 0;
+        }
+
+        .close {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            font-size: 35px;
+            top: -10px;
+            right: 0;
+            cursor: pointer;
+            transform: rotate(45deg);
+            color: red;
+            transition: all 0.2s ease;
+        }
+
+        .product-box:hover .close {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+}
+
+<h2>Đơn hàng số @Model.ID</h2>
+@if (Session["IsAdmin"] is true)
+{
+
+}
+
+@if (Model != null && Model.OrderDetails.Count() > 0)
+{
+    <div class="container-wrap product" style="justify-content: flex-start; gap: 12px">
+        @foreach (var item in Model.OrderDetails)
+        {
+            <div class="product-box">
+                <a href="/ShoppingCart/RemoveCart/@item.Product.ProductID" class="no-select close">+</a>
+                <div class="position-relative product-image">
+                    <img src="@Url.Content(item.Product.ImagePro)" />
+                </div>
+                <div class="product-content">
+                    <div class="main-content">
+                        @if (item.Product.Discount > 0)
+                        {
+                            <div class="product-price" style="font-size: 12px;color: red;text-decoration: line-through;line-height: unset;">@(String.Format("{0:#,#.##}", item.Product.Price))đ</div>
+                            <div class="product-price">@(String.Format("{0:#,#.##}", item.Product.Price - (item.Product.Price * item.Product.Discount) ))đ</div>
+                        }
+                        else
+                        {
+                            <div class="product-price">@(String.Format("{0:#,#.##}", item.Product.Price ))đ</div>
+                        }
+                        <a href="@Url.Action("Details", "Products", new { id = item.Product.ProductID })" style="text-decoration: none">
+                            <div class="product-name">@item.Product.NamePro</div>
+                        </a>
+                    </div>
+                    @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
+                    {
+                        <div style="padding-bottom: 5px">Số lượng</div>
+                        <input type="hidden" value="@item.Product.ProductID" name="idPro" />
+                        <input readonly class="quantity-input" type="number" min="0" max="@item.Product.InvQuantity" value="@item.Quantity" name="cartQuantity" />
+                    }
+                </div>
+            </div>
+        }
+        <div class="w-100">
+            @if (total != firstTotal)
+            {
+                <hr />
+                <h2 class="text-end">Tổng tiền sản phẩm@(FirstTotal)</h2>
+            }
+            @if (totalTax > 0)
+            {
+                <h2 class="text-end">Tổng thuế@(TotalTax)</h2>
+            }
+            @if (totalDiscount > 0)
+            {
+                <h2 class="text-end">Tổng khuyến mãi@(TotalDiscount)</h2>
+            }
+            <hr />
+            <h2 class="text-end">Tổng tiền@(TotalMoney)</h2>
+        </div>
+    </div>
 }

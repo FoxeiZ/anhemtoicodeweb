@@ -26,6 +26,27 @@ namespace anhemtoicodeweb.Controllers
             return View(customers.ToList());
         }
 
+        public ActionResult Details(int? id)
+        {
+            //if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var customer = db.Customers.Where(x => x.IDCus == id).FirstOrDefault();
+            if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            return View(customer);
+        }
+
         public ActionResult Create()
         {
             if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
@@ -66,6 +87,7 @@ namespace anhemtoicodeweb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Customer customer = db.Customers.Find(id);
             if (customer == null)
             {

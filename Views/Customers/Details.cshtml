@@ -1,8 +1,7 @@
 ﻿@model anhemtoicodeweb.Models.Customer
 
 @{
-    var listID = Model.OrderProes.ToList().Select(x => x.ID);
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -125,30 +124,9 @@
             }
         });
 
-        function searchCus(inp, tab) {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById(inp);
-            filter = input.value.toUpperCase();
-            table = document.getElementById(tab);
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-
-
-        function searchOrders() {
+        function searchCus(inp) {
             var input, filter, h2, h, i, txtValue;
-            input = document.getElementById("searchOrders");
+            input = document.getElementById(inp);
             filter = input.value.toUpperCase();
             h2 = document.getElementById("orderCollapse").getElementsByTagName("h2");
 
@@ -164,70 +142,54 @@
                 }
             }
         }
-
     </script>
 }
 
-<h2>Profile</h2>
-@if (Session["IsAdmin"] is true)
-{
-    <h2 class="py-3">Admin Panel</h2>
-    <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#productsCollapse" aria-expanded="false" aria-controls="productsCollapse">
-            Sản phẩm
-        </button>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
-            Hãng
-        </button>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#customersCollapse" aria-expanded="false" aria-controls="customersCollapse">
-            Khách hàng
-        </button>
-        <button class="btn btn-primary" type="button" onclick="window.location.href='/Profile/ThongKe'">
-            Thống kê
-        </button>
-    </p>
-    <div class="px-3 collapse" id="productsCollapse">
-        @{
-            Html.RenderAction("Index", "Products");
-        }
-        <hr />
-    </div>
-    <div class="px-3 collapse" id="categoryCollapse">
-        @{
-            Html.RenderAction("Index", "Categories");
-        }
-        <hr />
-    </div>
-    <div class="px-3 collapse" id="customersCollapse">
-        @{
-            Html.RenderAction("Index", "Customers");
-        }
-        <hr />
-    </div>
-}
+<h2>Chi tiết khách hàng: @Model.NameCus</h2>
 
-<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameCus)
+        </dt>
 
-<div class="profile-info">
-    <p>Tên người dùng: <b>@Model.NameCus</b></p>
-    <p>Email: <b>@Model.EmailCus</b></p>
-    <p>Số điện thoại: <b>@Model.PhoneCus</b></p>
-    <p>Địa chỉ hiện tại: <b>@Model.AddressName</b></p>
-    <div class="dropdown">
-        <button type="button" data-bs-toggle="collapse" data-bs-target="#orderCollapse" aria-expanded="false" aria-controls="orderCollapse" class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>
-        <div style="border-radius: 7px;" class="dropdown-content">
-            @foreach (var order in Model.OrderProes)
-            {
-                <a href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID</a>
-            }
-        </div>
-    </div>
-    <a href="@Url.Action("EditProfile")" class="no-select edit">Chỉnh sửa thông tin</a>
+        <dd>
+            @Html.DisplayFor(model => model.NameCus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneCus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneCus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailCus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailCus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddressName)
+        </dd>
+
+    </dl>
 </div>
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "dropbtn" })
+    <button type="button" data-bs-toggle="collapse" data-bs-target="#orderCollapse" aria-expanded="false" aria-controls="orderCollapse" class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>
+</p>
 
-<hr />
 <div class="collapse" id="orderCollapse">
-    <input type="text" id="searchOrders" class="searchBar" placeholder="Tìm kiếm đơn hàng..." onkeyup="searchOrders()" />
+    <input type="text" id="searchOrders" class="searchBar" placeholder="Tìm kiếm đơn hàng..." onkeyup="searchCus('searchOrders')" />
     @foreach (var order in Model.OrderProes)
     {
         <div>

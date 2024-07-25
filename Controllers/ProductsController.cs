@@ -18,6 +18,11 @@ namespace anhemtoicodeweb.Controllers
             return PartialView(product);
         }
 
+        public PartialViewResult PartialOrdersProduct(OrderDetail product)
+        {
+            return PartialView(product);
+        }
+
         // GET: Products
         public ActionResult Index(int page = 1)
         {

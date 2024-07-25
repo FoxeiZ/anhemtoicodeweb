@@ -32,6 +32,10 @@ a {
     font-size: x-large;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .navbar-header {
     background: #FFF;
     border-bottom: 1px solid #cfcfcf;

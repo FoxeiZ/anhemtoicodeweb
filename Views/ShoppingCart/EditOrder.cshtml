@@ -1,0 +1,82 @@
+﻿@model anhemtoicodeweb.Models.OrderPro
+
+@{
+    ViewBag.Title = "EditOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditOrder</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>OrderPro</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.IDCus)
+    @Html.HiddenFor(model => model.TotalTax)
+    @Html.HiddenFor(model => model.TotalDiscount)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DateOrder, new { htmlAttributes = new { @class = "form-control", @readonly = "" } })
+            @Html.ValidationMessageFor(model => model.DateOrder, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AddressDelivery, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AddressDelivery, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AddressDelivery, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control", @readonly = "" } })
+            @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TotalMoney, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TotalMoney, new { htmlAttributes = new { @class = "form-control", @readonly = "" } })
+            @Html.ValidationMessageFor(model => model.TotalMoney, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("State", null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style=" display: flex; gap: 10px; margin-top: 10px;">
+            <input type="submit" value="Save" class="btn btn-default" style=" background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" />
+            @Html.ActionLink("Back to List", "Index", null, new { @style = " background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" })
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    
+</div>
