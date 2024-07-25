@@ -150,7 +150,7 @@
             var input, filter, h2, h, i, txtValue;
             input = document.getElementById("searchOrders");
             filter = input.value.toUpperCase();
-            h2 = document.getElementById("orderCollapse").getElementsByTagName("h2");
+            h2 = document.getElementById("orderCollapse").getElementsByTagName("a");
 
             for (i = 0; i < h2.length; i++) {
                 h = h2[i];
@@ -231,7 +231,7 @@
     @foreach (var order in Model.OrderProes)
     {
         <div>
-            <a class="orderID" href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID</a>
+            <a class="orderID" href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID | @order.State</a>
             <div class="position-relative" id="product-slider@(order.ID)">
                 <button class="slick-prev-prod slick-arrow"><</button>
                 <button class="slick-next-prod slick-arrow">></button>

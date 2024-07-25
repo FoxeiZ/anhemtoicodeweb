@@ -1,7 +1,9 @@
 ﻿using anhemtoicodeweb.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -298,6 +300,56 @@ namespace anhemtoicodeweb.Controllers
             ViewBag.State = l.Select(x => new SelectListItem { Text = x, Value = x, Selected = (x == orderPro.State) }).ToList();
 
             return View(orderPro);
+        }
+
+        public ActionResult DeleteOrder(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrderPro orderPro = database.OrderProes.Find(id);
+            if (orderPro == null)
+            {
+                return HttpNotFound();
+            }
+            return View(orderPro);
+        }
+
+        [HttpPost, ActionName("DeleteOrder")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteOrderConfirmed(int id)
+        {
+            OrderPro orderPro = database.OrderProes.Find(id);
+            database.OrderDetails.Where(x => x.IDOrder == orderPro.ID).ForEach(x => database.OrderDetails.Remove(x));
+            database.OrderProes.Remove(orderPro);
+            database.SaveChanges();
+            return RedirectToAction("Details", "Customers", new { id = orderPro.IDCus });
+        }
+
+        public ActionResult CancelOrder(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrderPro orderPro = database.OrderProes.Find(id);
+            if (orderPro == null)
+            {
+                return HttpNotFound();
+            }
+            return View(orderPro);
+        }
+
+        [HttpPost, ActionName("CancelOrder")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelOrderConfirmed(int id)
+        {
+            OrderPro orderPro = database.OrderProes.Find(id);
+            orderPro.State = "Đang hủy";
+            database.Entry(orderPro).State = EntityState.Modified;
+            database.SaveChanges();
+            return RedirectToAction("CheckOrder", new { id = orderPro.ID });
         }
     }
 }

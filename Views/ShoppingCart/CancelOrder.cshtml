@@ -1,7 +1,8 @@
 ﻿@model anhemtoicodeweb.Models.OrderPro
 
+
 @{
-    ViewBag.Title = "ShowCart";
+    ViewBag.Title = "Cancel";
     string FirstTotal = "";
     string TotalMoney = "";
     string TotalDiscount = "";
@@ -108,22 +109,7 @@
     </style>
 }
 
-<h2 style="margin-bottom: 24px">Đơn hàng số @Model.ID | @Model.State</h2>
-@if (Session["IsAdmin"] is true)
-{
-    <a style=" background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" href="@Url.Action("EditOrder", new { id = Model.ID })">Cập nhật đơn hàng</a>
-    <a style=" background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" href="@Url.Action("DeleteOrder", new { id = Model.ID })">Xóa đơn hàng</a>
-}
-
-@if (Model.State.Contains("ủy"))
-{
-    <a style=" background-color: #5c5c5c; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;">@Model.State</a>
-}
-else
-{
-    <a style=" background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" href="@Url.Action("CancelOrder", new { id = Model.ID })">Hủy đơn hàng</a>
-}
-
+<h2>Bạn có muốn hủy đơn hàng này?</h2>
 @if (Model != null && Model.OrderDetails.Count() > 0)
 {
     <div class="container-wrap product" style="justify-content: flex-start; gap: 12px">
@@ -175,5 +161,14 @@ else
             <hr />
             <h2 class="text-end">Tổng tiền@(TotalMoney)</h2>
         </div>
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input style=" background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" type="submit" value="Hủy đơn" class="btn btn-default" />
     </div>
 }
