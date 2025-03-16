@@ -109,7 +109,7 @@
 }
 
 <h2 style="margin-bottom: 24px">Đơn hàng số @Model.ID | @Model.State</h2>
-@if (Session["IsAdmin"] is true)
+@if (Session["UserRole"] is anhemtoicodeweb.Enums.Role.Admin)
 {
     <a style=" background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" href="@Url.Action("EditOrder", new { id = Model.ID })">Cập nhật đơn hàng</a>
     <a style=" background-color: #4E6C50; color: white; font-size: 16px; border: none; padding: 10px; padding-bottom: 10px; border-radius: 7px; max-height: 41px;" href="@Url.Action("DeleteOrder", new { id = Model.ID })">Xóa đơn hàng</a>
@@ -132,7 +132,7 @@ else
             <div class="product-box">
                 <a href="/ShoppingCart/RemoveCart/@item.Product.ProductID" class="no-select close">+</a>
                 <div class="position-relative product-image">
-                    <img src="@Url.Content(item.Product.ImagePro)" />
+                    <img src="@Url.Content(item.Product.ImageLocation)" />
                 </div>
                 <div class="product-content">
                     <div class="main-content">
@@ -146,14 +146,14 @@ else
                             <div class="product-price">@(String.Format("{0:#,#.##}", item.Product.Price ))đ</div>
                         }
                         <a href="@Url.Action("Details", "Products", new { id = item.Product.ProductID })" style="text-decoration: none">
-                            <div class="product-name">@item.Product.NamePro</div>
+                            <div class="product-name">@item.Product.Name</div>
                         </a>
                     </div>
                     @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
                     {
                         <div style="padding-bottom: 5px">Số lượng</div>
                         <input type="hidden" value="@item.Product.ProductID" name="idPro" />
-                        <input readonly class="quantity-input" type="number" min="0" max="@item.Product.InvQuantity" value="@item.Quantity" name="cartQuantity" />
+                        <input readonly class="quantity-input" type="number" min="0" max="@item.Product.Quantity" value="@item.Quantity" name="cartQuantity" />
                     }
                 </div>
             </div>

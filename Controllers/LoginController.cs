@@ -1,4 +1,5 @@
 ﻿using anhemtoicodeweb.Models;
+using Microsoft.Ajax.Utilities;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -9,10 +10,9 @@ namespace anhemtoicodeweb.Controllers
         private readonly Model1 database = new Model1();
 
         // GET: LoginUser
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl)
         {
-            var Id = Session["UserId"];
-            if (Id != null)
+            if (Session["UserId"] != null)
             {
                 return RedirectToAction("Index", "Profile");
             }
@@ -20,9 +20,9 @@ namespace anhemtoicodeweb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Customer _user)
+        public ActionResult Index(User _user, string ReturnUrl)
         {
-            var check = database.Customers.Where(s => s.NameCus == _user.NameCus && s.PasswordCus == _user.PasswordCus).FirstOrDefault();
+            var check = database.Users.Where(s => s.Name == _user.Name && s.Password == _user.Password).FirstOrDefault();
             if (check == null)
             {
                 ViewBag.ErrorInfo = "Thông tin đăng nhập bị sai. Vui lòng kiểm tra";
@@ -31,9 +31,11 @@ namespace anhemtoicodeweb.Controllers
             else
             {
                 database.Configuration.ValidateOnSaveEnabled = false;
-                Session["UserId"] = check.IDCus;
-                Session["NameCus"] = check.NameCus;
-                Session["IsAdmin"] = (database.AdminUsers.Where(s => s.NameUser == check.NameCus && s.IDCus == check.IDCus).FirstOrDefault() != null);
+                Session["UserId"] = check.ID;
+                Session["UserName"] = check.Name;
+                Session["UserRole"] = check.Role;
+                if (!ReturnUrl.IsNullOrWhiteSpace())
+                    return Redirect(ReturnUrl);
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -50,20 +52,20 @@ namespace anhemtoicodeweb.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult RegisterUser(Customer _user)
+        public ActionResult RegisterUser(User _user)
         {
             if (ModelState.IsValid)
             {
-                var check = database.Customers.Where(s => s.IDCus == _user.IDCus || s.NameCus == _user.NameCus).FirstOrDefault();
+                var check = database.Users.Where(s => s.ID == _user.ID || s.Name == _user.Name).FirstOrDefault();
                 if (check == null)
                 {
-                    if (_user.ConfirmPasswordCus != _user.PasswordCus)
+                    if (_user.ConfirmPassword != _user.Password)
                     {
                         ViewBag.ErrorRegister = "Password nhập lại không đúng.";
                         return View();
                     }
                     database.Configuration.ValidateOnSaveEnabled = false;
-                    database.Customers.Add(_user);
+                    database.Users.Add(_user);
                     database.SaveChanges();
                     return RedirectToAction("Index");
                 }

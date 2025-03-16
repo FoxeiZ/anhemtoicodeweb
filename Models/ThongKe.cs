@@ -82,7 +82,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                                 sp => sp.ProductID == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
                                 {
                                     self.ChiTietSanPham.ChiTiet.Add(
-                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.NamePro));
+                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.Name));
                                 });
                         }
                     });
@@ -147,7 +147,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                                 sp => sp.ProductID == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
                                 {
                                     self.ChiTietSanPham.ChiTiet.Add(
-                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.NamePro));
+                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.Name));
                                 });
                         }
                     });
@@ -206,7 +206,7 @@ namespace anhemtoicodeweb.Models.ThongKe
                                 sp => sp.ProductID == x.IDProduct).FirstOrDefault().IfNotNull(sp =>
                                 {
                                     self.ChiTietSanPham.ChiTiet.Add(
-                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.NamePro));
+                                        new ChiTiet((int)x.IDProduct, x.Quantity, x.Total, sp.Name));
                                 });
                         }
                     });

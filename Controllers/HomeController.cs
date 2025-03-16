@@ -1,10 +1,10 @@
-﻿using anhemtoicodeweb.Models;
-using anhemtoicodeweb.Models.ThongKe;
+﻿using anhemtoicodeweb.Enums;
+using anhemtoicodeweb.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 
 namespace anhemtoicodeweb.Controllers
@@ -14,8 +14,32 @@ namespace anhemtoicodeweb.Controllers
         private readonly Model1 database = new Model1();
         public ActionResult Index()
         {
-            IEnumerable<Product> productList = database.Products.OrderByDescending(x => x.NamePro).ToList();
-            IEnumerable<Category> categoriesList = database.Categories.OrderByDescending(x => x.NameCate).ToList();
+
+            var userRole = Session["UserRole"].IfNotNull(o => (Role)o, Role.Empty);
+            var userId = (int?)Session["UserId"];
+
+            var productsQuery = database.Products.AsQueryable();
+            // Filter products based on user role
+            if (userRole == Role.Admin)
+            {
+                // Admin sees all products
+                // No additional filters needed
+            }
+            else if (userRole == Role.Seller)
+            {
+                // Seller sees their own products (both shown and hidden) plus other sellers' shown products
+                productsQuery = productsQuery.Where(p =>
+                    p.StateEnumId == (int)ProductState.Shown ||
+                    (p.SellerId == userId && p.StateEnumId != (int)ProductState.Deleted));
+            }
+            else
+            {
+                // Regular users only see shown products
+                productsQuery = productsQuery.Where(p => p.StateEnumId == (int)ProductState.Shown);
+            }
+
+            IEnumerable<Product> productList = productsQuery.OrderByDescending(x => x.Name).ToList();
+            IEnumerable<Category> categoriesList = database.Categories.OrderByDescending(x => x.Name).ToList();
             var tuple = new Tuple<IEnumerable<Product>, IEnumerable<Category>>(productList, categoriesList);
             return View(tuple);
         }
@@ -25,7 +49,7 @@ namespace anhemtoicodeweb.Controllers
             string norm_name;
             foreach (var item in database.Categories)
             {
-                norm_name = NormalizeDiacriticalCharacters(item.NameCate);
+                norm_name = Utils.NormalizeDiacriticalCharacters(item.Name);
                 if (norm_name.Contains(query))
                 {
                     foreach (var prod in item.Products)
@@ -48,13 +72,13 @@ namespace anhemtoicodeweb.Controllers
             {
                 return View();
             }
-            query = NormalizeDiacriticalCharacters(query);
+            query = Utils.NormalizeDiacriticalCharacters(query);
             List<Product> searchQuery = new List<Product>();
 
             string norm_name;
             foreach (var item in database.Products)
             {
-                norm_name = NormalizeDiacriticalCharacters(item.NamePro);
+                norm_name = Utils.NormalizeDiacriticalCharacters(item.Name);
                 if (norm_name.Contains(query))
                 {
                     searchQuery.Add(item);
@@ -70,18 +94,6 @@ namespace anhemtoicodeweb.Controllers
             ViewBag.MaxPage = maxPage;
             ViewBag.CurrentPage = page;
             return View(searchQuery.Skip(((int)page - 1) * 10).Take(10));
-        }
-
-        private string NormalizeDiacriticalCharacters(string value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException("value");
-            }
-
-            var normalised = value.Normalize(NormalizationForm.FormD).ToLower().ToCharArray();
-
-            return new string(normalised.Where(c => (int)c <= 127).ToArray());
         }
 
         public ActionResult ProductDetails()

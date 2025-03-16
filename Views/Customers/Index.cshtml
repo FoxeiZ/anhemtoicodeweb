@@ -1,4 +1,4 @@
-﻿@model IEnumerable<anhemtoicodeweb.Models.Customer>
+﻿@model IEnumerable<anhemtoicodeweb.Models.User>
 
 @{
     ViewBag.Title = "Index";
@@ -14,13 +14,13 @@
 <table id="cusTable" class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.NameCus)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneCus)
+            @Html.DisplayNameFor(model => model.Phone)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmailCus)
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AddressName)
@@ -31,22 +31,22 @@
 
     @foreach (var item in Model)
     {
-        <tr class="clickable" onclick="window.location.href='/Customers/Details/@item.IDCus'">
+        <tr class="clickable" onclick="window.location.href='/Customers/Details/@item.ID'">
             <td>
-                @Html.DisplayFor(modelItem => item.NameCus)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneCus)
+                @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmailCus)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AddressName)
             </td>
             <td>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.IDCus }) |
-                @Html.ActionLink("Xóa", "Delete", new { id = item.IDCus })
+                @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
 
             </td>
             <td></td>

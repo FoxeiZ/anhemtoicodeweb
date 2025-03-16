@@ -12,12 +12,7 @@ namespace anhemtoicodeweb.Controllers
 
         public ActionResult Index()
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var customers = db.Customers.ToList();
+            var customers = db.Users.Where(x => x.RoleEnumId == (int)Enums.Role.Customer).ToList();
             if (ControllerContext.IsChildAction)
             {
                 return PartialView(customers.ToList());
@@ -26,19 +21,15 @@ namespace anhemtoicodeweb.Controllers
             return View(customers.ToList());
         }
 
+        [Filters.RequireAdminRole]
         public ActionResult Details(int? id)
         {
-            //if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var customer = db.Customers.Where(x => x.IDCus == id).FirstOrDefault();
+            var customer = db.Users.Where(x => x.ID == id).FirstOrDefault();
             if (customer == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -47,48 +38,39 @@ namespace anhemtoicodeweb.Controllers
             return View(customer);
         }
 
+
+        [Filters.RequireAdminRole]
         public ActionResult Create()
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDCus,NameCus,PhoneCus,EmailCus,AddressName,PasswordCus")] Customer customer)
+        [Filters.RequireAdminRole]
+        public ActionResult Create([Bind(Include = "ID,Name,Role,Phone,Email,AddressName,Password")] User user)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (ModelState.IsValid)
             {
-                db.Customers.Add(customer);
+                user.Role = Enums.Role.Customer;
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(customer);
+            return View(user);
         }
 
+
+        [Filters.RequireAdminRole]
         public ActionResult Edit(int? id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customer customer = db.Customers.Find(id);
+            User customer = db.Users.Find(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -98,13 +80,9 @@ namespace anhemtoicodeweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDCus,NameCus,PhoneCus,EmailCus,AddressName,PasswordCus")] Customer customer)
+        [Filters.RequireAdminRole]
+        public ActionResult Edit([Bind(Include = "ID,Name,Phone,Email,AddressName,Password")] User customer)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (ModelState.IsValid)
             {
                 db.Entry(customer).State = EntityState.Modified;
@@ -114,18 +92,14 @@ namespace anhemtoicodeweb.Controllers
             return View(customer);
         }
 
+        [Filters.RequireAdminRole]
         public ActionResult Delete(int? id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customers.Find(id);
+            User customer = db.Users.Find(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -135,15 +109,11 @@ namespace anhemtoicodeweb.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Filters.RequireAdminRole]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            Customer customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
+            User customer = db.Users.Find(id);
+            db.Users.Remove(customer);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

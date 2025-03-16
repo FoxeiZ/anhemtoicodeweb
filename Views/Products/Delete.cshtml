@@ -14,13 +14,13 @@
 <div>
     <div class="product-box">
         <div class="product-image">
-            <img src="@Url.Content(Model.ImagePro)" />
+            <img src="@Url.Content(Model.ImageLocation)" />
         </div>
         <div class="product-content">
             <div class="main-content">
                 <div class="product-price">@(String.Format("{0:#,#.##}", Model.Price))đ</div>
                 <a href="@Url.Action("Details", "Products", new { id = Model.ProductID })" style="text-decoration: none">
-                    <div class="product-name">@Model.NamePro</div>
+                    <div class="product-name">@Model.Name</div>
                 </a>
             </div>
             @using (Html.BeginForm())

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<anhemtoicodeweb.Models.Discount>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CodeDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValueDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameDiscount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeDiscount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodeDiscount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValueDiscount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.DiscountID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.DiscountID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.DiscountID })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -11,14 +11,11 @@ namespace anhemtoicodeweb.Controllers
     public class ProfileController : Controller
     {
         private readonly Model1 database = new Model1();
+
+        [Filters.RequiredLogin]
         public ActionResult Index()
         {
-            int _userId = (int?)Session["UserId"] ?? -1;
-            if (_userId < 0)
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            var _user = database.Customers.Find(_userId);
+            var _user = database.Users.Find((int)Session["UserId"]);
             return View(_user);
         }
 
@@ -28,32 +25,28 @@ namespace anhemtoicodeweb.Controllers
             return PartialView(database.Products.ToList());
         }
 
+        [Filters.RequiredLogin]
         public ActionResult EditProfile()
         {
-            int id = (int?)Session["UserId"] ?? -1;
-            if (id < 0)
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            var user = database.Customers.Find(id);
+            var user = database.Users.Find((int)Session["UserId"]);
             return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(Customer customer, string PrevPassword)
+        public ActionResult EditProfile(User customer, string PrevPassword)
         {
             if (ModelState.IsValid)
             {
-                if (customer.PasswordCus != customer.ConfirmPasswordCus)
+                if (customer.Password != customer.ConfirmPassword)
                 {
                     TempData["Error"] = "Mật khẩu nhập lại không trùng";
                     return View();
                 }
 
-                if (customer.PasswordCus == "" || customer.PasswordCus == null)
+                if (customer.Password == "" || customer.Password == null)
                 {
-                    customer.PasswordCus = PrevPassword;
+                    customer.Password = PrevPassword;
                 }
                 database.Entry(customer).State = EntityState.Modified;
                 database.SaveChanges();

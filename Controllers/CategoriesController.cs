@@ -50,24 +50,17 @@ namespace anhemtoicodeweb.Controllers
             return View(tuple);
         }
 
+        [Filters.RequireAdminRole]
         public ActionResult Create()
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDCate,Id,NameCate")] Category category)
+        [Filters.RequireAdminRole]
+        public ActionResult Create([Bind(Include = "CategoryId,Id,Name")] Category category)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             if (ModelState.IsValid)
             {
@@ -79,12 +72,9 @@ namespace anhemtoicodeweb.Controllers
             return View(category);
         }
 
+        [Filters.RequireAdminRole]
         public ActionResult Edit(string id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             if (id == null)
             {
@@ -100,12 +90,9 @@ namespace anhemtoicodeweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDCate,Id,NameCate")] Category category)
+        [Filters.RequireAdminRole]
+        public ActionResult Edit([Bind(Include = "CategoryId,Id,Name")] Category category)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             if (ModelState.IsValid)
             {
@@ -116,12 +103,9 @@ namespace anhemtoicodeweb.Controllers
             return View(category);
         }
 
+        [Filters.RequireAdminRole]
         public ActionResult Delete(string id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             if (id == null)
             {
@@ -137,12 +121,9 @@ namespace anhemtoicodeweb.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Filters.RequireAdminRole]
         public ActionResult DeleteConfirmed(string id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);

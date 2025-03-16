@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using anhemtoicodeweb.Models;
+using Microsoft.Ajax.Utilities;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using anhemtoicodeweb.Models;
 
 namespace anhemtoicodeweb.Controllers
 {
@@ -39,7 +37,7 @@ namespace anhemtoicodeweb.Controllers
         // GET: OrderProes/Create
         public ActionResult Create()
         {
-            ViewBag.IDCus = new SelectList(db.Customers, "IDCus", "NameCus");
+            ViewBag.IDCus = new SelectList(db.Users, "ID", "Name");
             return View();
         }
 
@@ -48,7 +46,7 @@ namespace anhemtoicodeweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DateOrder,IDCus,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
+        public ActionResult Create([Bind(Include = "ID,DateOrder,ID,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
         {
             if (ModelState.IsValid)
             {
@@ -57,44 +55,43 @@ namespace anhemtoicodeweb.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IDCus = new SelectList(db.Customers, "IDCus", "NameCus", orderPro.IDCus);
+            ViewBag.IDCus = new SelectList(db.Users, "ID", "Name", orderPro.IDCus);
             return View(orderPro);
         }
 
-        // GET: OrderProes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View();
             }
-            OrderPro orderPro = db.OrderProes.Find(id);
-            if (orderPro == null)
+
+            OrderPro _order = db.OrderProes.Where(x => x.ID == id).FirstOrDefault();
+            if (_order == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            ViewBag.IDCus = new SelectList(db.Customers, "IDCus", "NameCus", orderPro.IDCus);
-            return View(orderPro);
+
+            ViewBag.State = Enums.OrderState.GetAllStates().Select(x => new SelectListItem { Text = x, Value = x, Selected = (x == _order.State) }).ToList();
+            return View(_order);
         }
 
-        // POST: OrderProes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DateOrder,IDCus,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
+        public ActionResult Edit([Bind(Include = "ID,DateOrder,ID,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(orderPro).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("CheckOrder", new { id = orderPro.ID });
             }
-            ViewBag.IDCus = new SelectList(db.Customers, "IDCus", "NameCus", orderPro.IDCus);
+
+            ViewBag.State = Enums.OrderState.GetAllStates().Select(x => new SelectListItem { Text = x, Value = x, Selected = (x == orderPro.State) }).ToList();
+
             return View(orderPro);
         }
 
-        // GET: OrderProes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,15 +106,40 @@ namespace anhemtoicodeweb.Controllers
             return View(orderPro);
         }
 
-        // POST: OrderProes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteOrder")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             OrderPro orderPro = db.OrderProes.Find(id);
+            db.OrderDetails.Where(x => x.IDOrder == orderPro.ID).ForEach(x => db.OrderDetails.Remove(x));
             db.OrderProes.Remove(orderPro);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Users", new { id = orderPro.IDCus });
+        }
+
+        public ActionResult Cancel(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrderPro orderPro = db.OrderProes.Find(id);
+            if (orderPro == null)
+            {
+                return HttpNotFound();
+            }
+            return View(orderPro);
+        }
+
+        [HttpPost, ActionName("CancelOrder")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelConfirmed(int id)
+        {
+            OrderPro orderPro = db.OrderProes.Find(id);
+            orderPro.State = "Đang hủy";
+            db.Entry(orderPro).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("CheckOrder", new { id = orderPro.ID });
         }
 
         protected override void Dispose(bool disposing)

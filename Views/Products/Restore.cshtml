@@ -1,0 +1,36 @@
+﻿@model anhemtoicodeweb.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+}
+
+<h3>Bạn có chắc muốn khôi phục sản phẩm này?</h3>
+<div>
+    <div class="product-box">
+        <div class="product-image">
+            <img src="@Url.Content(Model.ImageLocation)" />
+        </div>
+        <div class="product-content">
+            <div class="main-content">
+                <div class="product-price">@(String.Format("{0:#,#.##}", Model.Price))đ</div>
+                <a href="@Url.Action("Details", "Products", new { id = Model.ProductID })" style="text-decoration: none">
+                    <div class="product-name">@Model.Name</div>
+                </a>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Khôi phục" class="btn btn-warning" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

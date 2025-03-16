@@ -2,6 +2,7 @@
     width: 100%;
     height: auto;
     flex-direction: row;
+    position: unset;
 }
 
 .container-wrap {
@@ -27,11 +28,11 @@ select {
     max-width: unset;
 }
 
-    input.product-price,
-    textarea.edit-product-name {
+    input.product-price{
         width: fit-content;
         border: none;
         resize: both;
+        font-size: 2rem;
     }
 
 .d-flex.flex-column {

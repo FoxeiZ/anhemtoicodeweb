@@ -31,9 +31,9 @@ namespace anhemtoicodeweb.Models
             }
 
             var tempQ = quantity + item._quantity;
-            if (tempQ > product.InvQuantity)
+            if (tempQ > product.Quantity)
             {
-                item._quantity = product.InvQuantity;
+                item._quantity = product.Quantity;
                 return false;
             }
             item._quantity = tempQ;

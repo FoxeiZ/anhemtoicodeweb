@@ -1,4 +1,6 @@
-﻿using anhemtoicodeweb.Models;
+﻿using anhemtoicodeweb.Enums;
+using anhemtoicodeweb.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Data;
 using System.Data.Entity;
@@ -24,21 +26,54 @@ namespace anhemtoicodeweb.Controllers
         }
 
         // GET: Products
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int page = 1, int? fromSeller = null)
         {
             if (ControllerContext.IsChildAction)
             {
                 return PartialView(db.Products.ToList());
             }
+
             ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
-            int maxPage = Math.Max(1, db.Products.Count() / 10);
+
+            var userRole = Session["UserRole"].IfNotNull(o => (Role)o, Role.Empty);
+            var userId = (int?)Session["UserId"];
+
+            var productsQuery = db.Products.AsQueryable();
+
+            // Filter products based on user role
+            if (userRole == Role.Admin)
+            {
+                // Admin sees all products
+                // No additional filters needed
+            }
+            else if (userRole == Role.Seller)
+            {
+                // Seller sees their own products (both shown and hidden) plus other sellers' shown products
+                productsQuery = productsQuery.Where(p =>
+                    p.StateEnumId == (int)ProductState.Shown ||
+                    (p.SellerId == userId && p.StateEnumId != (int)ProductState.Deleted));
+            }
+            else
+            {
+                // Regular users only see shown products
+                productsQuery = productsQuery.Where(p => p.StateEnumId == (int)ProductState.Shown);
+            }
+
+            // Additional filter if viewing specific seller's products
+            if (fromSeller.HasValue)
+            {
+                productsQuery = productsQuery.Where(p => p.SellerId == fromSeller.Value);
+            }
+
+            int maxPage = Math.Max(1, (int)Math.Ceiling((double)productsQuery.Count() / 10));
             if (page > maxPage)
             {
                 page = maxPage;
             }
             ViewBag.MaxPage = maxPage;
             ViewBag.CurrentPage = page;
-            return View("UserIndex", db.Products.OrderBy(x => x.NamePro).Skip((page - 1) * 15).Take(15).ToList());
+
+            return View("UserIndex", productsQuery.OrderBy(x => x.Name).Skip((page - 1) * 15).Take(15).ToList());
         }
 
         public ActionResult Details(int? id)
@@ -47,23 +82,54 @@ namespace anhemtoicodeweb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Product product = db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+
+            var userRole = Session["UserRole"].IfNotNull(o => (Role)o, Role.Empty);
+            var userId = (int?)Session["UserId"];
+
+            // Admin can see all products
+            // Sellers can see their own products
+            // Regular users can only see products with "Shown" state
+            if (userRole == Role.Admin ||
+                (userRole == Role.Seller && product.SellerId == userId &&
+                product.State != ProductState.Deleted) || product.State == ProductState.Shown)
+            {
+                return View(product);
+            }
+
+            // Unauthorized access or hidden/deleted product
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Create
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
         public ActionResult Create()
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index");
-            }
-            ViewBag.IDCate = new SelectList(db.Categories, "IDCate", "NameCate");
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
             return View(new Product());
+        }
+
+        private void ProcessProduct(Product product)
+        {
+            product.UploadImage?.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImageLocation.Split('/').Last()));
+            if (product.ImageLocation == null)
+            {
+                product.ImageLocation = "~/Image/Product/banphim.png";
+            }
+            if (product.OldImageLocation != null && product.ImageLocation != product.OldImageLocation)
+            {
+                var oldfile = Path.Combine(Server.MapPath("~/Image/Product/"), product.OldImageLocation.Split('/').Last());
+                var file = Path.Combine(Server.MapPath("~/Image/Product/"), product.ImageLocation.Split('/').Last());
+                System.IO.File.Move(oldfile, file);
+            }
+
+            product.FinalPrice = product.Price + (product.Price * product.Tax) - (product.Price * product.Discount);
+            product.SellerId = (int)Session["UserId"];
         }
 
         // POST: Products/Create
@@ -71,49 +137,51 @@ namespace anhemtoicodeweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
         public ActionResult Create(Product product)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            //if (!ModelState.IsValid)
+            //{
+            //    ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
+            //    return View(db.Products.Where(p => p.ProductID == product.ProductID).FirstOrDefault());
+            //}
+
+            //if (product.ImageLocation == null)
+            //{
+            //    product.ImageLocation = "~/Image/Product/CuonTuiRac.jpg";
+            //}
+
+            //if (product.UploadImage != null)
+            //{
+            //    product.UploadImage.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImageLocation.Split('/').Last()));
+            //}
+
+            //product.FinalPrice = product.Price + (product.Price * product.Tax) - (product.Price * product.Discount);
+
+            //if (ModelState.IsValid)
+            //{
+            //    db.Products.Add(product);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+
+            //ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
+            //return View(product);
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
+                return View(db.Products.Where(p => p.ProductID == product.ProductID).FirstOrDefault());
             }
-
-            if (product.ImagePro == null)
-            {
-                product.ImagePro = "~/Image/Product/CuonTuiRac.jpg";
-            }
-
-            if (product.InvQuantity == 0)
-            {
-                product.InvQuantity = 1000;
-            }
-
-            if (product.UploadImage != null)
-            {
-                product.UploadImage.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last()));
-            }
-
-            product.FinalPrice = product.Price + (product.Price * product.Tax) - (product.Price * product.Discount);
-
-            if (ModelState.IsValid)
-            {
-                db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.IDCate = new SelectList(db.Categories, "IDCate", "NameCate", product.IDCate);
-            return View(product);
+            ProcessProduct(product);
+            db.Products.Add(product);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = product.ProductID });
         }
 
         // GET: Products/Edit/5
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
         public ActionResult Edit(int? id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index");
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -123,7 +191,7 @@ namespace anhemtoicodeweb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IDCate = new SelectList(db.Categories, "IDCate", "NameCate", product.IDCate);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -132,44 +200,25 @@ namespace anhemtoicodeweb.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
         public ActionResult Edit(Product product)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
+                return View(db.Products.Where(p => p.ProductID == product.ProductID).FirstOrDefault());
             }
-
-            if (product.UploadImage != null)
-            {
-                product.UploadImage.SaveAs(Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last()));
-            }
-
-            if (product.OldImagePro != null && product.ImagePro != product.OldImagePro)
-            {
-                var oldfile = Path.Combine(Server.MapPath("~/Image/Product/"), product.OldImagePro.Split('/').Last());
-                var file = Path.Combine(Server.MapPath("~/Image/Product/"), product.ImagePro.Split('/').Last());
-                System.IO.File.Move(oldfile, file);
-            }
-
-            product.FinalPrice = product.Price + (product.Price * product.Tax) - (product.Price * product.Discount);
-            if (ModelState.IsValid)
-            {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = product.ProductID });
-            }
-            ViewBag.IDCate = new SelectList(db.Categories, "IDCate", "NameCate", product.IDCate);
-            return View(db.Products.Where(p => p.ProductID == product.ProductID).FirstOrDefault());
+            ProcessProduct(product);
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = product.ProductID });
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(int? id)
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirm(int? id)
         {
-            if (Session["IsAdmin"] == null || Session["IsAdmin"] is false)
-            {
-                return RedirectToAction("Index");
-            }
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -183,14 +232,64 @@ namespace anhemtoicodeweb.Controllers
         }
 
         // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
+        public ActionResult Delete(int id)
         {
             Product product = db.Products.Find(id);
-            db.Products.Remove(product);
+            //db.Products.Remove(product);
+            product.State = ProductState.Deleted;
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: Products/Restore/5
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
+        [ActionName("Restore")]
+        public ActionResult RestoreConfirm(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        // POST: Products/Restore/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Filters.RequireLoginWithRole(Role.Admin)]
+        public ActionResult Restore(int id)
+        {
+            Product product = db.Products.Find(id);
+            //db.Products.Remove(product);
+            product.State = ProductState.Shown;
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id });
+        }
+
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
+        public ActionResult Hide(int id)
+        {
+            var product = db.Products.Find(id);
+            product.State = ProductState.Hidden;
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id });
+        }
+
+        [Filters.RequireLoginWithRole(Role.Seller, Role.Admin)]
+        public ActionResult Show(int id)
+        {
+            var product = db.Products.Find(id);
+            product.State = ProductState.Shown;
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id });
         }
 
         protected override void Dispose(bool disposing)

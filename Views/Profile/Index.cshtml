@@ -1,4 +1,4 @@
-﻿@model anhemtoicodeweb.Models.Customer
+﻿@model anhemtoicodeweb.Models.User
 
 @{
     var listID = Model.OrderProes.ToList().Select(x => x.ID);
@@ -169,7 +169,7 @@
 }
 
 <h2>Profile</h2>
-@if (Session["IsAdmin"] is true)
+@if (Session["UserRole"] is anhemtoicodeweb.Enums.Role.Admin)
 {
     <h2 class="py-3">Admin Panel</h2>
     <p>
@@ -209,9 +209,9 @@
 <hr />
 
 <div class="profile-info">
-    <p>Tên người dùng: <b>@Model.NameCus</b></p>
-    <p>Email: <b>@Model.EmailCus</b></p>
-    <p>Số điện thoại: <b>@Model.PhoneCus</b></p>
+    <p>Tên người dùng: <b>@Model.Name</b></p>
+    <p>Email: <b>@Model.Email</b></p>
+    <p>Số điện thoại: <b>@Model.Phone</b></p>
     <p>Địa chỉ hiện tại: <b>@Model.AddressName</b></p>
     <div class="dropdown">
         <button type="button" data-bs-toggle="collapse" data-bs-target="#orderCollapse" aria-expanded="false" aria-controls="orderCollapse" class="no-select dropbtn">Tổng số đơn hàng: @Model.OrderProes.Count</button>

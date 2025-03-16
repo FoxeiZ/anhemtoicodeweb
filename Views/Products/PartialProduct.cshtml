@@ -1,7 +1,7 @@
 ﻿@model anhemtoicodeweb.Models.Product
 
 <div class="product-box">
-    @if (Session["IsAdmin"] is true)
+    @if (Session["UserRole"] is anhemtoicodeweb.Enums.Role.Admin || (anhemtoicodeweb.Enums.RoleExtensions.EqualsTo(Session["UserRole"], anhemtoicodeweb.Enums.Role.Seller) && (int?)Session["UserId"] == Model.SellerId))
     {
         <div class="admin-btn">
             <a href="/Products/Delete/@Model.ProductID" class="no-select remove">&#x2715;</a>
@@ -11,11 +11,19 @@
         </div>
     }
     <div class="position-relative product-image">
-        @if (Model.InvQuantity == 0)
+        @if (Model.Quantity == 0)
         {
             <div class="no-select out-of-stock-overlay">Hết hàng</div>
         }
-        <img src="@Url.Content(Model.ImagePro)" />
+        @if (Model.State == anhemtoicodeweb.Enums.ProductState.Hidden)
+        {
+            <div class="no-select out-of-stock-overlay" style="color:yellow">Bị ẩn</div>
+        }
+        else if (Model.State == anhemtoicodeweb.Enums.ProductState.Deleted)
+        {
+            <div class="no-select out-of-stock-overlay">Bị xoá</div>
+        }
+        <img src="@Url.Content(Model.ImageLocation)" />
     </div>
     <div class="product-content">
         <div class="main-content">
@@ -29,11 +37,11 @@
                 <div class="product-price">@(String.Format("{0:#,#.##}", Model.Price ))đ</div>
             }
             <a href="@Url.Action("Details", "Products", new { id = Model.ProductID })" style="text-decoration: none">
-                <div class="product-name">@Model.NamePro</div>
+                <div class="product-name">@Model.Name</div>
             </a>
         </div>
         <div class="d-flex gap-4">
-            @if (Model.InvQuantity == 0)
+            @if (Model.Quantity == 0)
             {
                 <a class="no-select BuyNowBtn out-of-stock">Thêm vào giỏ</a>
             }

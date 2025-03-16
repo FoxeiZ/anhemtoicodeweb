@@ -13,7 +13,7 @@
         <h4>Chỉnh sửa hãng</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.IDCate)
+        @Html.HiddenFor(model => model.CategoryId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -24,25 +24,25 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NameCate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NameCate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NameCate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PicCate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ImageLocation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PicCate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PicCate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ImageLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ImageLocation, "", new { @class = "text-danger" })
             </div>
-            @*<img style="width: 10vw; margin-top: 20px" src="@Url.Content(Model.PicCate)" id="preview-img" />*@
+            @*<img style="width: 10vw; margin-top: 20px" src="@Url.Content(Model.ImageLocation)" id="preview-img" />*@
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                <img style="width: 10vw; margin-top: 20px" src="@Url.Content(Model.PicCate)" id="preview-img" />
+                <img style="width: 10vw; margin-top: 20px" src="@Url.Content(Model.ImageLocation)" id="preview-img" />
             </div>
         </div>
 
@@ -65,7 +65,7 @@
                     $(previewImg).attr('src', e.target.result);
                 }
                 reader.readAsDataURL(UploadImage.files[0]);
-                document.getElementById("ImagePro").value = `~/Image/logoforcategory/${UploadImage.files[0].name}`;
+                document.getElementById("ImageLocation").value = `~/Image/logoforcategory/${UploadImage.files[0].name}`;
             }
         }
     </script>

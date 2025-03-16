@@ -48,6 +48,18 @@
             justify-content: space-between;
             align-items: center;
         }
+
+
+        input[type=number] {
+            border-radius: 6px;
+            text-indent: 5px;
+            width: 20%;
+            border-width: 0.15rem;
+        }
+
+            input[type=number]::-webkit-inner-spin-button {
+                opacity: 1
+            }
     </style>
 }
 
@@ -56,9 +68,9 @@
     >
     <a href="/Products">Danh sách sản phầm</a>
     >
-    <a href="/Categories/Details/@Model.Category.IDCate">@Model.Category.NameCate</a>
+    <a href="/Categories/Details/@Model.Category.CategoryId">@Model.Category.Name</a>
     >
-    <a href="@Request.Path"><b>@Model.NamePro</b></a>
+    <a href="@Request.Path"><b>@Model.Name</b></a>
 </div>
 
 
@@ -66,24 +78,26 @@
     <div class="product-container">
         <div class="image">
             <div style="position: relative; border-radius:20px; overflow: hidden;">
-                @if (Model.InvQuantity == 0)
+                @if (Model.Quantity == 0)
                 {
                     <div class="no-select out-of-stock-overlay">Hết hàng</div>
                 }
-                <img src="@Url.Content(Model.ImagePro)" style="width: 100%" alt="Product image" />
+                @if (Model.State == anhemtoicodeweb.Enums.ProductState.Hidden)
+                {
+                    <div class="no-select out-of-stock-overlay" style="color:yellow">Bị ẩn</div>
+                }
+                else if (Model.State == anhemtoicodeweb.Enums.ProductState.Deleted)
+                {
+                    <div class="no-select out-of-stock-overlay">Bị xoá</div>
+                }
+                <img src="@Url.Content(Model.ImageLocation)" style="width: 100%" alt="Product image" />
                 @*<img src="~/Image/Product/BanChaiTre.png" alt="Product image" />*@
             </div>
         </div>
         <div class="text">
             <div>
-                <h2> @Html.DisplayFor(model => model.NamePro) </h2>
+                <h2> @Html.DisplayFor(model => model.Name) </h2>
             </div>
-            @if (Model.DecriptionPro != null && Model.DecriptionPro != "None")
-            {
-                <div>
-                    <l>@Html.DisplayFor(model => model.DecriptionPro) </l>
-                </div>
-            }
             <div>
                 @if (Model.Discount > 0)
                 {
@@ -97,21 +111,44 @@
                     <b style="color: #4E6C50">@(String.Format("{0:#,#.##}", Model.Price))đ </b>
                 }
             </div>
-            <div class="button-container">
-                <div class="d-flex gap-4" style="padding-left:30px;padding-top:10px">
-                    @if (Model.InvQuantity == 0)
-                    {
-                        <a class="no-select AddToCart out-of-stock">Thêm vào giỏ hàng</a>
-                    }
-                    else
-                    {
+            @if (Model.Quantity > 0)
+            {
+                <div class="d-flex gap-3 flex-column" style="margin-left:30px;margin-top:10px">
+                    <div class="button-container">
+                        <div class="d-flex gap-2 align-items-center">
+                            @*<a class="no-select AddToCart out-of-stock">Thêm vào giỏ hàng</a>*@
+                            <input id="quantity" value="1" type="number" max="@Model.Quantity" min="1" />
+                            <b style="font-size: 12px; padding: 0">@Model.Quantity sản phẩm có sẵn</b>
+                        </div>
+                    </div>
+                    <div class="button-container">
                         <a onclick="postAddCart(@Model.ProductID)" class="no-select AddToCart">Thêm vào giỏ hàng</a>
-                    }
+                    </div>
                 </div>
-                @if (Session["IsAdmin"] is true)
+            }
+            <div class="button-container">
+                @if (anhemtoicodeweb.Enums.RoleExtensions.EqualsTo(Session["UserRole"], anhemtoicodeweb.Enums.Role.Admin) || (int?)Session["UserId"] == Model.SellerId)
                 {
-                    <div class="d-flex gap-4" style="padding-left:20px;padding-top:10px">
-                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ProductID }, new { @class = "no-select EditBtn" })
+                    <div class="d-flex gap-3" style="padding-left:30px;padding-top:10px">
+                        @if (Model.State == anhemtoicodeweb.Enums.ProductState.Deleted)
+                        {
+                            @Html.ActionLink("Khôi phục", "Restore", new { id = Model.ProductID }, new { @class = "no-select EditBtn", style = "background: #c6c62a;" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ProductID }, new { @class = "no-select EditBtn" })
+                            @Html.ActionLink("Xoá", "Delete", new { id = Model.ProductID }, new { @class = "no-select EditBtn", style = "background: red;" })
+                            if (Model.State == anhemtoicodeweb.Enums.ProductState.Hidden)
+                            {
+                                @Html.ActionLink("Hiện thị", "Show", new { id = Model.ProductID }, new { @class = "no-select EditBtn", style = "background: #4E6C50;" })
+                            }
+                            else
+                            {
+
+                                @Html.ActionLink("Ẩn", "Hide", new { id = Model.ProductID }, new { @class = "no-select EditBtn", style = "background: #e6e620;" })
+                            }
+                        }
+
                     </div>
                 }
             </div>
@@ -127,7 +164,7 @@
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div style="min-height: 140px" class="d-flex">
                             <div class="card-body card-extra p-3">
-                                @Model.DecriptionPro
+                                @Html.Raw(Model.Decription)
                             </div>
                         </div>
                     </div>

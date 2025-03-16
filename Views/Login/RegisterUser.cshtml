@@ -1,4 +1,4 @@
-﻿@model anhemtoicodeweb.Models.Customer
+﻿@model anhemtoicodeweb.Models.User
 
 
 @{
@@ -25,10 +25,10 @@
             }
         @Html.AntiForgeryToken()
     <div class="input-field">
-        <input class="input-box" type="text" placeholder="Username" name="NameCus" id="NameCus" required>
-        <input class="input-box" type="password" placeholder="Password" name="PasswordCus" id="PasswordCus" required>
-        <input class="input-box" type="password" placeholder="Re-enter password" name="ConfirmPasswordCus" id="ConfirmPasswordCus" required>
-        <input class="input-box" type="Email" placeholder="Email (Optional)" name="EmailCus" id="EmailCus">
+        <input class="input-box" type="text" placeholder="Username" name="Name" id="Name" required>
+        <input class="input-box" type="password" placeholder="Password" name="Password" id="Password" required>
+        <input class="input-box" type="password" placeholder="Re-enter password" name="ConfirmPassword" id="ConfirmPassword" required>
+        <input class="input-box" type="Email" placeholder="Email (Optional)" name="Email" id="Email">
     </div>
         <input class="login-btn" type="submit" value="Register">
         <a href="@Url.Action("Index", "Login")">&#8592 Back to Login</a>

@@ -52,12 +52,12 @@
             <div class="container-wrap category">
                 @foreach (var category in Model.Item2)
                 {
-                    <a class="category-box" href="@Url.Action("Details", "Categories", new { id = category.IDCate.Trim() })">
-                        @if (category.PicCate != null)
+                    <a class="category-box" href="@Url.Action("Details", "Categories", new { id = category.CategoryId.Trim() })">
+                        @if (category.ImageLocation != null)
                         {
-                            <img src=@Url.Content(category.PicCate) />
+                            <img src=@Url.Content(category.ImageLocation) />
                         }
-                        <h3>@category.NameCate</h3>
+                        <h3>@category.Name</h3>
                     </a>
                 }
             </div>

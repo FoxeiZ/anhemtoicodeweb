@@ -15,10 +15,13 @@
     <link href="@Url.Content("~/Content/css/ForAdmin.css")" rel="stylesheet" type="text/css" />
 }
 
-@if (Session["IsAdmin"] is true)
+@if (anhemtoicodeweb.Enums.RoleExtensions.EqualsTo(Session["UserRole"], anhemtoicodeweb.Enums.Role.Admin, anhemtoicodeweb.Enums.Role.Seller))
 {
     <p>
         @Html.ActionLink("Tạo mới", "Create", "", new { @class = "btn btn-success" })
+    </p>
+    <p>
+        @Html.ActionLink("Lọc sản phẩm từ tôi", "Index", new { fromSeller = (int?)Session["UserId"] } , new { @class = "btn btn-success" })
     </p>
 }
 

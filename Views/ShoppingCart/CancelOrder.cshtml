@@ -118,7 +118,7 @@
             <div class="product-box">
                 <a href="/ShoppingCart/RemoveCart/@item.Product.ProductID" class="no-select close">+</a>
                 <div class="position-relative product-image">
-                    <img src="@Url.Content(item.Product.ImagePro)" />
+                    <img src="@Url.Content(item.Product.ImageLocation)" />
                 </div>
                 <div class="product-content">
                     <div class="main-content">
@@ -132,14 +132,14 @@
                             <div class="product-price">@(String.Format("{0:#,#.##}", item.Product.Price ))đ</div>
                         }
                         <a href="@Url.Action("Details", "Products", new { id = item.Product.ProductID })" style="text-decoration: none">
-                            <div class="product-name">@item.Product.NamePro</div>
+                            <div class="product-name">@item.Product.Name</div>
                         </a>
                     </div>
                     @using (Html.BeginForm("UpdateCartQuantity", "ShoppingCart"))
                     {
                         <div style="padding-bottom: 5px">Số lượng</div>
                         <input type="hidden" value="@item.Product.ProductID" name="idPro" />
-                        <input readonly class="quantity-input" type="number" min="0" max="@item.Product.InvQuantity" value="@item.Quantity" name="cartQuantity" />
+                        <input readonly class="quantity-input" type="number" min="0" max="@item.Product.Quantity" value="@item.Quantity" name="cartQuantity" />
                     }
                 </div>
             </div>

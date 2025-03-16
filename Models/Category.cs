@@ -17,12 +17,12 @@ namespace anhemtoicodeweb.Models
         public int Id { get; set; }
 
         [Key]
-        [StringLength(20)]
-        public string IDCate { get; set; }
+        [MaxLength(20)]
+        public string CategoryId { get; set; }
 
-        public string NameCate { get; set; }
+        public string Name { get; set; }
 
-        public string PicCate { get; set; }
+        public string ImageLocation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

@@ -3,7 +3,6 @@ using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -26,9 +25,9 @@ namespace anhemtoicodeweb.Controllers
             int _id = (int?)Session["UserId"] ?? -1;
             if (_id > -1)
             {
-                Customer _cus = database.Customers.FirstOrDefault(x => x.IDCus == _id);
+                User _cus = database.Users.FirstOrDefault(x => x.ID == _id);
                 TempData["Address"] = _cus.AddressName;
-                TempData["PhoneNumber"] = _cus.PhoneCus;
+                TempData["PhoneNumber"] = _cus.Phone;
             }
             return View(cart);
         }
@@ -105,7 +104,7 @@ namespace anhemtoicodeweb.Controllers
             {
                 Cart cart = Session["Cart"] as Cart;
                 int _userId = (int)Session["UserId"];
-                var _user = database.Customers.FirstOrDefault(x => x.IDCus == _userId);
+                var _user = database.Users.FirstOrDefault(x => x.ID == _userId);
 
                 if (cart.Items.Count() == 0)
                 {
@@ -124,23 +123,23 @@ namespace anhemtoicodeweb.Controllers
 
                 if (form["PhoneNumber"] == "")
                 {
-                    if (_user.PhoneCus == null || _user.PhoneCus == "")
+                    if (_user.Phone == null || _user.Phone == "")
                     {
                         TempData["Error"] = "Bạn cần phải nhập số điện thoại để liên hệ khi giao hàng";
                         return RedirectToAction("Index");
                     }
-                    form["PhoneNumber"] = _user.PhoneCus;
+                    form["PhoneNumber"] = _user.Phone;
                 }
 
                 if (form["CodeCustomer"] == null)
                 {
-                    form["CodeCustomer"] = _user.IDCus.ToString();
+                    form["CodeCustomer"] = _user.ID.ToString();
                 }
 
                 if (_user.AddressName == null)
                 {
                     _user.AddressName = form["AddressDelivery"];
-                    database.Entry<Customer>(_user).State = EntityState.Modified;
+                    database.Entry<User>(_user).State = EntityState.Modified;
                 }
 
                 OrderPro _order = new OrderPro(); //Bang Hoa Don San pham
@@ -185,7 +184,7 @@ namespace anhemtoicodeweb.Controllers
                     database.OrderDetails.Add(_order_detail);
 
                     var _prod = database.Products.Find(item._product.ProductID);
-                    _prod.InvQuantity = Math.Max(_prod.InvQuantity - item._quantity, 0);
+                    _prod.Quantity = Math.Max(_prod.Quantity - item._quantity, 0);
                     database.Entry(_prod).State = EntityState.Modified;
                 }
 
@@ -218,10 +217,10 @@ namespace anhemtoicodeweb.Controllers
                     return RedirectToAction("Index");
                 }
                 int _userId = (int)Session["UserId"];
-                var _user = database.Customers.FirstOrDefault(x => x.IDCus == _userId);
+                var _user = database.Users.FirstOrDefault(x => x.ID == _userId);
                 FormCollection form = new FormCollection();
                 form["AddressDelivery"] = _user.AddressName;
-                form["CodeCustomer"] = _user.IDCus.ToString();
+                form["CodeCustomer"] = _user.ID.ToString();
                 return RedirectToAction("CheckOut", "ShoppingCart", form);
             }
             TempData["Error"] = "Sản phẩm không tồn tại hoặc đã bị xóa";
@@ -278,7 +277,7 @@ namespace anhemtoicodeweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditOrder([Bind(Include = "ID,DateOrder,IDCus,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
+        public ActionResult EditOrder([Bind(Include = "ID,DateOrder,ID,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
         {
             if (ModelState.IsValid)
             {
@@ -324,7 +323,7 @@ namespace anhemtoicodeweb.Controllers
             database.OrderDetails.Where(x => x.IDOrder == orderPro.ID).ForEach(x => database.OrderDetails.Remove(x));
             database.OrderProes.Remove(orderPro);
             database.SaveChanges();
-            return RedirectToAction("Details", "Customers", new { id = orderPro.IDCus });
+            return RedirectToAction("Details", "Users", new { id = orderPro.IDCus });
         }
 
         public ActionResult CancelOrder(int? id)

@@ -20,12 +20,12 @@
 <div style="margin-bottom: 24px" class="list-href">
     <a href="/">Trang chủ</a>
     >
-    <a href="@Request.Path"><b>Sản phẩm của @Model.Item1.NameCate</b></a>
+    <a href="@Request.Path"><b>Sản phẩm của @Model.Item1.Name</b></a>
 </div>
 
 <div style="display:flex;flex-direction:row">
-    <h2>Các sản phẩm đến từ <b>@Model.Item1.NameCate</b></h2>
-    @if (Session["IsAdmin"] is true)
+    <h2>Các sản phẩm đến từ <b>@Model.Item1.Name</b></h2>
+    @if (Session["UserRole"] is anhemtoicodeweb.Enums.Role.Admin)
     {
         <div style="padding-left:20px">
             @Html.ActionLink("Edit", "Edit", new { id = Model.Item1.Id }, new { style = "width:80px", @class = "no-select btn btn-success" })

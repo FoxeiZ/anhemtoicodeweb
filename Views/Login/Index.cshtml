@@ -1,4 +1,4 @@
-﻿@model anhemtoicodeweb.Models.Customer
+﻿@model anhemtoicodeweb.Models.User
 
 
 @{
@@ -19,8 +19,9 @@
             }
         @Html.AntiForgeryToken()
         <div class="input-field">
-            <input class="input-box" type="text" placeholder="Username" name="NameCus" id="NameCus" required>
-            <input class="input-box" type="password" placeholder="Password" name="PasswordCus" id="PasswordCus" required>
+            <input class="input-box" type="text" placeholder="Username" name="Name" id="Name" required>
+            <input class="input-box" type="password" placeholder="Password" name="Password" id="Password" required>
+            <input type="hidden" accept="" name="ReturnUrl" value="@Request.QueryString["ReturnUrl"]" />
         </div>
         <div>
             <input type="checkbox" checked="checked" name="remember" /> Remember me

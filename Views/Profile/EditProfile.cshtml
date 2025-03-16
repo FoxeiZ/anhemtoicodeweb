@@ -1,4 +1,4 @@
-﻿@model anhemtoicodeweb.Models.Customer
+﻿@model anhemtoicodeweb.Models.User
 
 @{
     ViewBag.Title = "EditProfile";
@@ -38,21 +38,21 @@
     @Html.AntiForgeryToken()
 
 <div class="profile-info">
-    @Html.HiddenFor(model => model.IDCus)
+    @Html.HiddenFor(model => model.ID)
 
     <div class="d-flex flex-row gap-3 my-3">
         <div class="label">Tên người dùng: </div>
-        @Html.EditorFor(model => model.NameCus, new { htmlAttributes = new { @class = "input-edit" } })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "input-edit" } })
     </div>
 
     <div class="d-flex flex-row gap-3 my-3">
         <div class="label">Email: </div>
-        @Html.EditorFor(model => model.EmailCus, new { htmlAttributes = new { @class = "input-edit" } })
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input-edit" } })
     </div>
 
     <div class="d-flex flex-row gap-3 my-3">
         <div class="label">Số điện thoại: </div>
-        @Html.EditorFor(model => model.PhoneCus, new { htmlAttributes = new { @class = "input-edit" } })
+        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "input-edit" } })
     </div>
 
     <div class="d-flex flex-row gap-3 my-3">
@@ -64,13 +64,13 @@
     <hr class="my-4"/>
     <div class="d-flex flex-row gap-3 my-3">
         <div class="label">Mật khẩu: </div>
-        @Html.EditorFor(model => model.PasswordCus, new { htmlAttributes = new { @class = "input-edit", title = "Bỏ trống nếu dùng mật khẩu cũ", placeholder = "Bỏ trống nếu dùng mật khẩu cũ", @Value = "", autocomplete = "off", @Type = "password" } })
-        @Html.HiddenFor(model => model.PasswordCus, new { @Name = "PrevPassword" })
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input-edit", title = "Bỏ trống nếu dùng mật khẩu cũ", placeholder = "Bỏ trống nếu dùng mật khẩu cũ", @Value = "", autocomplete = "off", @Type = "password" } })
+        @Html.HiddenFor(model => model.Password, new { @Name = "PrevPassword" })
     </div>
 
     <div class="d-flex flex-row gap-3 my-3">
         <div class="label">Nhập lại mật khẩu: </div>
-        @Html.EditorFor(model => model.ConfirmPasswordCus, new { htmlAttributes = new { @class = "input-edit", @Value = "", autocomplete = "off", @Type = "password" } })
+        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "input-edit", @Value = "", autocomplete = "off", @Type = "password" } })
     </div>
 
 </div>

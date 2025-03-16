@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - uwu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat" rel="stylesheet">
@@ -99,7 +99,7 @@
                     <div class="d-flex flex-column gap-2 p-2 profile-popup">
                         @if (Session["UserID"] != null)
                         {
-                            <div>Hello, <b>@Session["NameCus"]</b>!</div>
+                            <div>Xin chào, <b>@Session["UserName"]</b>!</div>
                             <hr style="margin: 0.3em 0;" />
                             <a href="@Url.Action("Index", "Profile")">Thông tin khách hàng</a>
                             <a href="@Url.Action("LogoutUser", "Login")">Đăng xuất</a>

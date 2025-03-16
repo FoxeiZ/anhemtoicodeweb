@@ -17,7 +17,7 @@
             @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NameCate)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th></th>
     </tr>
@@ -29,12 +29,12 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NameCate)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.IDCate.Trim() }) |
-                @Html.ActionLink("Chi tiết", "Details", new { id = item.IDCate.Trim() }) |
-                @Html.ActionLink("Xóa", "Delete", new { id = item.IDCate.Trim() })
+                @Html.ActionLink("Sửa", "Edit", new { id = item.CategoryId.Trim() }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.CategoryId.Trim() }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.CategoryId.Trim() })
             </td>
         </tr>
     }
