@@ -288,6 +288,8 @@
     <Content Include="Views\Discounts\Index.cshtml" />
     <Content Include="Views\Seller\Details.cshtml" />
     <Content Include="Views\Products\Restore.cshtml" />
+    <Content Include="Views\Seller\ViewPage1.cshtml" />
+    <Content Include="Views\Seller\Pending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

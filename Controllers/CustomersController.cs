@@ -10,6 +10,7 @@ namespace anhemtoicodeweb.Controllers
     {
         private readonly Model1 db = new Model1();
 
+        [Filters.RequireAdminRole]
         public ActionResult Index()
         {
             var customers = db.Users.Where(x => x.RoleEnumId == (int)Enums.Role.Customer).ToList();

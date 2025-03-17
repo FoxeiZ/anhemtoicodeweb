@@ -1,5 +1,6 @@
 ﻿using anhemtoicodeweb.Models;
 using Microsoft.Ajax.Utilities;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -8,6 +9,23 @@ namespace anhemtoicodeweb.Controllers
     public class LoginController : Controller
     {
         private readonly Model1 database = new Model1();
+
+        public partial class LoginModel
+        {
+            public string Name { get; set; }
+            public string Password { get; set; }
+            public string HashPassword
+            {
+                get
+                {
+                    using (var sha256 = System.Security.Cryptography.SHA256.Create())
+                    {
+                        var hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(Password));
+                        return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                    }
+                }
+            }
+        }
 
         // GET: LoginUser
         public ActionResult Index(string returnUrl)
@@ -20,9 +38,9 @@ namespace anhemtoicodeweb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(User _user, string ReturnUrl)
+        public ActionResult Index(LoginModel _user, string ReturnUrl)
         {
-            var check = database.Users.Where(s => s.Name == _user.Name && s.Password == _user.Password).FirstOrDefault();
+            var check = database.Users.Where(s => s.Name == _user.Name && s.HashPassword == _user.HashPassword).FirstOrDefault();
             if (check == null)
             {
                 ViewBag.ErrorInfo = "Thông tin đăng nhập bị sai. Vui lòng kiểm tra";
@@ -57,6 +75,7 @@ namespace anhemtoicodeweb.Controllers
             if (ModelState.IsValid)
             {
                 var check = database.Users.Where(s => s.ID == _user.ID || s.Name == _user.Name).FirstOrDefault();
+
                 if (check == null)
                 {
                     if (_user.ConfirmPassword != _user.Password)

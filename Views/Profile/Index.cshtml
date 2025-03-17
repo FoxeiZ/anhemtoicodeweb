@@ -173,13 +173,19 @@
 {
     <h2 class="py-3">Admin Panel</h2>
     <p>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#productsCollapse" aria-expanded="false" aria-controls="productsCollapse">
+        @*<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#productsCollapse" aria-expanded="false" aria-controls="productsCollapse">
             Sản phẩm
         </button>
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
             Hãng
         </button>
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#customersCollapse" aria-expanded="false" aria-controls="customersCollapse">
+            Khách hàng
+        </button>*@
+        <button class="btn btn-primary" type="button" onclick="window.location.href='@Url.Action("Index", "Products", null)'">
+            Sản phẩm
+        </button>
+        <button class="btn btn-primary" type="button" onclick="window.location.href='@Url.Action("Index", "Customers", null)'">
             Khách hàng
         </button>
         <button class="btn btn-primary" type="button" onclick="window.location.href='/Profile/ThongKe'">

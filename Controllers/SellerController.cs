@@ -1,4 +1,5 @@
-﻿using anhemtoicodeweb.Models;
+﻿using anhemtoicodeweb.Enums;
+using anhemtoicodeweb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace anhemtoicodeweb.Controllers
     {
         private readonly Model1 db = new Model1();
 
-        public ActionResult Details(int id, int page = 1)
+        public ActionResult Details(int? id, int page = 1)
         {
             if (id == null)
             {
@@ -30,16 +31,17 @@ namespace anhemtoicodeweb.Controllers
                 return HttpNotFound();
             }
 
-            int maxPage = Math.Max(1, products.Count() / 10);
-            if (page > maxPage)
-            {
-                page = maxPage;
-            }
-            ViewBag.MaxPage = maxPage;
-            ViewBag.CurrentPage = page;
-
+            (ViewBag.MaxPage, ViewBag.CurrentPage) = Utils.PaginatorCalc(products, 10, page);
             var tuple = new Tuple<User, IEnumerable<Product>>(seller, products.Skip((page - 1) * 10).Take(10));
             return View(tuple);
+        }
+
+        [Filters.RequireAdminRole]
+        public ActionResult Pending(int page = 1)
+        {
+            var sellerPendingQuery = db.Users.AsQueryable().Where(s => s.RoleEnumId == (int)Role.SellerPending);
+            (ViewBag.MaxPage, ViewBag.CurrentPage) = Utils.PaginatorCalc(sellerPendingQuery, 10, page);
+            return View(sellerPendingQuery);
         }
     }
 }
