@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Styles {
@@ -28,8 +28,8 @@
         </div>
         <input class="login-btn" type="submit" value="Login">
         <div class="d-flex justify-content-between w-100 flex-row">
-            <a href="@Url.Action("RegisterUser", "Login")">Register</a>
-            <a href="@Url.Action("ForgotPassword", "Login")">Forgot your password?</a>
+            <a href="@Url.Action("RegisterUser", "Login")">Đăng ký</a>
+            <a href="@Url.Action("ForgotPassword", "Login")">Quên mật khẩu?</a>
         </div>
     </div>
 </form>

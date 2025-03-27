@@ -130,6 +130,8 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Enums\Base.cs" />
+    <Compile Include="Enums\PaymentMethod.cs" />
     <Compile Include="Enums\ProductState.cs" />
     <Compile Include="Enums\OrderState.cs" />
     <Compile Include="Enums\Role.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Library\VNPay.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs" />
@@ -288,13 +291,12 @@
     <Content Include="Views\Discounts\Index.cshtml" />
     <Content Include="Views\Seller\Details.cshtml" />
     <Content Include="Views\Products\Restore.cshtml" />
-    <Content Include="Views\Seller\ViewPage1.cshtml" />
     <Content Include="Views\Seller\Pending.cshtml" />
+    <Content Include="Views\OrderProes\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\logoforcategory\" />
-    <Folder Include="Views\OrderProes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

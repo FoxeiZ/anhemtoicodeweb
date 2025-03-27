@@ -105,11 +105,23 @@
             opacity: 1;
             visibility: visible;
         }
+
+        .input-box {
+            height: auto;
+            min-height: 2.2rem;
+            text-indent: 5px;
+            border-radius: 6px;
+            border: black 1px solid;
+        }
     </style>
 }
 
 <h2>Giỏ hàng của bạn</h2>
 <a href="@Url.Action("Index", "Products")">&#8592 Tiếp tục mua hàng</a>
+@if (TempData["CheckoutError"] != null)
+{
+    <div class="error-info">@TempData["CheckoutError"]</div>
+}
 @if (Model != null && Model.Items.Count() > 0)
 {
     <div class="container-wrap product" style="justify-content: flex-start; gap: 12px">
@@ -166,12 +178,17 @@
     <div class="d-flex flex-column mt-5 align-items-center">
         @if (Session["UserId"] != null)
         {
-            using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post, new { style = "display: flex; gap: 10px;" }))
+            using (Html.BeginForm("Checkout", "ShoppingCart", FormMethod.Post, new { @class = "d-flex flex-column gap-2" }))
             {
                 <input type="hidden" value="@Session["UserId"]" name="CodeCustomer" />
-                <input style="text-indent: 5px; border-radius: 6px; border: black 1px solid" type="text" name="AddressDelivery" placeholder="@placeholder_addr" title="@placeholder_addr" />
-                <input style="text-indent: 5px; border-radius: 6px; border: black 1px solid" type="text" name="PhoneNumber" placeholder="@placeholder_phone" title="@placeholder_phone" />
-                <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />
+                <div class="d-flex flex-row gap-2">
+                    <input class="input-box" type="text" name="AddressDelivery" placeholder="@placeholder_addr" title="@placeholder_addr" />
+                    <input class="input-box" type="text" name="PhoneNumber" placeholder="@placeholder_phone" title="@placeholder_phone" />
+                </div>
+                <div class="d-flex flex-row gap-2">
+                    @Html.DropDownList("PaymentMethod", null, htmlAttributes: new { @class = "form-control" })
+                    <input class="btn btn-success" type="submit" value="Đi đến thanh toán" />
+                </div>
             }
         }
         else

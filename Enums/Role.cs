@@ -18,8 +18,6 @@ namespace anhemtoicodeweb.Enums
         public static bool EqualsTo(object obj, params Role[] roles)
         {
             var c_role = obj.IfNotNull(o => (Role)o, Role.Empty);
-            if (c_role.Equals(Role.Admin))
-                return true;
             return obj != null && Array.Exists(roles, r => r == c_role);
         }
     }

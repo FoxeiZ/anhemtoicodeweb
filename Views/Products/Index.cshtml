@@ -74,7 +74,7 @@
                     @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
-                    @Html.ActionLink(item.Name, "Details", new { id = item.ProductID })
+                    @Html.ActionLink(item.Name.IsEmpty() ? "Sản phẩm" : item.Name, "Details", new { id = item.ProductID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Decription)

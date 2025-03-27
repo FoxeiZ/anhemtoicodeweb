@@ -128,6 +128,11 @@ namespace anhemtoicodeweb.Controllers
                 System.IO.File.Move(oldfile, file);
             }
 
+            if (product.Name.IsNullOrWhiteSpace())
+            {
+                product.Name = "Tên sản phẩm";
+            }
+
             product.FinalPrice = product.Price + (product.Price * product.Tax) - (product.Price * product.Discount);
             product.SellerId = (int)Session["UserId"];
         }

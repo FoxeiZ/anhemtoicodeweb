@@ -1,0 +1,197 @@
+﻿@model IQueryable<anhemtoicodeweb.Models.OrderPro>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var listID = Model.ToList().Select(x => x.ID);
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Styles {
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="@Url.Content("~/Content/css/Index.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/ForAdmin.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Slick/slick.min.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .navbar-header {
+            border-bottom: unset;
+        }
+
+        .p {
+            font-size: large;
+            margin: inherit;
+        }
+
+        button {
+            border-radius: 7px;
+        }
+
+        .edit,
+        .dropbtn {
+            background-color: #4E6C50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            padding: 10px;
+            padding-bottom: 10px;
+            border-radius: 7px;
+            max-height: 41px;
+        }
+
+        .dropbtn {
+            margin-bottom: 4px
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 165px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .profile-info p {
+            font-size: 24px;
+        }
+
+        .container-wrap {
+            justify-content: start;
+        }
+
+        .slick-arrow.slick-hidden {
+            display: block;
+        }
+
+        .container-wrap.product {
+            width: calc(100% / 6) !important;
+        }
+
+        .slick-track {
+            width: unset !important;
+        }
+
+        .product-box {
+            width: unset;
+        }
+
+        .orderID {
+            font-size: 2rem;
+        }
+
+        .form-control {
+            width: fit-content;
+        }
+    </style>
+}
+
+@section Javascript {
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Slick/slick.min.js")" defer></script>
+    <script>
+        $(document).ready(function () {
+            @foreach (var d in Model)
+            {
+                @:$('#product-slider@(d.ID) .slide-container').slick({
+                    @:lazyLoad: 'ondemand',
+                    @:slidesToShow: 5,
+                    @:draggable: false,
+                    @:infinite: false,
+                    @:prevArrow: "#product-slider@(d.ID) .slick-prev-prod",
+                    @:nextArrow: "#product-slider@(d.ID) .slick-next-prod",
+                @:});
+            }
+        });
+
+        function searchOrders() {
+            var input, filter, h2, h, i, txtValue;
+            input = document.getElementById("searchOrders");
+            filter = input.value.toUpperCase();
+            h2 = document.getElementById("orderCollapse").getElementsByTagName("a");
+
+            for (i = 0; i < h2.length; i++) {
+                h = h2[i];
+                if (h) {
+                    txtValue = h.textContent || h.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        h2[i].parentElement.style.display = "";
+                    } else {
+                        h2[i].parentElement.style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function stateOnSelect() {
+            const selectDropdown = document.getElementById("EnumStates");
+            selectDropdown.addEventListener('change', function (e) {
+                window.location.href = `/orderproes/List?filter=${this.value}`
+            });
+        }
+
+        stateOnSelect()
+    </script>
+}
+
+<h2>Đơn hàng</h2>
+@Html.DropDownList("EnumStates", null, htmlAttributes: new { @class = "form-control" })
+
+<hr />
+<div class="collapse" id="orderCollapse">
+    <input type="text" id="searchOrders" class="searchBar" placeholder="Tìm kiếm đơn hàng..." onkeyup="searchOrders()" />
+    @foreach (var order in Model)
+    {
+        <div>
+            <a class="orderID" href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID | @order.State</a>
+            <div class="position-relative" id="product-slider@(order.ID)">
+                <button class="slick-prev-prod slick-arrow"><</button>
+                <button class="slick-next-prod slick-arrow">></button>
+                <div class="slide-container">
+                    @for (int i = 0; i <= order.OrderDetails.Count(); i++)
+                    {
+                        if (i % 2 != 0)
+                        {
+                            continue;
+                        }
+                        <div class="container-wrap product">
+                            @foreach (var dt in order.OrderDetails.Skip(i).Take(2))
+                            {
+                                if (dt == null)
+                                {
+                                    continue;
+                                }
+                                Html.RenderPartial("../Products/PartialOrdersProduct", dt, ViewData);
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <hr />
+        </div>
+    }
+</div>

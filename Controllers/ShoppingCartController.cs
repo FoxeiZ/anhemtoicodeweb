@@ -1,7 +1,8 @@
-﻿using anhemtoicodeweb.Models;
+﻿using anhemtoicodeweb.Library;
+using anhemtoicodeweb.Models;
 using Microsoft.Ajax.Utilities;
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,15 @@ namespace anhemtoicodeweb.Controllers
                 TempData["Address"] = _cus.AddressName;
                 TempData["PhoneNumber"] = _cus.Phone;
             }
+
+            ViewBag.PaymentMethod = Enums.PaymentMethodEnum.AllPaymentMethod.Select(
+                s => new SelectListItem
+                {
+                    Text = s.Value,
+                    Value = s.Name,
+                    Selected = s.Equals(Enums.PaymentMethodEnum.Cash)
+                }).ToList();
+
             return View(cart);
         }
 
@@ -136,19 +146,35 @@ namespace anhemtoicodeweb.Controllers
                     form["CodeCustomer"] = _user.ID.ToString();
                 }
 
+                var paymentMethod = form["PaymentMethod"];
+                if (Enums.PaymentMethodEnum.FindByName(paymentMethod) == null)
+                {
+                    TempData["CheckoutError"] = "Chức năng thanh toán không hợp lệ.";
+                    return RedirectToAction("Index");
+                }
+
                 if (_user.AddressName == null)
                 {
                     _user.AddressName = form["AddressDelivery"];
                     database.Entry<User>(_user).State = EntityState.Modified;
                 }
 
-                OrderPro _order = new OrderPro(); //Bang Hoa Don San pham
+                //OrderPro _order = new OrderPro(); //Bang Hoa Don San pham
 
-                _order.DateOrder = DateTime.Now;
-                _order.AddressDelivery = form["AddressDelivery"];
-                _order.PhoneNumber = form["PhoneNumber"];
-                _order.IDCus = int.Parse(form["CodeCustomer"]);
-                _order.State = "Đang xử lý";
+                //_order.DateOrder = DateTime.Now;
+                //_order.AddressDelivery = form["AddressDelivery"];
+                //_order.PhoneNumber = form["PhoneNumber"];
+                //_order.IDCus = int.Parse(form["CodeCustomer"]);
+                //_order.State = Enums.OrderState.Pending.Name;
+
+                var _order = new OrderPro
+                {
+                    //ID = GenerateRandomOrderId(), // Randomly generated OrderID
+                    IDCus = _user.ID,
+                    State = Enums.OrderState.Pending.Name,
+                    CreatedAt = DateTime.Now,
+                    PaymentMethod = paymentMethod
+                };
 
                 decimal totalDiscount = 0;
                 decimal totalPrice = 0;
@@ -195,6 +221,12 @@ namespace anhemtoicodeweb.Controllers
 
                 database.OrderProes.Add(_order);
                 database.SaveChanges();
+
+                if (paymentMethod.ToLower() == "vnpay")
+                {
+                    return Redirect(GenerateVNPayUrl(_order));
+                }
+
                 cart.ClearCart();
                 return View("CheckOutSuccess", _order);
             }
@@ -261,17 +293,7 @@ namespace anhemtoicodeweb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var l = new List<String>()
-            {
-                "Đang xử lý",
-                "Đã xử lý",
-                "Đang giao hàng",
-                "Đã giao hàng",
-                "Đang hủy",
-                "Đã hủy",
-            };
-
-            ViewBag.State = l.Select(x => new SelectListItem { Text = x, Value = x, Selected = (x == _order.State) }).ToList();
+            ViewBag.State = Enums.OrderState.AllState.Select(x => new SelectListItem { Text = x.Value, Value = x.Name, Selected = (x.Name == _order.State) }).ToList();
             return View(_order);
         }
 
@@ -286,17 +308,7 @@ namespace anhemtoicodeweb.Controllers
                 return RedirectToAction("CheckOrder", new { id = orderPro.ID });
             }
 
-            var l = new List<String>()
-            {
-                "Đang xử lý",
-                "Đã xử lý",
-                "Đang giao hàng",
-                "Đã giao hàng",
-                "Đang hủy",
-                "Đã hủy",
-            };
-
-            ViewBag.State = l.Select(x => new SelectListItem { Text = x, Value = x, Selected = (x == orderPro.State) }).ToList();
+            ViewBag.State = Enums.OrderState.AllState.Select(x => new SelectListItem { Text = x.Value, Value = x.Name, Selected = (x.Name == orderPro.State) }).ToList();
 
             return View(orderPro);
         }
@@ -349,6 +361,96 @@ namespace anhemtoicodeweb.Controllers
             database.Entry(orderPro).State = EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("CheckOrder", new { id = orderPro.ID });
+        }
+
+        // Generate a unique random OrderID
+        private int GenerateRandomOrderId()
+        {
+            Random random = new Random();
+            int orderId;
+            do
+            {
+                orderId = random.Next(100000, 999999); // 6-digit random number
+            } while (database.OrderProes.Any(o => o.ID == orderId)); // Ensure uniqueness
+            return orderId;
+        }
+
+        private string GenerateVNPayUrl(OrderPro order)
+        {
+            string vnpUrl = ConfigurationManager.AppSettings["vnp_Url"];
+            string vnpTmnCode = ConfigurationManager.AppSettings["vnp_TmnCode"];
+            string vnpHashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"];
+            string vnpReturnUrl = Url.Action("VNPayReturn", "ShoppingCart", null, Request.Url.Scheme);
+            string ipAddr = Utils.GetIpAddress();
+
+            var vnpay = new VNPay();
+            vnpay.AddRequestData("vnp_Version", "2.1.0");
+            vnpay.AddRequestData("vnp_Command", "pay");
+            vnpay.AddRequestData("vnp_TmnCode", vnpTmnCode);
+            vnpay.AddRequestData("vnp_Amount", ((int)(order.TotalAmount * 100)).ToString());
+            vnpay.AddRequestData("vnp_CurrCode", "VND");
+            vnpay.AddRequestData("vnp_TxnRef", order.ID.ToString());
+            vnpay.AddRequestData("vnp_OrderInfo", $"Payment for Order #{order.ID}");
+            vnpay.AddRequestData("vnp_OrderType", "billpayment");
+            vnpay.AddRequestData("vnp_Locale", "vn");
+            vnpay.AddRequestData("vnp_ReturnUrl", vnpReturnUrl);
+            vnpay.AddRequestData("vnp_IpAddr", ipAddr);
+
+            string createDate = DateTime.Now.ToString("yyyyMMddHHmmss");
+            vnpay.AddRequestData("vnp_CreateDate", createDate);
+
+            return vnpay.CreateRequestUrl(vnpUrl, vnpHashSecret);
+        }
+
+        // Handle VNPay return
+        public ActionResult VNPayReturn()
+        {
+            string vnp_HashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"];
+            var vnpay = new VNPay();
+
+            foreach (string key in Request.QueryString.Keys)
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    vnpay.AddResponseData(key, Request.QueryString[key]);
+                }
+            }
+
+            string vnpSecureHash = Request.QueryString["vnp_SecureHash"];
+            bool isValidSignature = vnpay.ValidateSignature(vnpSecureHash, vnp_HashSecret);
+
+            if (isValidSignature)
+            {
+                string responseCode = vnpay.GetResponseData("vnp_ResponseCode");
+                string transactionStatus = vnpay.GetResponseData("vnp_TransactionStatus");
+                string txnRef = vnpay.GetResponseData("vnp_TxnRef");
+
+                if (responseCode == "00" && transactionStatus == "00")
+                {
+                    if (int.TryParse(txnRef, out int orderId))
+                    {
+                        var order = database.OrderProes.Find(orderId);
+                        if (order != null)
+                        {
+                            order.State = Enums.OrderState.PaymentReceived.Name;
+                            database.SaveChanges();
+                            Session["Cart"] = null;
+                            Session["CartCount"] = 0;
+                            return RedirectToAction("OrderConfirmation", new { orderId });
+                        }
+                    }
+                    TempData["CheckoutError"] = "Invalid order reference.";
+                }
+                else
+                {
+                    TempData["CheckoutError"] = "Thanh toán bị huỷ. Vui lòng thử lại sau.";
+                }
+            }
+            else
+            {
+                TempData["CheckoutError"] = "Invalid payment response.";
+            }
+            return RedirectToAction("Index");
         }
     }
 }
