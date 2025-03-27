@@ -1,17 +1,12 @@
-# Anh em tôi collab làm đồ án
-Finally done with this. Never gonna see you again MVC. rest in piss
-on god on god, deadass, fr fr, no cap, facts
-
-Project được viết trên ASP MVC, Bootstrap5 (~~maybe tailwind?~~ no tailwind.) (và tại sao chúng ta không được dùng nextjs, *f-ing BS*)
+# Tôi làm đồ án
+Well, here we go again...
+Project được viết trên ASP MVC, BS5, Database code-first
 
 ## Người tham gia thực hiện
   - Nguyễn Ngọc Duy Bảo
-  - Thân Vĩnh Huy
-  - Phan Xuân Thái
-  - Huỳnh Tấn Thiên Ân
 
 # Todo
-> Done?
+> Done
 - [x] Landing Page
 - [x] Image Slideshow
 - [x] Product Detail Page
@@ -24,3 +19,7 @@ Project được viết trên ASP MVC, Bootstrap5 (~~maybe tailwind?~~ no tailwi
 - [x] Search
 - [x] User Checkout
 - [x] OrderDetail Lookup
+- [x] Payment
+- [x] Statistic
+- [x] Orderstate update
+- [x] Role
