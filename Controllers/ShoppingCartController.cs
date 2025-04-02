@@ -1,4 +1,5 @@
-﻿using anhemtoicodeweb.Library;
+﻿using anhemtoicodeweb.Enums;
+using anhemtoicodeweb.Library;
 using anhemtoicodeweb.Models;
 using Microsoft.Ajax.Utilities;
 using System;
@@ -293,22 +294,24 @@ namespace anhemtoicodeweb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.State = Enums.OrderState.AllState.Select(x => new SelectListItem { Text = x.Value, Value = x.Name, Selected = (x.Name == _order.State) }).ToList();
+            ViewBag.State = Enums.OrderState.AllState.Select(x => new SelectListItem { Text = x.Value, Value = x.Name, Selected = (x.Value == _order.State) }).ToList();
             return View(_order);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditOrder([Bind(Include = "ID,DateOrder,ID,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State")] OrderPro orderPro)
+        public ActionResult EditOrder([Bind(Include = "ID,DateOrder,ID,PhoneNumber,AddressDelivery,TotalAmount,TotalMoney,TotalTax,TotalDiscount,State,CreatedAt")] OrderPro orderPro, string oldState)
         {
-            if (ModelState.IsValid)
+            //var oldState = database.OrderProes.Find(orderPro.ID);
+            if (ModelState.IsValid && OrderState.CanMoveToState(oldState, orderPro.State))
             {
                 database.Entry(orderPro).State = EntityState.Modified;
+                //database.OrderProes.AddOrUpdate(orderPro);
                 database.SaveChanges();
                 return RedirectToAction("CheckOrder", new { id = orderPro.ID });
             }
 
-            ViewBag.State = Enums.OrderState.AllState.Select(x => new SelectListItem { Text = x.Value, Value = x.Name, Selected = (x.Name == orderPro.State) }).ToList();
+            ViewBag.State = OrderState.AllState.Select(x => new SelectListItem { Text = x.Value, Value = x.Name, Selected = (x.Value == orderPro.State) }).ToList();
 
             return View(orderPro);
         }
@@ -357,7 +360,7 @@ namespace anhemtoicodeweb.Controllers
         public ActionResult CancelOrderConfirmed(int id)
         {
             OrderPro orderPro = database.OrderProes.Find(id);
-            orderPro.State = "Đang hủy";
+            orderPro.State = OrderState.Canceled.Name;
             database.Entry(orderPro).State = EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("CheckOrder", new { id = orderPro.ID });

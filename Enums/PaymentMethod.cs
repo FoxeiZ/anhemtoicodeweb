@@ -4,7 +4,6 @@ namespace anhemtoicodeweb.Enums
 {
     public class PaymentMethod : CustomEnum
     {
-        private static int _id = 0;
         public PaymentMethod(string name) : base(name) { }
         public PaymentMethod(string name, string value) : base(name, value) { }
     }

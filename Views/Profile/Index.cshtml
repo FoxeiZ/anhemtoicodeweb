@@ -237,7 +237,7 @@
     @foreach (var order in Model.OrderProes)
     {
         <div>
-            <a class="orderID" href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID | @order.State</a>
+            <a class="orderID" href="@Url.Action("CheckOrder", "ShoppingCart", new { @id = order.ID })">Đơn hàng số @order.ID | @anhemtoicodeweb.Enums.OrderState.FindByName(order.State).Value</a>
             <div class="position-relative" id="product-slider@(order.ID)">
                 <button class="slick-prev-prod slick-arrow"><</button>
                 <button class="slick-next-prod slick-arrow">></button>

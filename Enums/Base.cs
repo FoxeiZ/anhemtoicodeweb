@@ -17,7 +17,6 @@
         /// </summary>
         /// <param name="name">The name and value of the enum.</param>
 
-        private int _compareValue = 0;
         public CustomEnum(string name)
         {
             Name = Value = name;
@@ -32,16 +31,6 @@
         {
             Name = name;
             Value = value;
-        }
-
-        public CustomEnum(string name, string value, int compareValue) : this(name, value)
-        {
-            _compareValue = compareValue;
-        }
-
-        public bool CompareTo(CustomEnum obj)
-        {
-            return _compareValue > obj._compareValue;
         }
     }
 }
